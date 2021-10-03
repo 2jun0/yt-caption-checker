@@ -9,16 +9,12 @@ function tagVideo(e, lang) {
     var overlays = e.querySelector('#overlays');
     var ccStatus = overlays.querySelector('#cc-status');
 
-    if (ccStatus) ccStatus.style.display = 'none';
-
-    getSubtitle(url, lang, hasSubtitle => {
+    hasSubtitle(url, lang, hasSubtitle => {
       if (hasSubtitle) {
         // Already tagged
         if (ccStatus) {
-          ccStatus.style.display = 'inline-block';
           return;
         }
-
         ccStatus = document.createElement('div');
         ccStatus.id = 'cc-status';
         ccStatus.style.display = 'inline-block';
@@ -35,7 +31,6 @@ function tagVideo(e, lang) {
         ccStatus.style.fontWeight = '500';
         ccStatus.style.position = 'absolute';
         ccStatus.style.borderRadius = '2px';
-        overlays.appendChild(ccStatus);
 
         var span = document.createElement('span');
         span.className = 'style-scope ytd-thumbnail-overlay-time-status-renderer';
@@ -44,42 +39,43 @@ function tagVideo(e, lang) {
         ccStatus.appendChild(span);
 
         // User moved the page in processing
-        // if(e.href != url && ccStatus) ccStatus.remove();
+        if(e.href != url && ccStatus) ccStatus.remove();
 
-      }else if (ccStatus) {
-        // Untag
-        // ccStatus.remove();
+        // To avoid deleting the elements
+        function waitLoadingAndAppendElement() {
+        
+          if (overlays.childElementCount >= 3) {
+            overlays.insertBefore(ccStatus, overlays.lastChild);
+            return;
+          }
+        
+          wlTimeoutId = setTimeout(function() {
+            waitLoadingAndAppendElement();
+          }, 100);
+        }
+        
+        waitLoadingAndAppendElement();
       }
     });
   }
 }
 
-function untagAllVideo() {
-  document.querySelectorAll('#ccStatus').forEach(e => {e.remove();});
-}
-
-function getSubtitle(videoUrl, lang, callback) {
+function hasSubtitle(videoUrl, lang, callback) {
   // URL example : /watch?v=[video_id]
   var videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
-
   var request = new XMLHttpRequest();
   request.onreadystatechange = function() {
-    if (this.readyState == this.DONE) {
+    if (this.readyState == this.LOADING) {
       if (this.status == 200) {
-        callback(this.responseText);
+        callback(true);
+        this.abort();
       }else if (this.status == 404){
-        callback(undefined);
+        callback(false);
       }
     }
   };
-  request.open("POST", "https://video.google.com/timedtext?lang="+lang+"&v="+videoId, true);
-  request.send();
-}
-
-function tagVideos(thumbs) {
-  thumbs.forEach(thumb => {
-    tagVideo(thumb, 'ko');
-  })
+  request.open("GET", "https://video.google.com/timedtext?lang="+lang+"&v="+videoId, true);
+  request.send(null);
 }
 
 function checkNodes(nodes) {
@@ -88,22 +84,24 @@ function checkNodes(nodes) {
     if (['#text', '#comment'].includes(node.nodeName)) return;
 
     node.querySelectorAll('a#thumbnail').forEach(e => {
-      addVideo(e);
+      checkNode(e);
     });
   })
 }
 
+function checkNode(node) {
+  if (node.tagName != 'A' || node.id != 'thumbnail') {
+    // if (node.id == 'video-title') console.log(node);
+    return;
+  }
+  // except play list
+  if (node.parentElement.tagName == 'YTD-PLAYLIST-THUMBNAIL') return;
+  // console.log(node);
+  addVideo(node);
+}
+
 function addVideo(video) {
   tagVideo(video, 'ko');
-
-  var observer = new MutationObserver(mutations => {
-    mutations.forEach(mutation => {
-      tagVideo(mutation.target, 'ko');
-    })
-  });
-
-  observer.observe(video, { attributes: true })
-  videoObserverList.push(observer);
 }
 
 function initObserver() {
@@ -111,7 +109,7 @@ function initObserver() {
     return false;
   }
 
-  var contentElement = document.querySelector("ytd-browse[role='main']");
+  var contentElement = document.querySelector("ytd-page-manager#page-manager");
   if(!contentElement) {
     return false;
   }
@@ -120,10 +118,9 @@ function initObserver() {
 
   (new MutationObserver(mutations => {
     mutations.forEach(mutation => {
-      // console.log(mutation.type, mutation.attributeName, mutation.target.tagName, mutation.target)
-      checkNodes(mutation.addedNodes);
+      checkNode(mutation.target);
     })
-  })).observe(contentElement, { childList: true, subtree: true });
+  })).observe(contentElement, {subtree: true, attributeFilter: ['href']});
 
   clearTimeout(timeoutId); // Just for good measure
 
