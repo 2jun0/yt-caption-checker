@@ -10,6 +10,11 @@
     "scripts": ["js/background.js"],
     "persistent": false
   },
+  "page_action": {
+    "default_name": "Options",
+    "default_popup": "html/popup.html",
+    "default_icon": "asset/logo.png"
+  },
   "content_scripts":[
     {
       "matches": ["*://*.youtube.com/*"],
@@ -18,13 +23,7 @@
       "all_frames": true
     }
   ],
-  "page_action": {
-    "default_popup": "html/popup.html",
-    "default_icon": {
-      "48": "asset/logo.png"
-    }
-  },
-  "permissions": ["storage", "tabs", "declarativeContent"],
+  "permissions": ["storage", "declarativeContent"],
   "icons": {
     "48": "asset/logo.png"
   }

@@ -44,7 +44,7 @@ function tagVideo(e, lang) {
         // To avoid deleting the elements
         function waitLoadingAndAppendElement() {
         
-          if (overlays.childElementCount >= 3) {
+          if (overlays.childElementCount > 0) {
             overlays.insertBefore(ccStatus, overlays.lastChild);
             return;
           }
@@ -91,7 +91,7 @@ function checkNodes(nodes) {
 
 function checkNode(node) {
   if (node.tagName != 'A' || node.id != 'thumbnail') {
-    // if (node.id == 'video-title') console.log(node);
+    if (node.id == 'video-title') console.log(node);
     return;
   }
   // except play list
