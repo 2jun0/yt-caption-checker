@@ -3,9 +3,9 @@
   "short_name":"Youtube subtitle filter",
   "description":"",
   "manifest_version": 2,
-  "version":"0.9.1",
+  "version":"0.9.2",
   "author":"2jun0",
-  "homepage_url": "https://youtube.com",
+  "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
   "background": {
     "scripts": ["js/background.js"],
     "persistent": false
@@ -22,6 +22,9 @@
       "run_at": "document_end",
       "all_frames": true
     }
+  ],
+  "web_accessible_resources": [
+    "js/lang.js"
   ],
   "permissions": ["storage", "declarativeContent"],
   "icons": {

@@ -6,7 +6,7 @@ div#main {
 #main {
   outline: none;
   box-sizing: border-box;
-  width: 229.469px;
+  width: 300px;
   max-height: 251px;
 }
 
@@ -44,6 +44,10 @@ popup-item-page>.title {
 popup-item-page>.value {
   position: absolute;
   right:0;
+}
+
+#lang-picker {
+  width: 80px;
 }
 
 color-picker-wapper {
