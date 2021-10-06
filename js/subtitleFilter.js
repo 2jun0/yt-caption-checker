@@ -2,17 +2,16 @@ var ccLang = 'en';
 var ccColor1 = '#008000';
 var ccColor2 = '#ffffff';
 
+var mainObserver;
+
 function setCCLang(lang) {
+  if (ccLang == lang) return;
   ccLang = lang;
-  document.querySelectorAll('#cc-status').forEach(ccStatus => {
-    ((span) => {
-      span.ariaLabel = lang.toUpperCase()+' CC';
-      span.textContent = lang.toUpperCase()+' CC';
-    })(ccStatus.querySelector('span'));
-  });
+  checkAllNode();
 }
 
 function setCCColor1(color1) {
+  if (ccColor1 == color1) return;
   ccColor1 = color1;
   document.querySelectorAll('#cc-status').forEach(ccStatus => {
     ccStatus.style.backgroundColor = color1;
@@ -20,6 +19,7 @@ function setCCColor1(color1) {
 }
 
 function setCCColor2(color2) {
+  if (ccColor2 == color2) return;
   ccColor2 = color2;
   document.querySelectorAll('#cc-status').forEach(ccStatus => {
     ccStatus.style.color = color2;
@@ -32,13 +32,14 @@ function tagVideo(e, lang) {
   if (url) {
     var overlays = e.querySelector('#overlays');
     var ccStatus = overlays.querySelector('#cc-status');
+    // Already tagged
+    if (ccStatus && ccStatus.lang != ccLang) {
+      ccStatus.remove();
+      console.log(ccStatus);
+    }
 
     hasSubtitle(url, lang, hasSubtitle => {
       if (hasSubtitle) {
-        // Already tagged
-        if (ccStatus) {
-          return;
-        }
         ccStatus = document.createElement('div');
         ccStatus.id = 'cc-status';
         ccStatus.style.display = 'inline-block';
@@ -55,6 +56,7 @@ function tagVideo(e, lang) {
         ccStatus.style.fontWeight = '500';
         ccStatus.style.position = 'absolute';
         ccStatus.style.borderRadius = '2px';
+        ccStatus.lang = ccLang;
 
         var span = document.createElement('span');
         span.className = 'style-scope ytd-thumbnail-overlay-time-status-renderer';
@@ -125,7 +127,16 @@ function checkNode(node) {
 }
 
 function addVideo(video) {
-  tagVideo(video, 'ko');
+  tagVideo(video, ccLang);
+}
+
+function checkAllNode() {
+  var contentElement = document.querySelector("ytd-page-manager#page-manager");
+  if(!contentElement) {
+    return false;
+  }
+
+  checkNodes(Array.from(contentElement.children));
 }
 
 function initObserver() {
@@ -140,11 +151,12 @@ function initObserver() {
 
   checkNodes(Array.from(contentElement.children));
 
-  (new MutationObserver(mutations => {
+  mainObserver = new MutationObserver(mutations => {
     mutations.forEach(mutation => {
       checkNode(mutation.target);
     })
-  })).observe(contentElement, {subtree: true, attributeFilter: ['href']});
+  });
+  mainObserver.observe(contentElement, {subtree: true, attributeFilter: ['href']});
 
   clearTimeout(timeoutId); // Just for good measure
 
@@ -178,6 +190,6 @@ chrome.storage.sync.get(['YT-SUBTITLE-FILTER_lang', 'YT-SUBTITLE-FILTER_color1',
   setCCLang(items['YT-SUBTITLE-FILTER_lang'] || 'en');
   setCCColor1(items['YT-SUBTITLE-FILTER_color1'] || '#008000');
   setCCColor2(items['YT-SUBTITLE-FILTER_color2'] || '#ffffff');
-});
 
-initTimeout();
+  initTimeout();
+});

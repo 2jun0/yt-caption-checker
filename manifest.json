@@ -3,7 +3,7 @@
   "short_name":"Youtube subtitle filter",
   "description":"Youtube subtitle filter",
   "manifest_version": 2,
-  "version":"1.0.0",
+  "version":"1.0.1",
   "author":"2jun0",
   "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
   "background": {
@@ -13,7 +13,7 @@
   "page_action": {
     "default_name": "Options",
     "default_popup": "html/popup.html",
-    "default_icon": "asset/logo.png"
+    "default_icon": "asset/logo-little.png"
   },
   "content_scripts":[
     {
@@ -28,6 +28,6 @@
   ],
   "permissions": ["storage", "declarativeContent"],
   "icons": {
-    "48": "asset/logo.png"
+    "128": "asset/logo-big.png"
   }
 }

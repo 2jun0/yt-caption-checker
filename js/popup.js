@@ -18,7 +18,6 @@ function setLanguage(lang) {
   ccStatusExmaple.textContent = langPicker.value.toUpperCase()+' CC'
   // Save data
   chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_lang': lang }, () => {});
-  sendMessage({ 'YT-SUBTITLE-FILTER_lang': lang });
 }
 
 function setColor1(color1) {
@@ -27,7 +26,6 @@ function setColor1(color1) {
   ccStatusExmaple.style.background = color1;
   // Save data
   chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_color1': color1 }, () => {});
-  sendMessage({ 'YT-SUBTITLE-FILTER_color1': color1 });
 }
 
 function setColor2(color2) {
@@ -36,17 +34,19 @@ function setColor2(color2) {
   ccStatusExmaple.style.color = color2;
   // Save data
   chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_color2': color2 }, () => {});
-  sendMessage({ 'YT-SUBTITLE-FILTER_color2': color2 });
 }
 
+langPicker.onchange = () => {
+  setLanguage(langPicker.value);
+  sendMessage({ 'YT-SUBTITLE-FILTER_lang': langPicker.value });
+}
 colorPicker1.onchange = () => { 
   setColor1(colorPicker1.value);
+  sendMessage({ 'YT-SUBTITLE-FILTER_color1': colorPicker1.value });
 }
 colorPicker2.onchange = () => { 
   setColor2(colorPicker2.value);
-}
-langPicker.onchange = () => {
-  setLanguage(langPicker.value);
+  sendMessage({ 'YT-SUBTITLE-FILTER_color2': colorPicker2.value });
 }
 
 (async () => {
