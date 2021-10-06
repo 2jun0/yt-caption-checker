@@ -1,9 +1,9 @@
 {
   "name":"Youtube subtitle filter",
   "short_name":"Youtube subtitle filter",
-  "description":"",
+  "description":"Youtube subtitle filter",
   "manifest_version": 2,
-  "version":"0.9.2",
+  "version":"1.0.0",
   "author":"2jun0",
   "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
   "background": {

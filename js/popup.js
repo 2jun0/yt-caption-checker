@@ -5,11 +5,20 @@ const colorPickerWapper1 = document.getElementById('color-picker1-wapper');
 const colorPickerWapper2 = document.getElementById('color-picker2-wapper');
 const langPicker = document.getElementById('lang-picker');
 
+function sendMessage(message, callback) {
+  chrome.tabs.query({}, (tabs) => {
+    tabs.forEach(tab => {
+      chrome.tabs.sendMessage(tab.id, message, callback);
+    });
+  });
+}
+
 function setLanguage(lang) {
   langPicker.value = lang;
   ccStatusExmaple.textContent = langPicker.value.toUpperCase()+' CC'
   // Save data
   chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_lang': lang }, () => {});
+  sendMessage({ 'YT-SUBTITLE-FILTER_lang': lang });
 }
 
 function setColor1(color1) {
@@ -18,6 +27,7 @@ function setColor1(color1) {
   ccStatusExmaple.style.background = color1;
   // Save data
   chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_color1': color1 }, () => {});
+  sendMessage({ 'YT-SUBTITLE-FILTER_color1': color1 });
 }
 
 function setColor2(color2) {
@@ -26,6 +36,7 @@ function setColor2(color2) {
   ccStatusExmaple.style.color = color2;
   // Save data
   chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_color2': color2 }, () => {});
+  sendMessage({ 'YT-SUBTITLE-FILTER_color2': color2 });
 }
 
 colorPicker1.onchange = () => { 
@@ -53,7 +64,6 @@ langPicker.onchange = () => {
 
   // Load data
   chrome.storage.sync.get(['YT-SUBTITLE-FILTER_lang', 'YT-SUBTITLE-FILTER_color1', 'YT-SUBTITLE-FILTER_color2'], (items) => {
-    console.log(items)
     setLanguage(items['YT-SUBTITLE-FILTER_lang'] || 'en');
     setColor1(items['YT-SUBTITLE-FILTER_color1'] || '#008000');
     setColor2(items['YT-SUBTITLE-FILTER_color2'] || '#ffffff');
