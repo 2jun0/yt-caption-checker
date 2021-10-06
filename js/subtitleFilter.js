@@ -1,6 +1,30 @@
-var videoObserverList = [];
-var timeoutId;
-var spanStyleText;
+var ccLang = 'en';
+var ccColor1 = '#008000';
+var ccColor2 = '#ffffff';
+
+function setCCLang(lang) {
+  ccLang = lang;
+  document.querySelectorAll('#cc-status').forEach(ccStatus => {
+    ((span) => {
+      span.ariaLabel = lang.toUpperCase()+' CC';
+      span.textContent = lang.toUpperCase()+' CC';
+    })(ccStatus.querySelector('span'));
+  });
+}
+
+function setCCColor1(color1) {
+  ccColor1 = color1;
+  document.querySelectorAll('#cc-status').forEach(ccStatus => {
+    ccStatus.style.backgroundColor = color1;
+  });
+}
+
+function setCCColor2(color2) {
+  ccColor2 = color2;
+  document.querySelectorAll('#cc-status').forEach(ccStatus => {
+    ccStatus.style.color = color2;
+  });
+}
 
 function tagVideo(e, lang) {
   var url = e.href;
@@ -23,8 +47,8 @@ function tagVideo(e, lang) {
         ccStatus.style.top = 0;
         ccStatus.style.left = 0;
         ccStatus.style.right = 'auto';
-        ccStatus.style.backgroundColor = 'green';
-        ccStatus.style.color = '#fff';
+        ccStatus.style.backgroundColor = ccColor1;
+        ccStatus.style.color = ccColor2;
         ccStatus.style.margin = '4px';
         ccStatus.style.padding = '3px 4px';
         ccStatus.style.fontSize = '1.2rem';
@@ -34,8 +58,8 @@ function tagVideo(e, lang) {
 
         var span = document.createElement('span');
         span.className = 'style-scope ytd-thumbnail-overlay-time-status-renderer';
-        span.ariaLabel = lang.toUpperCase()+' CC';
-        span.textContent = lang.toUpperCase()+' CC';
+        span.ariaLabel = ccLang.toUpperCase()+' CC';
+        span.textContent = ccLang.toUpperCase()+' CC';
         ccStatus.appendChild(span);
 
         // User moved the page in processing
@@ -44,7 +68,7 @@ function tagVideo(e, lang) {
         // To avoid deleting the elements
         function waitLoadingAndAppendElement() {
         
-          if (overlays.childElementCount >= 3) {
+          if (overlays.childElementCount >= 2) {
             overlays.insertBefore(ccStatus, overlays.lastChild);
             return;
           }
@@ -127,6 +151,8 @@ function initObserver() {
   return true;
 }
 
+var timeoutId;
+
 function initTimeout() {
   clearTimeout(timeoutId);
 
@@ -139,5 +165,19 @@ function initTimeout() {
     initTimeout();
   }, 2000);
 }
+
+// option update handlers
+chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
+  if(req['YT-SUBTITLE-FILTER_lang']) setCCLang(req['YT-SUBTITLE-FILTER_lang']);
+  if(req['YT-SUBTITLE-FILTER_color1']) setCCColor1(req['YT-SUBTITLE-FILTER_color1']);
+  if(req['YT-SUBTITLE-FILTER_color2']) setCCColor2(req['YT-SUBTITLE-FILTER_color2']);
+});
+
+// Load data
+chrome.storage.sync.get(['YT-SUBTITLE-FILTER_lang', 'YT-SUBTITLE-FILTER_color1', 'YT-SUBTITLE-FILTER_color2'], (items) => {
+  setCCLang(items['YT-SUBTITLE-FILTER_lang'] || 'en');
+  setCCColor1(items['YT-SUBTITLE-FILTER_color1'] || '#008000');
+  setCCColor2(items['YT-SUBTITLE-FILTER_color2'] || '#ffffff');
+});
 
 initTimeout();

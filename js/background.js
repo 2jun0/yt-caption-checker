@@ -4,7 +4,7 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.declarativeContent.onPageChanged.addRules([{
       conditions: [
         new chrome.declarativeContent.PageStateMatcher({
-          pageUrl: { hostEquals: 'youtube.com', schemes: ['https','http'] }
+          pageUrl: { hostEquals: 'www.youtube.com' }
         })
       ],
       actions: [
