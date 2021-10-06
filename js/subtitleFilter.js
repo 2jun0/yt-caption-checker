@@ -1,4 +1,4 @@
-var ccLang = 'en';
+var ccLang = '??';
 var ccColor1 = '#008000';
 var ccColor2 = '#ffffff';
 

@@ -1,7 +1,7 @@
 {
   "name":"Youtube subtitle filter",
   "short_name":"Youtube subtitle filter",
-  "description":"Youtube subtitle filter",
+  "description":"Show if youtube video has subtitle of the language you want",
   "manifest_version": 2,
   "version":"1.0.1",
   "author":"2jun0",
