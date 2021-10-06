@@ -1,839 +1,839 @@
 const langs = [
   {
-    "code": "gl",
-    "displayName": "Galego"
+      "code": "ha",
+      "displayName": "(Hausa) هَوُسَ"
   },
   {
-    "code": "gn",
-    "displayName": "Avañe'ẽ"
+      "code": "om",
+      "displayName": "Afaan Oromoo"
   },
   {
-    "code": "yue",
-    "displayName": "粵語"
+      "code": "aa",
+      "displayName": "Afaraf"
   },
   {
-    "code": "yue-HK",
-    "displayName": "粵語(香港)"
+      "code": "af",
+      "displayName": "Afrikaans"
   },
   {
-    "code": "gu",
-    "displayName": "ગુજરાતી"
+      "code": "ig",
+      "displayName": "Asụsụ Igbo"
   },
   {
-    "code": "el",
-    "displayName": "ελληνικά"
+      "code": "gn",
+      "displayName": "Avañe'ẽ"
   },
   {
-    "code": "kl",
-    "displayName": "kalaallisut"
+      "code": "mxp",
+      "displayName": "Ayuujk"
   },
   {
-    "code": "nv",
-    "displayName": "Diné bizaad"
+      "code": "id",
+      "displayName": "Bahasa Indonesia"
   },
   {
-    "code": "na",
-    "displayName": "Dorerin Naoero"
+      "code": "ms",
+      "displayName": "Bahasa Melayu"
   },
   {
-    "code": "st",
-    "displayName": "Sesotho"
+      "code": "su",
+      "displayName": "Basa Sunda"
   },
   {
-    "code": "nl",
-    "displayName": "Nederlands"
+      "code": "bi",
+      "displayName": "Bislama"
   },
   {
-    "code": "nl-NL",
-    "displayName": "Nederlands(Nederland)"
+      "code": "cho",
+      "displayName": "Chahta"
   },
   {
-    "code": "nl-BE",
-    "displayName": "Nederlands(Belgium)"
+      "code": "cy",
+      "displayName": "Cymraeg"
   },
   {
-    "code": "ne",
-    "displayName": "नेपाली"
+      "code": "de",
+      "displayName": "Deutsch"
   },
   {
-    "code": "no",
-    "displayName": "Norsk"
+      "code": "de-DE",
+      "displayName": "Deutsch(Deutschland)"
   },
   {
-    "code": "da",
-    "displayName": "dansk"
+      "code": "de-CH",
+      "displayName": "Deutsch(Swiss)"
   },
   {
-    "code": "doi",
-    "displayName": "डोगरी"
+      "code": "de-AT",
+      "displayName": "Deutsch(Österreich)"
   },
   {
-    "code": "de",
-    "displayName": "Deutsch"
+      "code": "nv",
+      "displayName": "Diné bizaad"
   },
   {
-    "code": "de-DE",
-    "displayName": "Deutsch(Deutschland)"
+      "code": "na",
+      "displayName": "Dorerin Naoero"
   },
   {
-    "code": "de-CH",
-    "displayName": "Deutsch(Swiss)"
+      "code": "en",
+      "displayName": "English"
   },
   {
-    "code": "de-AT",
-    "displayName": "Deutsch(Österreich)"
+      "code": "en-CA",
+      "displayName": "English(Canada)"
   },
   {
-    "code": "lad",
-    "displayName": "Judeo-Spanish/Ladino"
+      "code": "en-IN",
+      "displayName": "English(India)"
   },
   {
-    "code": "lo",
-    "displayName": "ພາສາລາວ"
+      "code": "en-IE",
+      "displayName": "English(Ireland)"
   },
   {
-    "code": "lv",
-    "displayName": "latviešu valoda"
+      "code": "en-GB",
+      "displayName": "English(UK)"
   },
   {
-    "code": "la",
-    "displayName": "latine"
+      "code": "en-US",
+      "displayName": "English(US)"
   },
   {
-    "code": "ru",
-    "displayName": "русский"
+      "code": "es",
+      "displayName": "Español"
   },
   {
-    "code": "ru-Latn",
-    "displayName": "русский(Latin)"
+      "code": "es-419",
+      "displayName": "Español(América Latina)"
   },
   {
-    "code": "rm",
-    "displayName": "Rumantsch Grischun"
+      "code": "es-ES",
+      "displayName": "Español(Español)"
   },
   {
-    "code": "ro",
-    "displayName": "Română"
+      "code": "es-MX",
+      "displayName": "Español(México)"
   },
   {
-    "code": "mo",
-    "displayName": "Română(Moldova)"
+      "code": "es-US",
+      "displayName": "Español(US)"
   },
   {
-    "code": "lus",
-    "displayName": "Mizo ṭawng"
+      "code": "eo",
+      "displayName": "Esperanto"
   },
   {
-    "code": "lb",
-    "displayName": "Lëtzebuergesch"
+      "code": "to",
+      "displayName": "Faka Tonga"
   },
   {
-    "code": "rn",
-    "displayName": "Ikirundi"
+      "code": "fil",
+      "displayName": "Filipino"
   },
   {
-    "code": "rw",
-    "displayName": "Ikinyarwanda"
+      "code": "fy",
+      "displayName": "Frysk"
   },
   {
-    "code": "lt",
-    "displayName": "lietuvių kalba"
+      "code": "ff",
+      "displayName": "Fulfulde"
   },
   {
-    "code": "ln",
-    "displayName": "Lingála"
+      "code": "ga",
+      "displayName": "Gaeilge"
   },
   {
-    "code": "mni",
-    "displayName": "ꯃꯤꯇꯩꯂꯣꯟ"
+      "code": "gl",
+      "displayName": "Galego"
   },
   {
-    "code": "mr",
-    "displayName": "मराठी"
+      "code": "gd",
+      "displayName": "Gàidhlig"
   },
   {
-    "code": "mas",
-    "displayName": "ɔl Maa"
+      "code": "ho",
+      "displayName": "Hiri Motu"
   },
   {
-    "code": "mi",
-    "displayName": "te reo Māori"
+      "code": "rw",
+      "displayName": "Ikinyarwanda"
   },
   {
-    "code": "mai",
-    "displayName": "मैथिली"
+      "code": "rn",
+      "displayName": "Ikirundi"
   },
   {
-    "code": "mk",
-    "displayName": "македонски јазик"
+      "code": "ia",
+      "displayName": "Interlingua"
   },
   {
-    "code": "mg",
-    "displayName": "fiteny malagasy"
+      "code": "ie",
+      "displayName": "Interlingue"
   },
   {
-    "code": "ml",
-    "displayName": "മലയാളം"
+      "code": "it",
+      "displayName": "Italiano"
   },
   {
-    "code": "ms",
-    "displayName": "Bahasa Melayu"
+      "code": "ik",
+      "displayName": "Iñupiaq"
   },
   {
-    "code": "mt",
-    "displayName": "Malti"
+      "code": "lad",
+      "displayName": "Judeo-Spanish/Ladino"
   },
   {
-    "code": "mn",
-    "displayName": "Монгол хэл"
+      "code": "sw",
+      "displayName": "Kiswahili"
   },
   {
-    "code": "mn-Mong",
-    "displayName": "Монгол хэл(ᠮᠣᠩᠭᠣᠯᠪᠢᠴᠢᠭ᠌)"
+      "code": "ht",
+      "displayName": "Kreyòl ayisyen"
   },
   {
-    "code": "mxp",
-    "displayName": "Ayuujk"
+      "code": "ku",
+      "displayName": "Kurdî"
   },
   {
-    "code": "nan",
-    "displayName": "閩語"
+      "code": "ln",
+      "displayName": "Lingála"
   },
   {
-    "code": "nan-TW",
-    "displayName": "閩語(臺灣)"
+      "code": "lb",
+      "displayName": "Lëtzebuergesch"
   },
   {
-    "code": "ba",
-    "displayName": "башҡорт теле"
+      "code": "mt",
+      "displayName": "Malti"
   },
   {
-    "code": "eu",
-    "displayName": "euskara"
+      "code": "lus",
+      "displayName": "Mizo ṭawng"
   },
   {
-    "code": "my",
-    "displayName": "ဗမာစာ"
+      "code": "nl",
+      "displayName": "Nederlands"
   },
   {
-    "code": "vi",
-    "displayName": "Tiếng Việt"
+      "code": "nl-BE",
+      "displayName": "Nederlands(Belgium)"
   },
   {
-    "code": "ve",
-    "displayName": "Tshivenḓa"
+      "code": "nl-NL",
+      "displayName": "Nederlands(Nederland)"
   },
   {
-    "code": "be",
-    "displayName": "беларуская мова"
+      "code": "no",
+      "displayName": "Norsk"
   },
   {
-    "code": "bn",
-    "displayName": "বাংলা"
+      "code": "uz",
+      "displayName": "Oʻzbek"
   },
   {
-    "code": "brx",
-    "displayName": "बर'"
+      "code": "pap",
+      "displayName": "Papiamentu"
   },
   {
-    "code": "bs",
-    "displayName": "bosanski jezik"
+      "code": "pt",
+      "displayName": "Português"
   },
   {
-    "code": "vo",
-    "displayName": "Volapük"
+      "code": "pt-BR",
+      "displayName": "Português(Brasil)"
   },
   {
-    "code": "bg",
-    "displayName": "български език"
+      "code": "pt-PT",
+      "displayName": "Português(Portugal)"
   },
   {
-    "code": "br",
-    "displayName": "brezhoneg"
+      "code": "ro",
+      "displayName": "Română"
   },
   {
-    "code": "bi",
-    "displayName": "Bislama"
+      "code": "mo",
+      "displayName": "Română(Moldova)"
   },
   {
-    "code": "sc",
-    "displayName": "sardu"
+      "code": "rm",
+      "displayName": "Rumantsch Grischun"
   },
   {
-    "code": "sm",
-    "displayName": "gagana fa'a Samoa"
+      "code": "qu",
+      "displayName": "Runa Simi"
   },
   {
-    "code": "sg",
-    "displayName": "yângâ tî sängö"
+      "code": "st",
+      "displayName": "Sesotho"
   },
   {
-    "code": "sa",
-    "displayName": "संस्कृतम्"
+      "code": "tn",
+      "displayName": "Setswana"
   },
   {
-    "code": "sat",
-    "displayName": "ᱥᱟᱱᱛᱟᱲᱤ"
+      "code": "sq",
+      "displayName": "Shqip"
   },
   {
-    "code": "fy",
-    "displayName": "Frysk"
+      "code": "ss",
+      "displayName": "SiSwati"
   },
   {
-    "code": "sr",
-    "displayName": "српски језик"
+      "code": "scn",
+      "displayName": "Sicilianu"
   },
   {
-    "code": "sr-Latn",
-    "displayName": "српски језик(Latin)"
+      "code": "sl",
+      "displayName": "Slovenski jezik"
   },
   {
-    "code": "sr-Cyrl",
-    "displayName": "српски језик(Cyrillic)"
+      "code": "sk",
+      "displayName": "Slovenčina"
   },
   {
-    "code": "so",
-    "displayName": "Soomaaliga"
+      "code": "so",
+      "displayName": "Soomaaliga"
   },
   {
-    "code": "sn",
-    "displayName": "chiShona"
+      "code": "sv",
+      "displayName": "Svenska"
   },
   {
-    "code": "su",
-    "displayName": "Basa Sunda"
+      "code": "vi",
+      "displayName": "Tiếng Việt"
   },
   {
-    "code": "sw",
-    "displayName": "Kiswahili"
+      "code": "tpi",
+      "displayName": "Tok Pisin"
   },
   {
-    "code": "sv",
-    "displayName": "Svenska"
+      "code": "ve",
+      "displayName": "Tshivenḓa"
   },
   {
-    "code": "gd",
-    "displayName": "Gàidhlig"
+      "code": "tw",
+      "displayName": "Twi"
   },
   {
-    "code": "es",
-    "displayName": "Español"
+      "code": "tk",
+      "displayName": "Türkmen"
   },
   {
-    "code": "es-419",
-    "displayName": "Español(América Latina)"
+      "code": "tr",
+      "displayName": "Türkçe"
   },
   {
-    "code": "es-MX",
-    "displayName": "Español(México)"
+      "code": "vo",
+      "displayName": "Volapük"
   },
   {
-    "code": "es-US",
-    "displayName": "Español(US)"
+      "code": "tl",
+      "displayName": "Wikang Tagalog"
   },
   {
-    "code": "es-ES",
-    "displayName": "Español(Español)"
+      "code": "wo",
+      "displayName": "Wollof"
   },
   {
-    "code": "sk",
-    "displayName": "Slovenčina"
+      "code": "ts",
+      "displayName": "Xitsonga"
   },
   {
-    "code": "sl",
-    "displayName": "Slovenski jezik"
+      "code": "yo",
+      "displayName": "Yorùbá"
   },
   {
-    "code": "ss",
-    "displayName": "SiSwati"
+      "code": "ase",
+      "displayName": "ase"
   },
   {
-    "code": "scn",
-    "displayName": "Sicilianu"
+      "code": "ay",
+      "displayName": "aymar aru"
   },
   {
-    "code": "sd",
-    "displayName": "सिंधी"
+      "code": "az",
+      "displayName": "azərbaycan dili"
   },
   {
-    "code": "si",
-    "displayName": "සිංහල"
+      "code": "bs",
+      "displayName": "bosanski jezik"
   },
   {
-    "code": "arc",
-    "displayName": "ܐܪܡܝܐ"
+      "code": "br",
+      "displayName": "brezhoneg"
   },
   {
-    "code": "ar",
-    "displayName": "العربية"
+      "code": "ca",
+      "displayName": "català"
   },
   {
-    "code": "hy",
-    "displayName": "Հայերեն"
+      "code": "sn",
+      "displayName": "chiShona"
   },
   {
-    "code": "as",
-    "displayName": "অসমীয়া"
+      "code": "co",
+      "displayName": "corsu"
   },
   {
-    "code": "ay",
-    "displayName": "aymar aru"
+      "code": "da",
+      "displayName": "dansk"
   },
   {
-    "code": "is",
-    "displayName": "Íslenska"
+      "code": "et",
+      "displayName": "eesti"
   },
   {
-    "code": "ht",
-    "displayName": "Kreyòl ayisyen"
+      "code": "eu",
+      "displayName": "euskara"
   },
   {
-    "code": "ga",
-    "displayName": "Gaeilge"
+      "code": "mg",
+      "displayName": "fiteny malagasy"
   },
   {
-    "code": "az",
-    "displayName": "azərbaycan dili"
+      "code": "fr",
+      "displayName": "français"
   },
   {
-    "code": "akk",
-    "displayName": "lišānum"
+      "code": "fr-BE",
+      "displayName": "français(Belgium)"
   },
   {
-    "code": "aa",
-    "displayName": "Afaraf"
+      "code": "fr-CA",
+      "displayName": "français(Canada)"
   },
   {
-    "code": "af",
-    "displayName": "Afrikaans"
+      "code": "fr-CH",
+      "displayName": "français(Swiss)"
   },
   {
-    "code": "sq",
-    "displayName": "Shqip"
+      "code": "fr-FR",
+      "displayName": "français(française)"
   },
   {
-    "code": "am",
-    "displayName": "አማርኛ"
+      "code": "fo",
+      "displayName": "føroyskt"
   },
   {
-    "code": "ab",
-    "displayName": "аҧсуа бызшәа"
+      "code": "sm",
+      "displayName": "gagana fa'a Samoa"
   },
   {
-    "code": "et",
-    "displayName": "eesti"
+      "code": "hr",
+      "displayName": "hrvatski jezik"
   },
   {
-    "code": "eo",
-    "displayName": "Esperanto"
+      "code": "xh",
+      "displayName": "isiXhosa"
   },
   {
-    "code": "en",
-    "displayName": "English"
+      "code": "zu",
+      "displayName": "isiZulu"
   },
   {
-    "code": "en-US",
-    "displayName": "English(US)"
+      "code": "pl",
+      "displayName": "język polski"
   },
   {
-    "code": "en-IE",
-    "displayName": "English(Ireland)"
+      "code": "kl",
+      "displayName": "kalaallisut"
   },
   {
-    "code": "en-GB",
-    "displayName": "English(UK)"
+      "code": "la",
+      "displayName": "latine"
   },
   {
-    "code": "en-IN",
-    "displayName": "English(India)"
+      "code": "lv",
+      "displayName": "latviešu valoda"
   },
   {
-    "code": "en-CA",
-    "displayName": "English(Canada)"
+      "code": "lt",
+      "displayName": "lietuvių kalba"
   },
   {
-    "code": "om",
-    "displayName": "Afaan Oromoo"
+      "code": "akk",
+      "displayName": "lišānum"
   },
   {
-    "code": "or",
-    "displayName": "ଓଡ଼ିଆ"
+      "code": "hu",
+      "displayName": "magyar"
   },
   {
-    "code": "oc",
-    "displayName": "occitan"
+      "code": "oc",
+      "displayName": "occitan"
   },
   {
-    "code": "yo",
-    "displayName": "Yorùbá"
+      "code": "sc",
+      "displayName": "sardu"
   },
   {
-    "code": "ur",
-    "displayName": "اردو"
+      "code": "fi",
+      "displayName": "suomi"
   },
   {
-    "code": "uz",
-    "displayName": "Oʻzbek"
+      "code": "mi",
+      "displayName": "te reo Māori"
   },
   {
-    "code": "uk",
-    "displayName": "Українська"
+      "code": "tlh",
+      "displayName": "tlhIngan Hol"
   },
   {
-    "code": "wo",
-    "displayName": "Wollof"
+      "code": "fj",
+      "displayName": "vosa Vakaviti"
   },
   {
-    "code": "cy",
-    "displayName": "Cymraeg"
+      "code": "vro",
+      "displayName": "vro"
   },
   {
-    "code": "ug",
-    "displayName": "ئۇيغۇرچە‎"
+      "code": "sg",
+      "displayName": "yângâ tî sängö"
   },
   {
-    "code": "yi",
-    "displayName": "ייִדיש"
+      "code": "is",
+      "displayName": "Íslenska"
   },
   {
-    "code": "ig",
-    "displayName": "Asụsụ Igbo"
+      "code": "cs",
+      "displayName": "čeština"
   },
   {
-    "code": "ik",
-    "displayName": "Iñupiaq"
+      "code": "mas",
+      "displayName": "ɔl Maa"
   },
   {
-    "code": "iu",
-    "displayName": "ᐃᓄᒃᑎᑐᑦ"
+      "code": "haw",
+      "displayName": "ʻŌlelo Hawaiʻi"
   },
   {
-    "code": "it",
-    "displayName": "Italiano"
+      "code": "el",
+      "displayName": "ελληνικά"
   },
   {
-    "code": "id",
-    "displayName": "Bahasa Indonesia"
+      "code": "ky",
+      "displayName": "Кыргызча"
   },
   {
-    "code": "ia",
-    "displayName": "Interlingua"
+      "code": "mn",
+      "displayName": "Монгол хэл"
   },
   {
-    "code": "ie",
-    "displayName": "Interlingue"
+      "code": "mn-Mong",
+      "displayName": "Монгол хэл(ᠮᠣᠩᠭᠣᠯᠪᠢᠴᠢᠭ᠌)"
   },
   {
-    "code": "ja",
-    "displayName": "日本語"
+      "code": "uk",
+      "displayName": "Українська"
   },
   {
-    "code": "jv",
-    "displayName": "ꦧꦱꦗꦮ"
+      "code": "ab",
+      "displayName": "аҧсуа бызшәа"
   },
   {
-    "code": "ka",
-    "displayName": "ქართული"
+      "code": "ba",
+      "displayName": "башҡорт теле"
   },
   {
-    "code": "dz",
-    "displayName": "རྫོང་ཁ"
+      "code": "be",
+      "displayName": "беларуская мова"
   },
   {
-    "code": "zu",
-    "displayName": "isiZulu"
+      "code": "bg",
+      "displayName": "български език"
   },
   {
-    "code": "zh",
-    "displayName": "中文"
+      "code": "mk",
+      "displayName": "македонски јазик"
   },
   {
-    "code": "zh-Hans",
-    "displayName": "中文(简体)"
+      "code": "ru",
+      "displayName": "русский"
   },
   {
-    "code": "zh-TW",
-    "displayName": "中文(臺灣)"
+      "code": "ru-Latn",
+      "displayName": "русский(Latin)"
   },
   {
-    "code": "zh-Hant",
-    "displayName": "中文(繁體)"
+      "code": "sr",
+      "displayName": "српски језик"
   },
   {
-    "code": "zh-SG",
-    "displayName": "中文(Singapore)"
+      "code": "sr-Cyrl",
+      "displayName": "српски језик(Cyrillic)"
   },
   {
-    "code": "zh-CN",
-    "displayName": "中文(中国)"
+      "code": "sr-Latn",
+      "displayName": "српски језик(Latin)"
   },
   {
-    "code": "zh-HK",
-    "displayName": "中文(香港)"
+      "code": "tt",
+      "displayName": "татар теле"
   },
   {
-    "code": "chr",
-    "displayName": "ᏣᎳᎩ ᎦᏬᏂᎯᏍᏗ"
+      "code": "tg",
+      "displayName": "тоҷикӣ"
   },
   {
-    "code": "cs",
-    "displayName": "čeština"
+      "code": "kk",
+      "displayName": "қазақ тілі"
   },
   {
-    "code": "cho",
-    "displayName": "Chahta"
+      "code": "hy",
+      "displayName": "Հայերեն"
   },
   {
-    "code": "ts",
-    "displayName": "Xitsonga"
+      "code": "yi",
+      "displayName": "ייִדיש"
   },
   {
-    "code": "tn",
-    "displayName": "Setswana"
+      "code": "iw",
+      "displayName": "עברית"
   },
   {
-    "code": "ks",
-    "displayName": "कॉशुर"
+      "code": "ug",
+      "displayName": "ئۇيغۇرچە‎"
   },
   {
-    "code": "kk",
-    "displayName": "қазақ тілі"
+      "code": "ur",
+      "displayName": "اردو"
   },
   {
-    "code": "ca",
-    "displayName": "català"
+      "code": "ar",
+      "displayName": "العربية"
   },
   {
-    "code": "kn",
-    "displayName": "ಕನ್ನಡ"
+      "code": "fa",
+      "displayName": "فارسی"
   },
   {
-    "code": "qu",
-    "displayName": "Runa Simi"
+      "code": "fa-AF",
+      "displayName": "فارسی(افغانستان)"
   },
   {
-    "code": "co",
-    "displayName": "corsu"
+      "code": "fa-IR",
+      "displayName": "فارسی(ایران)"
   },
   {
-    "code": "xh",
-    "displayName": "isiXhosa"
+      "code": "ps",
+      "displayName": "پښتو"
   },
   {
-    "code": "kok",
-    "displayName": "कोंकणी"
+      "code": "arc",
+      "displayName": "ܐܪܡܝܐ"
   },
   {
-    "code": "cop",
-    "displayName": "Ⲙⲉⲧⲣⲉⲙ̀ⲛⲭⲏⲙⲓ"
+      "code": "ks",
+      "displayName": "कॉशुर"
   },
   {
-    "code": "ku",
-    "displayName": "Kurdî"
+      "code": "kok",
+      "displayName": "कोंकणी"
   },
   {
-    "code": "hr",
-    "displayName": "hrvatski jezik"
+      "code": "doi",
+      "displayName": "डोगरी"
   },
   {
-    "code": "cr",
-    "displayName": "ᓀᐦᐃᔭᐍᐏᐣ"
+      "code": "ne",
+      "displayName": "नेपाली"
   },
   {
-    "code": "km",
-    "displayName": "ភាសាខ្មែរ"
+      "code": "brx",
+      "displayName": "बर'"
   },
   {
-    "code": "tlh",
-    "displayName": "tlhIngan Hol"
+      "code": "mr",
+      "displayName": "मराठी"
   },
   {
-    "code": "ky",
-    "displayName": "Кыргызча"
+      "code": "mai",
+      "displayName": "मैथिली"
   },
   {
-    "code": "tl",
-    "displayName": "Wikang Tagalog"
+      "code": "sa",
+      "displayName": "संस्कृतम्"
   },
   {
-    "code": "ta",
-    "displayName": "தமிழ்"
+      "code": "sd",
+      "displayName": "सिंधी"
   },
   {
-    "code": "tg",
-    "displayName": "тоҷикӣ"
+      "code": "hi",
+      "displayName": "हिन्दी"
   },
   {
-    "code": "tt",
-    "displayName": "татар теле"
+      "code": "hi-Latn",
+      "displayName": "हिन्दी(Latin)"
   },
   {
-    "code": "th",
-    "displayName": "ไทย"
+      "code": "as",
+      "displayName": "অসমীয়া"
   },
   {
-    "code": "tr",
-    "displayName": "Türkçe"
+      "code": "bh",
+      "displayName": "বাংলা"
   },
   {
-    "code": "te",
-    "displayName": "తెలుగు"
+      "code": "bn",
+      "displayName": "বাংলা"
   },
   {
-    "code": "tpi",
-    "displayName": "Tok Pisin"
+      "code": "pa",
+      "displayName": "ਪੰਜਾਬੀ"
   },
   {
-    "code": "to",
-    "displayName": "Faka Tonga"
+      "code": "gu",
+      "displayName": "ગુજરાતી"
   },
   {
-    "code": "tk",
-    "displayName": "Türkmen"
+      "code": "or",
+      "displayName": "ଓଡ଼ିଆ"
   },
   {
-    "code": "tw",
-    "displayName": "Twi"
+      "code": "ta",
+      "displayName": "தமிழ்"
   },
   {
-    "code": "ti",
-    "displayName": "ትግርኛ"
+      "code": "te",
+      "displayName": "తెలుగు"
   },
   {
-    "code": "bo",
-    "displayName": "བོད་ཡིག"
+      "code": "kn",
+      "displayName": "ಕನ್ನಡ"
   },
   {
-    "code": "ps",
-    "displayName": "پښتو"
+      "code": "ml",
+      "displayName": "മലയാളം"
   },
   {
-    "code": "pap",
-    "displayName": "Papiamentu"
+      "code": "si",
+      "displayName": "සිංහල"
   },
   {
-    "code": "pa",
-    "displayName": "ਪੰਜਾਬੀ"
+      "code": "th",
+      "displayName": "ไทย"
   },
   {
-    "code": "fo",
-    "displayName": "føroyskt"
+      "code": "lo",
+      "displayName": "ພາສາລາວ"
   },
   {
-    "code": "fa",
-    "displayName": "فارسی"
+      "code": "bo",
+      "displayName": "བོད་ཡིག"
   },
   {
-    "code": "fa-AF",
-    "displayName": "فارسی(افغانستان)"
+      "code": "dz",
+      "displayName": "རྫོང་ཁ"
   },
   {
-    "code": "fa-IR",
-    "displayName": "فارسی(ایران)"
+      "code": "my",
+      "displayName": "ဗမာစာ"
   },
   {
-    "code": "pt",
-    "displayName": "Português"
+      "code": "ka",
+      "displayName": "ქართული"
   },
   {
-    "code": "pt-BR",
-    "displayName": "Português(Brasil)"
+      "code": "ti",
+      "displayName": "ትግርኛ"
   },
   {
-    "code": "pt-PT",
-    "displayName": "Português(Portugal)"
+      "code": "am",
+      "displayName": "አማርኛ"
   },
   {
-    "code": "pl",
-    "displayName": "język polski"
+      "code": "chr",
+      "displayName": "ᏣᎳᎩ ᎦᏬᏂᎯᏍᏗ"
   },
   {
-    "code": "ff",
-    "displayName": "Fulfulde"
+      "code": "iu",
+      "displayName": "ᐃᓄᒃᑎᑐᑦ"
   },
   {
-    "code": "fr",
-    "displayName": "français"
+      "code": "cr",
+      "displayName": "ᓀᐦᐃᔭᐍᐏᐣ"
   },
   {
-    "code": "fr-BE",
-    "displayName": "français(Belgium)"
+      "code": "km",
+      "displayName": "ភាសាខ្មែរ"
   },
   {
-    "code": "fr-CH",
-    "displayName": "français(Swiss)"
+      "code": "sat",
+      "displayName": "ᱥᱟᱱᱛᱟᱲᱤ"
   },
   {
-    "code": "fr-CA",
-    "displayName": "français(Canada)"
+      "code": "cop",
+      "displayName": "Ⲙⲉⲧⲣⲉⲙ̀ⲛⲭⲏⲙⲓ"
   },
   {
-    "code": "fr-FR",
-    "displayName": "français(française)"
+      "code": "zh",
+      "displayName": "中文"
   },
   {
-    "code": "fj",
-    "displayName": "vosa Vakaviti"
+      "code": "zh-SG",
+      "displayName": "中文(Singapore)"
   },
   {
-    "code": "fi",
-    "displayName": "suomi"
+      "code": "zh-CN",
+      "displayName": "中文(中国)"
   },
   {
-    "code": "fil",
-    "displayName": "Filipino"
+      "code": "zh-Hans",
+      "displayName": "中文(简体)"
   },
   {
-    "code": "haw",
-    "displayName": "ʻŌlelo Hawaiʻi"
+      "code": "zh-Hant",
+      "displayName": "中文(繁體)"
   },
   {
-    "code": "ha",
-    "displayName": "(Hausa) هَوُسَ"
+      "code": "zh-TW",
+      "displayName": "中文(臺灣)"
   },
   {
-    "code": "hak",
-    "displayName": "客家话"
+      "code": "zh-HK",
+      "displayName": "中文(香港)"
   },
   {
-    "code": "hak-TW",
-    "displayName": "客家話(臺灣)"
+      "code": "hak-TW",
+      "displayName": "客家話(臺灣)"
   },
   {
-    "code": "ko",
-    "displayName": "한국어"
+      "code": "hak",
+      "displayName": "客家话"
   },
   {
-    "code": "hu",
-    "displayName": "magyar"
+      "code": "ja",
+      "displayName": "日本語"
   },
   {
-    "code": "bh",
-    "displayName": "বাংলা"
+      "code": "yue",
+      "displayName": "粵語"
   },
   {
-    "code": "ho",
-    "displayName": "Hiri Motu"
+      "code": "yue-HK",
+      "displayName": "粵語(香港)"
   },
   {
-    "code": "iw",
-    "displayName": "עברית"
+      "code": "nan",
+      "displayName": "閩語"
   },
   {
-    "code": "hi",
-    "displayName": "हिन्दी"
+      "code": "nan-TW",
+      "displayName": "閩語(臺灣)"
   },
   {
-    "code": "hi-Latn",
-    "displayName": "हिन्दी(Latin)"
+      "code": "jv",
+      "displayName": "ꦧꦱꦗꦮ"
   },
   {
-    "code": "ase",
-    "displayName": "ase"
+      "code": "mni",
+      "displayName": "ꯃꯤꯇꯩꯂꯣꯟ"
   },
   {
-    "code": "vro",
-    "displayName": "vro"
+      "code": "ko",
+      "displayName": "한국어"
   }
 ]
 
