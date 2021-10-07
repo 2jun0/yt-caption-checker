@@ -35,7 +35,6 @@ function tagVideo(e, lang) {
     // Already tagged
     if (ccStatus && ccStatus.lang != ccLang) {
       ccStatus.remove();
-      console.log(ccStatus);
     }
 
     hasSubtitle(url, lang, hasSubtitle => {
@@ -64,13 +63,16 @@ function tagVideo(e, lang) {
         span.textContent = ccLang.toUpperCase()+' CC';
         ccStatus.appendChild(span);
 
-        // User moved the page in processing
-        if(e.href != url && ccStatus) ccStatus.remove();
-
-        // To avoid deleting the elements
+        // To avoid deleting the elements,
+        // Wait loading video overlays
         function waitLoadingAndAppendElement() {
-        
           if (overlays.childElementCount >= 2) {
+            // Once load overlays, insert ccStatus
+
+            // But if user change langauge or url in processing,
+            // Remove ccStatus
+            if(e.href != url || ccStatus.lang != ccLang) ccStatus.remove();
+
             overlays.insertBefore(ccStatus, overlays.lastChild);
             return;
           }
@@ -131,7 +133,7 @@ function addVideo(video) {
 }
 
 function checkAllNode() {
-  var contentElement = document.querySelector("ytd-page-manager#page-manager");
+  var contentElement = document.querySelector("body");
   if(!contentElement) {
     return false;
   }
@@ -144,7 +146,7 @@ function initObserver() {
     return false;
   }
 
-  var contentElement = document.querySelector("ytd-page-manager#page-manager");
+  var contentElement = document.querySelector("body");
   if(!contentElement) {
     return false;
   }
