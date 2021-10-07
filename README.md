@@ -1,9 +1,11 @@
 # YouTube Subtitle Filter
 
-This Extension Show if youtube video has subtitle of the language you want.
+Add a subtitle tag to the video in the language you want.
 
 ## Showcase
 ![Showcase Videos](asset/showcase_videos.jpg)
+
+![Showcase In Video](asset/showcase_invideo.jpg)
 
 ## Customize
 - You can customize tag color in popup menu (background and text color)
