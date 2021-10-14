@@ -1,8 +1,10 @@
 var ccLang = '??';
 var ccColor1 = '#008000';
 var ccColor2 = '#ffffff';
+var CCCombineRegion = false;
 
 var mainObserver;
+var getRelatedLangCodes;
 
 function setCCLang(lang) {
   if (ccLang == lang) return;
@@ -26,50 +28,54 @@ function setCCColor2(color2) {
   });
 }
 
+function setCCCombineRegion(enable) {
+  CCCombineRegion = enable;
+  setCCLang(ccLang.split('-')[0]);
+}
+
 function tagVideo(e, lang) {
   var url = e.href;
   
   if (url) {
     var overlays = e.querySelector('#overlays');
+
     var ccStatus = overlays.querySelector('#cc-status');
-    // Already tagged
-    if (ccStatus && ccStatus.lang != ccLang) {
+    // if already tagged remove it
+    if (ccStatus)
       ccStatus.remove();
-    }
 
-    hasSubtitle(url, lang, hasSubtitle => {
+    var callback = (hasSubtitle) => {
       if (hasSubtitle) {
-        ccStatus = document.createElement('div');
-        ccStatus.id = 'cc-status';
-        ccStatus.style.display = 'inline-block';
-        ccStatus.overlayStyle = 'DEFAULT';
-        ccStatus.className = 'style-scope ytd-thumbnail';
-        ccStatus.style.top = 0;
-        ccStatus.style.left = 0;
-        ccStatus.style.right = 'auto';
-        ccStatus.style.backgroundColor = ccColor1;
-        ccStatus.style.color = ccColor2;
-        ccStatus.style.margin = '4px';
-        ccStatus.style.padding = '3px 4px';
-        ccStatus.style.fontSize = '1.2rem';
-        ccStatus.style.fontWeight = '500';
-        ccStatus.style.position = 'absolute';
-        ccStatus.style.borderRadius = '2px';
-        ccStatus.lang = ccLang;
-
-        var span = document.createElement('span');
-        span.className = 'style-scope ytd-thumbnail-overlay-time-status-renderer';
-        span.ariaLabel = ccLang.toUpperCase()+' CC';
-        span.textContent = ccLang.toUpperCase()+' CC';
-        ccStatus.appendChild(span);
-
         // To avoid deleting the elements,
         // Wait loading video overlays
         function waitLoadingAndAppendElement() {
           if (overlays.childElementCount >= 2) {
             // Once load overlays, insert ccStatus
+            ccStatus = document.createElement('div');
+            ccStatus.id = 'cc-status';
+            ccStatus.style.display = 'inline-block';
+            ccStatus.overlayStyle = 'DEFAULT';
+            ccStatus.className = 'style-scope ytd-thumbnail';
+            ccStatus.style.top = 0;
+            ccStatus.style.left = 0;
+            ccStatus.style.right = 'auto';
+            ccStatus.style.backgroundColor = ccColor1;
+            ccStatus.style.color = ccColor2;
+            ccStatus.style.margin = '4px';
+            ccStatus.style.padding = '3px 4px';
+            ccStatus.style.fontSize = '1.2rem';
+            ccStatus.style.fontWeight = '500';
+            ccStatus.style.position = 'absolute';
+            ccStatus.style.borderRadius = '2px';
+            ccStatus.lang = ccLang;
 
-            // But if user change langauge or url in processing,
+            var span = document.createElement('span');
+            span.className = 'style-scope ytd-thumbnail-overlay-time-status-renderer';
+            span.ariaLabel = ccLang.toUpperCase()+' CC';
+            span.textContent = ccLang.toUpperCase()+' CC';
+            ccStatus.appendChild(span);
+
+            // if user change langauge or url in processing,
             // Remove ccStatus
             if(e.href != url || ccStatus.lang != ccLang) ccStatus.remove();
 
@@ -84,24 +90,76 @@ function tagVideo(e, lang) {
         
         waitLoadingAndAppendElement();
       }
-    });
+    }
+
+    if(CCCombineRegion) {
+      var langs = getRelatedLangCodes(ccLang);
+      hasSubtitles(url, langs, callback);
+    } else
+      hasSubtitle(url, lang, callback);
   }
+}
+
+function hasSubtitles(videoUrl, langs, callback) {
+  // URL example : /watch?v=[video_id]
+  var videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
+  var result = false;
+  var tryCount = langs.length;
+
+  langs.forEach(lang => {
+    if (result) return;
+    
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+      if (this.readyState == this.LOADING) {
+        if (this.status == 200) {
+          result = true;
+        }else if (this.status == 404){
+          tryCount -= 1;
+        }
+        this.abort();
+      }
+    };
+
+    request.open("GET", "https://video.google.com/timedtext?lang="+lang+"&v="+videoId, true);
+    request.send(null);
+  });
+
+  // Wait request subtitles
+  function waitRequests() {
+    setTimeout(function() {
+      if (result) {
+        callback(true);
+        return;
+      }
+      if (tryCount == 0) {
+        callback(false);
+        return;
+      }
+
+      waitRequests();
+    }, 200);
+  }
+  
+  waitRequests();
 }
 
 function hasSubtitle(videoUrl, lang, callback) {
   // URL example : /watch?v=[video_id]
   var videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
+
   var request = new XMLHttpRequest();
   request.onreadystatechange = function() {
     if (this.readyState == this.LOADING) {
       if (this.status == 200) {
         callback(true);
-        this.abort();
       }else if (this.status == 404){
         callback(false);
       }
+      this.abort();
     }
   };
+  
   request.open("GET", "https://video.google.com/timedtext?lang="+lang+"&v="+videoId, true);
   request.send(null);
 }
@@ -134,22 +192,19 @@ function addVideo(video) {
 
 function checkAllNode() {
   var contentElement = document.querySelector("body");
-  if(!contentElement) {
+  if(!contentElement)
     return false;
-  }
 
   checkNodes(Array.from(contentElement.children));
 }
 
 function initObserver() {
-  if (!('MutationObserver' in window)) {
+  if (!('MutationObserver' in window))
     return false;
-  }
 
   var contentElement = document.querySelector("body");
-  if(!contentElement) {
+  if(!contentElement)
     return false;
-  }
 
   checkNodes(Array.from(contentElement.children));
 
@@ -170,12 +225,10 @@ var timeoutId;
 function initTimeout() {
   clearTimeout(timeoutId);
 
-  if (initObserver()) {
+  if (initObserver())
     return;
-  }
 
   timeoutId = setTimeout(function() {
-    //TODO
     initTimeout();
   }, 2000);
 }
@@ -185,13 +238,21 @@ chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
   if(req['YT-SUBTITLE-FILTER_lang']) setCCLang(req['YT-SUBTITLE-FILTER_lang']);
   if(req['YT-SUBTITLE-FILTER_color1']) setCCColor1(req['YT-SUBTITLE-FILTER_color1']);
   if(req['YT-SUBTITLE-FILTER_color2']) setCCColor2(req['YT-SUBTITLE-FILTER_color2']);
+  if(req['YT-SUBTITLE-FILTER_combine-region']) setCCCombineRegion(items['YT-SUBTITLE-FILTER_combine-region']);
 });
 
-// Load data
-chrome.storage.sync.get(['YT-SUBTITLE-FILTER_lang', 'YT-SUBTITLE-FILTER_color1', 'YT-SUBTITLE-FILTER_color2'], (items) => {
-  setCCLang(items['YT-SUBTITLE-FILTER_lang'] || 'en');
-  setCCColor1(items['YT-SUBTITLE-FILTER_color1'] || '#008000');
-  setCCColor2(items['YT-SUBTITLE-FILTER_color2'] || '#ffffff');
+(async () => {
+  // dynamic import
+  const src = chrome.runtime.getURL('js/lang.js');
+  getRelatedLangCodes = (await import(src)).getRelatedLangCodes;
 
-  initTimeout();
-});
+  // Load data
+  chrome.storage.sync.get(['YT-SUBTITLE-FILTER_lang', 'YT-SUBTITLE-FILTER_color1', 'YT-SUBTITLE-FILTER_color2', 'YT-SUBTITLE-FILTER_combine-region'], (items) => {
+    setCCLang(items['YT-SUBTITLE-FILTER_lang'] || 'en');
+    setCCColor1(items['YT-SUBTITLE-FILTER_color1'] || '#008000');
+    setCCColor2(items['YT-SUBTITLE-FILTER_color2'] || '#ffffff');
+    setCCCombineRegion(items['YT-SUBTITLE-FILTER_combine-region'] || false);
+
+    initTimeout();
+  });
+})();
