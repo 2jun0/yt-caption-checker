@@ -8,31 +8,31 @@
       <popup-multi-page-menu class="popup-multi-page-menu">
         <div class="items">
           <popup-item-page>
-            <span style="font-weight: 600;">Youtube Subtitle Filter</span>
+            <span style="font-weight: 600;" data-locale="appName">Youtube Subtitle Filter</span>
           </popup-item-page>
         </div>
       </popup-multi-page-menu>
       <popup-multi-page-menu class="popup-multi-page-menu">
         <div class="items">
           <popup-item-page>
-            <span class="title">Select Language</span>
+            <span class="title" data-locale="selectLang">Select Language</span>
             <select class="value" id="lang-picker" data-width="fit"></select>
           </popup-item-page>
           <popup-item-page>
-            <span class="title">Color</span>
+            <span class="title" data-locale="color">Color</span>
             <div class="value" style="display: flex;">
               <color-picker-wapper id="color-picker1-wapper"><input id="color-picker1" type="color"></color-picker-wapper>
               <color-picker-wapper id="color-picker2-wapper"><input id="color-picker2" type="color"></color-picker-wapper>
             </div>
           </popup-item-page>
           <popup-item-page>
-            <span class="title">Example</span>
+            <span class="title" data-locale="example">Example</span>
             <div id="cc-status-example" class="value">
               <span>KO CC</span>
             </div>
           </popup-item-page>
           <popup-item-page>
-            <span class="title">Combine region</span>
+            <span class="title" data-locale="combineRegion">Combine region</span>
             <input id="combine-region-checkbox" class="value" type="checkbox">
           </popup-item-page>
         </div>
@@ -41,4 +41,5 @@
   </body>
   <link rel="stylesheet" href="../css/popup.css">
   <script type="text/javascript" src="../js/popup.js"></script>
+  <script type="text/javascript" src="../js/localize.js"></script>
 </html>

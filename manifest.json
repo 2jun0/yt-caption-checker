@@ -1,9 +1,10 @@
 {
-  "name":"YouTube subtitle filter",
+  "name":"__MSG_appName__",
   "short_name":"yt-subtitle-filter",
-  "description":"Add a subtitle tag to the video in the language you want",
+  "description":"__MSG_appDesc__",
+  "default_locale": "en",
   "manifest_version": 2,
-  "version":"1.0.3",
+  "version":"1.0.4",
   "author":"2jun0",
   "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
   "background": {

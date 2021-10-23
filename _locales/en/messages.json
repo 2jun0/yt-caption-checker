@@ -1,0 +1,26 @@
+{
+    "appName": {
+        "message": "YouTube subtitle filter",
+        "description": "Add a subtitle tag to the video in the language you want."
+    },
+    "appDesc": {
+        "message": "Add a subtitletag to the video in the language you want",
+        "description":"This extension adds a subtitle tag to the top of the YouTube video in the language you want. (But if there are no subtitle, it doesn't add tags)"
+    },
+    "selectLang": {
+        "message": "Select Language",
+        "description": "Label name for langauge selector"
+    },
+    "color": {
+        "message": "Color",
+        "description": "Label name for color selector"
+    },
+    "example": {
+        "message": "Exmaple",
+        "description": "Label name for exmaple"
+    },
+    "combineRegion": {
+        "message": "Combine region",
+        "description": "Label name for Combine region"
+    }
+}

@@ -1,5 +1,10 @@
 # YouTube Subtitle Filter
 
+We support Korean version!
+follow the below page to read it in multiple languages.
+
+[한국어 보기](README_KO.md)
+
 Add a subtitle tag to the video in the language you want.
 
 ## Showcase
