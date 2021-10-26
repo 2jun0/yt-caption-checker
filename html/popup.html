@@ -21,9 +21,14 @@
           <popup-item-page>
             <span class="title" data-locale="color">Color</span>
             <div class="value" style="display: flex;">
+              <color-picker-wapper id="alpha-picker-wapper"><input id="alpha-picker" type="button" value="0"></color-picker-wapper>
               <color-picker-wapper id="color-picker1-wapper"><input id="color-picker1" type="color"></color-picker-wapper>
               <color-picker-wapper id="color-picker2-wapper"><input id="color-picker2" type="color"></color-picker-wapper>
             </div>
+          </popup-item-page>
+          <popup-item-page>
+            <span class="title" data-locale="tagSizeRange">tag size</span>
+            <input id="tag-size-range" class="value" type="range" value="3" min="0" max="5">
           </popup-item-page>
           <popup-item-page>
             <span class="title" data-locale="example">Example</span>

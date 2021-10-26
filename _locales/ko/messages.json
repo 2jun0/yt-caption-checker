@@ -15,6 +15,10 @@
         "message": "색상",
         "description": "색상 셀렉터의 레이블 이름"
     },
+    "tagSizeRange": {
+        "message": "크기 조절",
+        "description": "크기 조절의 레이블 이름"
+    },
     "example": {
         "message": "예시",
         "description": "예시의 레이블 이름"

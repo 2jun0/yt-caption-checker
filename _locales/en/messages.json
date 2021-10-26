@@ -15,6 +15,10 @@
         "message": "Color",
         "description": "Label name for color selector"
     },
+    "tagSizeRange": {
+        "message": "Tag size",
+        "description": "Label name for tag size range"
+    },
     "example": {
         "message": "Exmaple",
         "description": "Label name for exmaple"

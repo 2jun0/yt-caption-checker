@@ -1,7 +1,8 @@
 var ccLang = '??';
 var ccColor1 = '#008000';
 var ccColor2 = '#ffffff';
-var CCCombineRegion = false;
+var ccFontSize = '1.2rem';
+var ccCombineRegion = false;
 
 var mainObserver;
 var getRelatedLangCodes;
@@ -28,8 +29,16 @@ function setCCColor2(color2) {
   });
 }
 
+function setCCFontSize(fontSize) {
+  if (ccFontSize == fontSize) return;
+  ccFontSize = fontSize;
+  document.querySelectorAll('#cc-status').forEach(ccStatus => {
+    ccStatus.style.fontSize = fontSize;
+  });
+}
+
 function setCCCombineRegion(enable) {
-  CCCombineRegion = enable;
+  ccCombineRegion = enable;
   setCCLang(ccLang.split('-')[0]);
 }
 
@@ -63,7 +72,7 @@ function tagVideo(e, lang) {
             ccStatus.style.color = ccColor2;
             ccStatus.style.margin = '4px';
             ccStatus.style.padding = '3px 4px';
-            ccStatus.style.fontSize = '1.2rem';
+            ccStatus.style.fontSize = ccFontSize;
             ccStatus.style.fontWeight = '500';
             ccStatus.style.position = 'absolute';
             ccStatus.style.borderRadius = '2px';
@@ -92,7 +101,7 @@ function tagVideo(e, lang) {
       }
     }
 
-    if(CCCombineRegion) {
+    if(ccCombineRegion) {
       var langs = getRelatedLangCodes(ccLang);
       hasSubtitles(url, langs, callback);
     } else
@@ -235,10 +244,11 @@ function initTimeout() {
 
 // option update handlers
 chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
-  if(req['YT-SUBTITLE-FILTER_lang']) setCCLang(req['YT-SUBTITLE-FILTER_lang']);
-  if(req['YT-SUBTITLE-FILTER_color1']) setCCColor1(req['YT-SUBTITLE-FILTER_color1']);
-  if(req['YT-SUBTITLE-FILTER_color2']) setCCColor2(req['YT-SUBTITLE-FILTER_color2']);
-  if(req['YT-SUBTITLE-FILTER_combine-region']) setCCCombineRegion(items['YT-SUBTITLE-FILTER_combine-region']);
+  if (req['YT-SUBTITLE-FILTER_lang']) setCCLang(req['YT-SUBTITLE-FILTER_lang']);
+  if (req['YT-SUBTITLE-FILTER_color1']) setCCColor1(req['YT-SUBTITLE-FILTER_color1']);
+  if (req['YT-SUBTITLE-FILTER_color2']) setCCColor2(req['YT-SUBTITLE-FILTER_color2']);
+  if (req['YT-SUBTITLE-FILTER_tag-font-size']) setCCFontSize(req['YT-SUBTITLE-FILTER_tag-font-size']);
+  if (req['YT-SUBTITLE-FILTER_combine-region']) setCCCombineRegion(items['YT-SUBTITLE-FILTER_combine-region']);
 });
 
 (async () => {
@@ -247,10 +257,17 @@ chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
   getRelatedLangCodes = (await import(src)).getRelatedLangCodes;
 
   // Load data
-  chrome.storage.sync.get(['YT-SUBTITLE-FILTER_lang', 'YT-SUBTITLE-FILTER_color1', 'YT-SUBTITLE-FILTER_color2', 'YT-SUBTITLE-FILTER_combine-region'], (items) => {
+  chrome.storage.sync.get([
+    'YT-SUBTITLE-FILTER_lang',
+    'YT-SUBTITLE-FILTER_color1',
+    'YT-SUBTITLE-FILTER_color2',
+    'YT-SUBTITLE-FILTER_tag-font-size',
+    'YT-SUBTITLE-FILTER_combine-region'
+  ], (items) => {
     setCCLang(items['YT-SUBTITLE-FILTER_lang'] || 'en');
     setCCColor1(items['YT-SUBTITLE-FILTER_color1'] || '#008000');
     setCCColor2(items['YT-SUBTITLE-FILTER_color2'] || '#ffffff');
+    setCCFontSize(items['YT-SUBTITLE-FILTER_tag-font-size'] || '1.2rem');
     setCCCombineRegion(items['YT-SUBTITLE-FILTER_combine-region'] || false);
 
     initTimeout();

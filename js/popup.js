@@ -3,10 +3,27 @@ const colorPicker1 = document.getElementById('color-picker1');
 const colorPicker2 = document.getElementById('color-picker2');
 const colorPickerWapper1 = document.getElementById('color-picker1-wapper');
 const colorPickerWapper2 = document.getElementById('color-picker2-wapper');
+const tagSizeRange = document.getElementById('tag-size-range');
 const langPicker = document.getElementById('lang-picker');
 const combineRegionCheckbox = document.getElementById('combine-region-checkbox');
 
 var langs;
+var tagFontSizeToIdx = {
+  "0rem": 0,
+  "0.8rem": 1,
+  "1.0rem": 2,
+  "1.2rem": 3,
+  "1.4rem": 4,
+  "1.6rem": 5
+};
+var idxToTagFontSize = {
+  0: "0rem",
+  1: "0.8rem",
+  2: "1.0rem",
+  3: "1.2rem",
+  4: "1.4rem",
+  5: "1.6rem"
+}
 
 function sendMessage(message, callback) {
   chrome.tabs.query({}, (tabs) => {
@@ -58,6 +75,13 @@ function setColor2(color2) {
   chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_color2': color2 }, () => {});
 }
 
+function setTagFontSize(fontSize) {
+  tagSizeRange.value = tagFontSizeToIdx[fontSize];
+  ccStatusExmaple.style.fontSize = `calc(${fontSize} - 0.4rem)`;
+  // Save data
+  chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_tag-font-size': fontSize }, () => {});
+}
+
 function combineRegion(enable) {
   combineRegionCheckbox.checked = enable;
   if (enable)
@@ -79,6 +103,10 @@ colorPicker2.onchange = () => {
   setColor2(colorPicker2.value);
   sendMessage({ 'YT-SUBTITLE-FILTER_color2': colorPicker2.value });
 }
+tagSizeRange.onchange = () => {
+  setTagFontSize(idxToTagFontSize[tagSizeRange.value]);
+  sendMessage({ 'YT-SUBTITLE-FILTER_tag-font-size': idxToTagFontSize[tagSizeRange.value] });
+}
 combineRegionCheckbox.onchange = () => {
   combineRegion(combineRegionCheckbox.checked);
   sendMessage({ 'YT-SUBTITLE-FILTER_combine-region': combineRegionCheckbox.checked });
@@ -93,10 +121,17 @@ combineRegionCheckbox.onchange = () => {
   updateLangOptions();
 
   // Load data
-  chrome.storage.sync.get(['YT-SUBTITLE-FILTER_lang', 'YT-SUBTITLE-FILTER_color1', 'YT-SUBTITLE-FILTER_color2', 'YT-SUBTITLE-FILTER_combine-region'], (items) => {
+  chrome.storage.sync.get([
+    'YT-SUBTITLE-FILTER_lang',
+    'YT-SUBTITLE-FILTER_color1', 
+    'YT-SUBTITLE-FILTER_color2', 
+    'YT-SUBTITLE-FILTER_tag-font-size',
+    'YT-SUBTITLE-FILTER_combine-region',
+  ], (items) => {
     setLanguage(items['YT-SUBTITLE-FILTER_lang'] || 'en');
     setColor1(items['YT-SUBTITLE-FILTER_color1'] || '#008000');
     setColor2(items['YT-SUBTITLE-FILTER_color2'] || '#ffffff');
+    setTagFontSize(items['YT-SUBTITLE-FILTER_tag-font-size'] || idxToTagFontSize[3]);
     combineRegion(items['YT-SUBTITLE-FILTER_combine-region'] || false);
   });
 })();
