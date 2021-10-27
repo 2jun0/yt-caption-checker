@@ -14,6 +14,7 @@ Add a subtitle tag to the video in the language you want.
 
 ## Customize
 - You can customize tag color in popup menu (background and text color)
+- You can resize the subtitle tags
 - You can search for subtitles by grouping regions. (ex en-US + en-GB)
 
 ![Showcase Popup](asset/showcase_popup.jpg)
