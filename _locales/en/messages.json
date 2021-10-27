@@ -1,11 +1,11 @@
 {
     "appName": {
         "message": "YouTube subtitle filter",
-        "description": "Add a subtitle tag to the video thumbnail in the language you want."
+        "description": "Add a subtitle tag language that you want on the video thumbnail in the YouTube."
     },
     "appDesc": {
-        "message": "Add a subtitle tag to the video thumbnail in the language you want",
-        "description":"This extension adds a subtitle tag to the top of the YouTube thumbnail video in the language you want. (But if there are no subtitle, it doesn't add tags)"
+        "message": "Add a subtitle tag language that you want on the video thumbnail in the YouTube.",
+        "description": "This extension add a subtitle tag language that you want on the video thumbnail in the YouTube. (But if there are no subtitle, it doesn't add tags)"
     },
     "selectLang": {
         "message": "Select Language",
