@@ -5,7 +5,7 @@ follow the below page to read it in multiple languages.
 
 [한국어 보기](README_KO.md)
 
-Add a subtitle tag to the video in the language you want.
+Add a subtitle tag language that you want on the video thumbnail in the YouTube.
 
 ## Showcase
 ![Showcase Videos](asset/showcase_videos.jpg)
