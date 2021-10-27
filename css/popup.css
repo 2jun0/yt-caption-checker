@@ -1,13 +1,14 @@
-div#main {
-  max-width: 227.469px;
-  max-height: 250px;
+body {
+  margin: 0;
+  background-color: transparent;
 }
 
-#main {
-  outline: none;
-  box-sizing: border-box;
-  width: 300px;
-  max-height: 251px;
+div#main {
+  width: 227.469px;
+  max-height: 250px;
+
+  /* outline: none;
+  box-sizing: border-box; */
 }
 
 popup-multi-page-menu {
@@ -50,12 +51,20 @@ popup-item-page>.value {
   width: 80px;
 }
 
+#alpha-picker-wapper {
+  background-image: url("../asset/transparent-background.jpg");
+}
+
 #alpha-picker {
   width: 100%;
   height: 100%;
+  background: none;
+  padding: 0;
+  border: none;
 }
 
 color-picker-wapper {
+  display: flex;
   width: 24px;
   height: 24px;
   border-radius: 2px;

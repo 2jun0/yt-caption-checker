@@ -3,26 +3,34 @@ const colorPicker1 = document.getElementById('color-picker1');
 const colorPicker2 = document.getElementById('color-picker2');
 const colorPickerWapper1 = document.getElementById('color-picker1-wapper');
 const colorPickerWapper2 = document.getElementById('color-picker2-wapper');
+const alphaPicker = document.getElementById('alpha-picker');
 const tagSizeRange = document.getElementById('tag-size-range');
 const langPicker = document.getElementById('lang-picker');
 const combineRegionCheckbox = document.getElementById('combine-region-checkbox');
 
-var langs;
-var tagFontSizeToIdx = {
-  "0rem": 0,
-  "0.8rem": 1,
-  "1.0rem": 2,
-  "1.2rem": 3,
-  "1.4rem": 4,
-  "1.6rem": 5
+var Langs;
+
+var AlphaHex = 'FF';
+
+var AlphaPersentToHex = {
+  "0": "00",
+  "20": "33",
+  "40": "66",
+  "60": "99",
+  "80": "CC",
+  "100": "FF"
 };
-var idxToTagFontSize = {
-  0: "0rem",
-  1: "0.8rem",
-  2: "1.0rem",
-  3: "1.2rem",
-  4: "1.4rem",
-  5: "1.6rem"
+
+var TagFontSizes = ["0rem", "0.8rem", "1.0rem", "1.2rem", "1.4rem", "1.6rem"];
+
+// utils
+
+function rgbToRgba(rgb, a) {
+  return rgb.substring(0,7) + a;
+}
+
+function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
 }
 
 function sendMessage(message, callback) {
@@ -33,6 +41,8 @@ function sendMessage(message, callback) {
   });
 }
 
+// mains
+
 function updateLangOptions() {
   var prevLang = langPicker.value;
 
@@ -40,7 +50,7 @@ function updateLangOptions() {
   while (langPicker.firstChild)
     langPicker.removeChild(langPicker.firstChild);
 
-  langs.forEach(lang => {
+  Langs.forEach(lang => {
     if (combineRegionCheckbox.checked && lang.code.includes('-')) return;
 
     var option = document.createElement("option");
@@ -60,8 +70,11 @@ function setLanguage(lang) {
 }
 
 function setColor1(color1) {
-  colorPicker1.value = color1;
-  colorPickerWapper1.style.background = color1;
+  // input[type='color'] doesn't support alpha color,
+  colorPicker1.value = color1.substring(0,7);
+  colorPickerWapper1.style.background = color1.substring(0,7);
+
+  alphaPicker.style.background = color1;
   ccStatusExmaple.style.background = color1;
   // Save data
   chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_color1': color1 }, () => {});
@@ -70,13 +83,26 @@ function setColor1(color1) {
 function setColor2(color2) {
   colorPicker2.value = color2;
   colorPickerWapper2.style.background = color2;
+
   ccStatusExmaple.style.color = color2;
   // Save data
   chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_color2': color2 }, () => {});
 }
 
+function setAlpha(alphaHex) {
+  AlphaHex = alphaHex;
+  alphaPicker.value = getKeyByValue(AlphaPersentToHex, alphaHex);
+  // Get rgba
+  let color1_rgba = rgbToRgba(colorPicker1.value, alphaHex);
+
+  alphaPicker.style.background = color1_rgba;
+  ccStatusExmaple.style.background = color1_rgba;
+  // Save data
+  chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_color1': color1_rgba }, () => {});
+}
+
 function setTagFontSize(fontSize) {
-  tagSizeRange.value = tagFontSizeToIdx[fontSize];
+  tagSizeRange.value = TagFontSizes.indexOf(fontSize);
   ccStatusExmaple.style.fontSize = `calc(${fontSize} - 0.4rem)`;
   // Save data
   chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_tag-font-size': fontSize }, () => {});
@@ -90,22 +116,45 @@ function combineRegion(enable) {
   updateLangOptions();
   chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_combine-region': enable }, () => {});
 }
-
 langPicker.onchange = () => {
   setLanguage(langPicker.value);
   sendMessage({ 'YT-SUBTITLE-FILTER_lang': langPicker.value });
 }
-colorPicker1.onchange = () => { 
-  setColor1(colorPicker1.value);
-  sendMessage({ 'YT-SUBTITLE-FILTER_color1': colorPicker1.value });
+
+colorPicker1.onchange = () => {
+  let color1_rgba = rgbToRgba(colorPicker1.value, AlphaHex);
+  setColor1(color1_rgba);
+  sendMessage({ 'YT-SUBTITLE-FILTER_color1': color1_rgba });
+}
+colorPicker1.oninput = () => {
+  let color1_rgba = rgbToRgba(colorPicker1.value, AlphaHex);
+  setColor1(color1_rgba);
+  sendMessage({ 'YT-SUBTITLE-FILTER_color1': color1_rgba });
 }
 colorPicker2.onchange = () => { 
   setColor2(colorPicker2.value);
   sendMessage({ 'YT-SUBTITLE-FILTER_color2': colorPicker2.value });
 }
+colorPicker2.oninput = () => {
+  setColor2(colorPicker2.value);
+  sendMessage({ 'YT-SUBTITLE-FILTER_color2': colorPicker2.value });
+}
+alphaPicker.onclick = () => {
+  let keys = Object.keys(AlphaPersentToHex);
+  let keyIdx = keys.indexOf(alphaPicker.value);
+  // next alpha value
+  alphaPicker.value = keys[(keyIdx+1) % keys.length];
+
+  setAlpha(AlphaPersentToHex[alphaPicker.value]);
+
+  let rgba = rgbToRgba(colorPicker1.value, AlphaHex);
+  sendMessage({ 'YT-SUBTITLE-FILTER_color1': rgba });
+}
+
 tagSizeRange.onchange = () => {
-  setTagFontSize(idxToTagFontSize[tagSizeRange.value]);
-  sendMessage({ 'YT-SUBTITLE-FILTER_tag-font-size': idxToTagFontSize[tagSizeRange.value] });
+  let idx = tagSizeRange.value;
+  setTagFontSize(TagFontSizes[idx]);
+  sendMessage({ 'YT-SUBTITLE-FILTER_tag-font-size': TagFontSizes[idx] });
 }
 combineRegionCheckbox.onchange = () => {
   combineRegion(combineRegionCheckbox.checked);
@@ -115,7 +164,7 @@ combineRegionCheckbox.onchange = () => {
 (async () => {
   // dynamic import
   const src = chrome.runtime.getURL('js/lang.js');
-  langs = (await import(src)).langs;
+  Langs = (await import(src)).langs;
   
   // add langauge options
   updateLangOptions();
@@ -129,9 +178,10 @@ combineRegionCheckbox.onchange = () => {
     'YT-SUBTITLE-FILTER_combine-region',
   ], (items) => {
     setLanguage(items['YT-SUBTITLE-FILTER_lang'] || 'en');
-    setColor1(items['YT-SUBTITLE-FILTER_color1'] || '#008000');
-    setColor2(items['YT-SUBTITLE-FILTER_color2'] || '#ffffff');
-    setTagFontSize(items['YT-SUBTITLE-FILTER_tag-font-size'] || idxToTagFontSize[3]);
+    setColor1(items['YT-SUBTITLE-FILTER_color1'] || '#008000FF');
+    setColor2(items['YT-SUBTITLE-FILTER_color2'] || '#FFFFFF');
+    setAlpha(items['YT-SUBTITLE-FILTER_color1'].substring(7,9) || 'FF');
+    setTagFontSize(items['YT-SUBTITLE-FILTER_tag-font-size'] || TagFontSizes[3]);
     combineRegion(items['YT-SUBTITLE-FILTER_combine-region'] || false);
   });
 })();
