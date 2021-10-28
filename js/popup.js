@@ -198,7 +198,7 @@ combineRegionCheckbox.onchange = () => {
     setLanguage(items['YT-SUBTITLE-FILTER_lang'] || 'en');
     setColor1(items['YT-SUBTITLE-FILTER_color1'] || '#00000099');
     setColor2(items['YT-SUBTITLE-FILTER_color2'] || '#FFFFFF');
-    setAlpha(items['YT-SUBTITLE-FILTER_color1'].substring(7,9) || '99');
+    setAlpha(items['YT-SUBTITLE-FILTER_color1'] ? items['YT-SUBTITLE-FILTER_color1'].substring(7,9) : '99');
     setTagFontSize(items['YT-SUBTITLE-FILTER_tag-font-size'] || TagFontSizes[3]);
     combineRegion(items['YT-SUBTITLE-FILTER_combine-region'] || true);
   });
