@@ -10,7 +10,7 @@ const combineRegionCheckbox = document.getElementById('combine-region-checkbox')
 
 var Langs;
 
-var AlphaHex = 'FF';
+var AlphaHex = '99';
 
 var AlphaPersentToHex = {
   "0": "00",
@@ -79,7 +79,7 @@ function setLanguage(lang) {
   langPicker.value = lang;
   ccStatusExmaple.textContent = langPicker.value.toUpperCase()+' CC'
   // Save data
-  chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_lang': lang }, () => {});
+  chrome.storage.local.set({ 'YT-SUBTITLE-FILTER_lang': lang }, () => {});
 }
 
 function setColor1(color1) {
@@ -90,7 +90,7 @@ function setColor1(color1) {
   alphaPicker.style.background = color1;
   ccStatusExmaple.style.background = color1;
   // Save data
-  chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_color1': color1 }, () => {});
+  chrome.storage.local.set({ 'YT-SUBTITLE-FILTER_color1': color1 }, () => {});
 }
 
 function setColor2(color2) {
@@ -100,7 +100,7 @@ function setColor2(color2) {
   alphaPicker.style.color = color2;
   ccStatusExmaple.style.color = color2;
   // Save data
-  chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_color2': color2 }, () => {});
+  chrome.storage.local.set({ 'YT-SUBTITLE-FILTER_color2': color2 }, () => {});
 }
 
 function setAlpha(alphaHex) {
@@ -112,14 +112,14 @@ function setAlpha(alphaHex) {
   alphaPicker.style.background = color1_rgba;
   ccStatusExmaple.style.background = color1_rgba;
   // Save data
-  chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_color1': color1_rgba }, () => {});
+  chrome.storage.local.set({ 'YT-SUBTITLE-FILTER_color1': color1_rgba }, () => {});
 }
 
 function setTagFontSize(fontSize) {
   tagSizeRange.value = TagFontSizes.indexOf(fontSize);
   ccStatusExmaple.style.fontSize = `calc(${fontSize} - 0.4rem)`;
   // Save data
-  chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_tag-font-size': fontSize }, () => {});
+  chrome.storage.local.set({ 'YT-SUBTITLE-FILTER_tag-font-size': fontSize }, () => {});
 }
 
 function combineRegion(enable) {
@@ -128,7 +128,7 @@ function combineRegion(enable) {
     setLanguage(langPicker.value.split('-')[0]);
 
   updateLangOptions();
-  chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_combine-region': enable }, () => {});
+  chrome.storage.local.set({ 'YT-SUBTITLE-FILTER_combine-region': enable }, () => {});
 }
 langPicker.onchange = () => {
   setLanguage(langPicker.value);
@@ -188,7 +188,7 @@ combineRegionCheckbox.onchange = () => {
   updateLangOptions();
 
   // Load data
-  chrome.storage.sync.get([
+  chrome.storage.local.get([
     'YT-SUBTITLE-FILTER_lang',
     'YT-SUBTITLE-FILTER_color1', 
     'YT-SUBTITLE-FILTER_color2', 
@@ -196,10 +196,10 @@ combineRegionCheckbox.onchange = () => {
     'YT-SUBTITLE-FILTER_combine-region',
   ], (items) => {
     setLanguage(items['YT-SUBTITLE-FILTER_lang'] || 'en');
-    setColor1(items['YT-SUBTITLE-FILTER_color1'] || '#008000FF');
+    setColor1(items['YT-SUBTITLE-FILTER_color1'] || '#00000099');
     setColor2(items['YT-SUBTITLE-FILTER_color2'] || '#FFFFFF');
-    setAlpha(items['YT-SUBTITLE-FILTER_color1'].substring(7,9) || 'FF');
+    setAlpha(items['YT-SUBTITLE-FILTER_color1'].substring(7,9) || '99');
     setTagFontSize(items['YT-SUBTITLE-FILTER_tag-font-size'] || TagFontSizes[3]);
-    combineRegion(items['YT-SUBTITLE-FILTER_combine-region'] || false);
+    combineRegion(items['YT-SUBTITLE-FILTER_combine-region'] || true);
   });
 })();

@@ -1,8 +1,8 @@
 var ccLang = '??';
-var ccColor1 = '#008000FF';
+var ccColor1 = '#00000099';
 var ccColor2 = '#FFFFFF';
 var ccFontSize = '1.2rem';
-var ccCombineRegion = false;
+var ccCombineRegion = true;
 
 var mainObserver;
 var getRelatedLangCodes;
@@ -257,7 +257,7 @@ chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
   getRelatedLangCodes = (await import(src)).getRelatedLangCodes;
 
   // Load data
-  chrome.storage.sync.get([
+  chrome.storage.local.get([
     'YT-SUBTITLE-FILTER_lang',
     'YT-SUBTITLE-FILTER_color1',
     'YT-SUBTITLE-FILTER_color2',
@@ -265,7 +265,7 @@ chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
     'YT-SUBTITLE-FILTER_combine-region'
   ], (items) => {
     setCCLang(items['YT-SUBTITLE-FILTER_lang'] || 'en');
-    setCCColor1(items['YT-SUBTITLE-FILTER_color1'] || '#008000FF');
+    setCCColor1(items['YT-SUBTITLE-FILTER_color1'] || '#00000099');
     setCCColor2(items['YT-SUBTITLE-FILTER_color2'] || '#FFFFFF');
     setCCFontSize(items['YT-SUBTITLE-FILTER_tag-font-size'] || '1.2rem');
     setCCCombineRegion(items['YT-SUBTITLE-FILTER_combine-region'] || false);
