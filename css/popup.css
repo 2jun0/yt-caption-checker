@@ -77,6 +77,10 @@ color-picker-wapper>input[type="color" i] {
   border: none;
 }
 
+#cc-status-example-wapper {
+  background-image: url("../asset/transparent-background.jpg");
+}
+
 #cc-status-example {
   font-weight: 500;
   padding: 3px 4px;

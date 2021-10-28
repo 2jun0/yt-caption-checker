@@ -21,13 +21,20 @@ var AlphaPersentToHex = {
   "100": "FF"
 };
 
-var TagFontSizes = ["0rem", "0.8rem", "1.0rem", "1.2rem", "1.4rem", "1.6rem"];
+var TagFontSizes = ["1.0rem", "1.1rem", "1.2rem", "1.3rem", "1.4rem", "1.5rem", "1.6rem"];
 
 // utils
 
 function rgbToRgba(rgb, a) {
-  return rgb.substring(0,7) + a;
+  return '#'+rgb.substring(1).substring(0,7) + a;
 }
+
+// function reverseRbg(rbg) {
+//   let dec = parseInt(rbg.substring(1), 16)^0xFFFFFF;
+//   let hex = '#'+dec.toString(16);
+//   while (rbg.length > hex.length) hex+='0';
+//   return hex;
+// }
 
 function getKeyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);
@@ -62,6 +69,12 @@ function updateLangOptions() {
   langPicker.value = prevLang;
 }
 
+function initTagSizeRange() {
+  tagSizeRange.min = 0;
+  tagSizeRange.max = TagFontSizes.length-1;
+  tagSizeRange.value = getKeyByValue("1.3rem");
+}
+
 function setLanguage(lang) {
   langPicker.value = lang;
   ccStatusExmaple.textContent = langPicker.value.toUpperCase()+' CC'
@@ -73,7 +86,7 @@ function setColor1(color1) {
   // input[type='color'] doesn't support alpha color,
   colorPicker1.value = color1.substring(0,7);
   colorPickerWapper1.style.background = color1.substring(0,7);
-
+  
   alphaPicker.style.background = color1;
   ccStatusExmaple.style.background = color1;
   // Save data
@@ -84,6 +97,7 @@ function setColor2(color2) {
   colorPicker2.value = color2;
   colorPickerWapper2.style.background = color2;
 
+  alphaPicker.style.color = color2;
   ccStatusExmaple.style.color = color2;
   // Save data
   chrome.storage.sync.set({ 'YT-SUBTITLE-FILTER_color2': color2 }, () => {});
@@ -151,11 +165,12 @@ alphaPicker.onclick = () => {
   sendMessage({ 'YT-SUBTITLE-FILTER_color1': rgba });
 }
 
-tagSizeRange.onchange = () => {
+tagSizeRange.oninput = () => {
   let idx = tagSizeRange.value;
   setTagFontSize(TagFontSizes[idx]);
   sendMessage({ 'YT-SUBTITLE-FILTER_tag-font-size': TagFontSizes[idx] });
 }
+
 combineRegionCheckbox.onchange = () => {
   combineRegion(combineRegionCheckbox.checked);
   sendMessage({ 'YT-SUBTITLE-FILTER_combine-region': combineRegionCheckbox.checked });
@@ -165,6 +180,9 @@ combineRegionCheckbox.onchange = () => {
   // dynamic import
   const src = chrome.runtime.getURL('js/lang.js');
   Langs = (await import(src)).langs;
+
+  // init tag size range
+  initTagSizeRange();
   
   // add langauge options
   updateLangOptions();
