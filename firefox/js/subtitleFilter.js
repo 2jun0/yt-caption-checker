@@ -87,6 +87,7 @@ function tagVideo(e, lang) {
             // if user change langauge or url in processing,
             // Remove ccStatus
             if(e.href != url || ccStatus.lang != ccLang) ccStatus.remove();
+            console.log(ccStatus)
 
             overlays.insertBefore(ccStatus, overlays.lastChild);
             return;
@@ -112,45 +113,37 @@ function tagVideo(e, lang) {
 function hasSubtitles(videoUrl, langs, callback) {
   // URL example : /watch?v=[video_id]
   var videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
-  var result = false;
-  var tryCount = langs.length;
 
-  langs.forEach(lang => {
-    if (result) return;
+  // check has subtitles
+  (async (videoId, langs, callback) => {
+    let hasSub = false;
+    let leftCount = langs.length;
     
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-      if (this.readyState == this.LOADING) {
-        if (this.status == 200) {
-          result = true;
-        }else if (this.status == 404){
-          tryCount -= 1;
+    langs.forEach(lang => {
+      if (hasSub) return;
+      
+      var request = new XMLHttpRequest();
+      request.onreadystatechange = function() {
+        if (this.readyState == this.LOADING) {
+          if (this.status == 200)
+            hasSub = true;
+
+          leftCount--;
+          this.abort();
         }
-        this.abort();
-      }
-    };
+      };
+      request.open("GET", "https://video.google.com/timedtext?lang="+lang+"&v="+videoId);
+      request.send();
+    });
 
-    request.open("GET", "https://video.google.com/timedtext?lang="+lang+"&v="+videoId, true);
-    request.send(null);
-  });
-
-  // Wait request subtitles
-  function waitRequests() {
-    setTimeout(function() {
-      if (result) {
-        callback(true);
-        return;
+    // Wait requests
+    setTimeout(() => {
+      if (leftCount == 0) {
+        console.log(hasSub, videoId);
+        callback(hasSub);
       }
-      if (tryCount == 0) {
-        callback(false);
-        return;
-      }
-
-      waitRequests();
     }, 200);
-  }
-  
-  waitRequests();
+  })(videoId, langs, callback);
 }
 
 function hasSubtitle(videoUrl, lang, callback) {
@@ -191,7 +184,6 @@ function checkNode(node) {
   }
   // except play list
   if (node.parentElement.tagName == 'YTD-PLAYLIST-THUMBNAIL') return;
-  // console.log(node);
   addVideo(node);
 }
 
@@ -244,11 +236,11 @@ function initTimeout() {
 
 // option update handlers
 chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
-  if (req['YT-SUBTITLE-FILTER_lang']) setCCLang(req['YT-SUBTITLE-FILTER_lang']);
-  if (req['YT-SUBTITLE-FILTER_color1']) setCCColor1(req['YT-SUBTITLE-FILTER_color1']);
-  if (req['YT-SUBTITLE-FILTER_color2']) setCCColor2(req['YT-SUBTITLE-FILTER_color2']);
-  if (req['YT-SUBTITLE-FILTER_tag-font-size']) setCCFontSize(req['YT-SUBTITLE-FILTER_tag-font-size']);
-  if (req['YT-SUBTITLE-FILTER_combine-region']) setCCCombineRegion(items['YT-SUBTITLE-FILTER_combine-region']);
+  if ('YT-SUBTITLE-FILTER_lang' in req) setCCLang(req['YT-SUBTITLE-FILTER_lang']);
+  if ('YT-SUBTITLE-FILTER_color1' in req) setCCColor1(req['YT-SUBTITLE-FILTER_color1']);
+  if ('YT-SUBTITLE-FILTER_color2' in req) setCCColor2(req['YT-SUBTITLE-FILTER_color2']);
+  if ('YT-SUBTITLE-FILTER_tag-font-size' in req) setCCFontSize(req['YT-SUBTITLE-FILTER_tag-font-size']);
+  if ('YT-SUBTITLE-FILTER_combine-region' in req) setCCCombineRegion(items['YT-SUBTITLE-FILTER_combine-region']);
 });
 
 (async () => {
@@ -268,8 +260,9 @@ chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
     setCCColor1(items['YT-SUBTITLE-FILTER_color1'] || '#00000099');
     setCCColor2(items['YT-SUBTITLE-FILTER_color2'] || '#FFFFFF');
     setCCFontSize(items['YT-SUBTITLE-FILTER_tag-font-size'] || '1.2rem');
-    setCCCombineRegion(items['YT-SUBTITLE-FILTER_combine-region'] || false);
-
+    setCCCombineRegion('YT-SUBTITLE-FILTER_combine-region' in items ? items['YT-SUBTITLE-FILTER_combine-region'] : true);
     initTimeout();
+
+    console.log('init', items);
   });
 })();

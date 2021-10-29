@@ -1,3 +1,4 @@
 .vscode
-
-yt-subtitle-filter.zip
+*.zip
+*.crx
+*.pem
