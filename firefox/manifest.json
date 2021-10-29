@@ -4,7 +4,7 @@
   "description":"__MSG_appDesc__",
   "default_locale": "en",
   "manifest_version": 2,
-  "version":"1.0.6",
+  "version":"1.0.7",
   "author":"2jun0",
   "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
   "browser_action": {
@@ -24,6 +24,7 @@
     "js/lang.js"
   ],
   "permissions": ["storage", "tabs"],
+  "host_permissions": ["*://*.google.com/*"],
   "icons": {
     "128": "asset/logo-big.png"
   }

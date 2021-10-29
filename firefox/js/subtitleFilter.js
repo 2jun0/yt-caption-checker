@@ -87,7 +87,6 @@ function tagVideo(e, lang) {
             // if user change langauge or url in processing,
             // Remove ccStatus
             if(e.href != url || ccStatus.lang != ccLang) ccStatus.remove();
-            console.log(ccStatus)
 
             overlays.insertBefore(ccStatus, overlays.lastChild);
             return;
@@ -106,64 +105,26 @@ function tagVideo(e, lang) {
       var langs = getRelatedLangCodes(ccLang);
       hasSubtitles(url, langs, callback);
     } else
-      hasSubtitle(url, lang, callback);
+      hasSubtitles(url, [lang], callback);
   }
 }
 
 function hasSubtitles(videoUrl, langs, callback) {
   // URL example : /watch?v=[video_id]
   var videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
-
-  // check has subtitles
-  (async (videoId, langs, callback) => {
-    let hasSub = false;
-    let leftCount = langs.length;
-    
-    langs.forEach(lang => {
-      if (hasSub) return;
-      
-      var request = new XMLHttpRequest();
-      request.onreadystatechange = function() {
-        if (this.readyState == this.LOADING) {
-          if (this.status == 200)
-            hasSub = true;
-
-          leftCount--;
-          this.abort();
-        }
-      };
-      request.open("GET", "https://video.google.com/timedtext?lang="+lang+"&v="+videoId);
-      request.send();
-    });
-
-    // Wait requests
-    setTimeout(() => {
-      if (leftCount == 0) {
-        console.log(hasSub, videoId);
-        callback(hasSub);
-      }
-    }, 200);
-  })(videoId, langs, callback);
-}
-
-function hasSubtitle(videoUrl, lang, callback) {
-  // URL example : /watch?v=[video_id]
-  var videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
+  var langCodeCheck = RegExp(`lang_code="(${langs.join('|')})"`);
 
   var request = new XMLHttpRequest();
   request.onreadystatechange = function() {
-    if (this.readyState == this.LOADING) {
+    if (this.readyState == this.DONE) {
       if (this.status == 200) {
-        callback(true);
-      }else if (this.status == 404){
-        callback(false);
+        callback(langCodeCheck.test(this.responseText));
       }
-      this.abort();
     }
   };
-  
-  request.open("GET", "https://video.google.com/timedtext?lang="+lang+"&v="+videoId, true);
-  request.send(null);
+   
+  request.open("GET", `https://video.google.com/timedtext?type=list&v=${videoId}`);
+  request.send();
 }
 
 function checkNodes(nodes) {
@@ -262,7 +223,5 @@ chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
     setCCFontSize(items['YT-SUBTITLE-FILTER_tag-font-size'] || '1.2rem');
     setCCCombineRegion('YT-SUBTITLE-FILTER_combine-region' in items ? items['YT-SUBTITLE-FILTER_combine-region'] : true);
     initTimeout();
-
-    console.log('init', items);
   });
 })();
