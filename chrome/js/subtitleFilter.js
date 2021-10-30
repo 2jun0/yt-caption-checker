@@ -105,72 +105,26 @@ function tagVideo(e, lang) {
       var langs = getRelatedLangCodes(ccLang);
       hasSubtitles(url, langs, callback);
     } else
-      hasSubtitle(url, lang, callback);
+      hasSubtitles(url, [lang], callback);
   }
 }
 
 function hasSubtitles(videoUrl, langs, callback) {
   // URL example : /watch?v=[video_id]
   var videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
-  var result = false;
-  var tryCount = langs.length;
-
-  langs.forEach(lang => {
-    if (result) return;
-    
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-      if (this.readyState == this.LOADING) {
-        if (this.status == 200) {
-          result = true;
-        }else if (this.status == 404){
-          tryCount -= 1;
-        }
-        this.abort();
-      }
-    };
-
-    request.open("GET", "https://video.google.com/timedtext?lang="+lang+"&v="+videoId, true);
-    request.send(null);
-  });
-
-  // Wait request subtitles
-  function waitRequests() {
-    setTimeout(function() {
-      if (result) {
-        callback(true);
-        return;
-      }
-      if (tryCount == 0) {
-        callback(false);
-        return;
-      }
-
-      waitRequests();
-    }, 200);
-  }
-  
-  waitRequests();
-}
-
-function hasSubtitle(videoUrl, lang, callback) {
-  // URL example : /watch?v=[video_id]
-  var videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
+  var langCodeCheck = RegExp(`lang_code="(${langs.join('|')})"`);
 
   var request = new XMLHttpRequest();
   request.onreadystatechange = function() {
-    if (this.readyState == this.LOADING) {
+    if (this.readyState == this.DONE) {
       if (this.status == 200) {
-        callback(true);
-      }else if (this.status == 404){
-        callback(false);
+        callback(langCodeCheck.test(this.responseText));
       }
-      this.abort();
     }
   };
-  
-  request.open("GET", "https://video.google.com/timedtext?lang="+lang+"&v="+videoId, true);
-  request.send(null);
+   
+  request.open("GET", `https://video.google.com/timedtext?type=list&v=${videoId}`);
+  request.send();
 }
 
 function checkNodes(nodes) {
@@ -191,7 +145,6 @@ function checkNode(node) {
   }
   // except play list
   if (node.parentElement.tagName == 'YTD-PLAYLIST-THUMBNAIL') return;
-  // console.log(node);
   addVideo(node);
 }
 
@@ -269,7 +222,6 @@ chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
     setCCColor2(items['YT-SUBTITLE-FILTER_color2'] || '#FFFFFF');
     setCCFontSize(items['YT-SUBTITLE-FILTER_tag-font-size'] || '1.2rem');
     setCCCombineRegion('YT-SUBTITLE-FILTER_combine-region' in items ? items['YT-SUBTITLE-FILTER_combine-region'] : true);
-
     initTimeout();
   });
 })();
