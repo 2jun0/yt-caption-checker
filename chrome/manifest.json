@@ -28,6 +28,7 @@
     "js/lang.js"
   ],
   "permissions": ["storage", "declarativeContent"],
+  "host_permissions": ["*://*.google.com/*"],
   "icons": {
     "128": "asset/logo-big.png"
   }
