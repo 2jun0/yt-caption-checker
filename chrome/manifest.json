@@ -4,7 +4,7 @@
   "description":"__MSG_appDesc__",
   "default_locale": "en",
   "manifest_version": 2,
-  "version":"1.1.0",
+  "version":"1.1.1",
   "author":"2jun0",
   "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
   "background": {
@@ -24,9 +24,7 @@
       "all_frames": true
     }
   ],
-  "web_accessible_resources": [
-    "js/lang.js"
-  ],
+  "web_accessible_resources": ["js/lang.js"],
   "permissions": ["storage", "declarativeContent", "*://*.google.com/*"],
   "icons": {
     "128": "asset/logo-big.png"

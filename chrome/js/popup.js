@@ -1,40 +1,52 @@
+const mainDiv = document.getElementById('main');
 const ccStatusExmaple = document.getElementById('cc-status-example');
-const colorPicker1 = document.getElementById('color-picker1');
-const colorPicker2 = document.getElementById('color-picker2');
-const colorPickerWapper1 = document.getElementById('color-picker1-wapper');
-const colorPickerWapper2 = document.getElementById('color-picker2-wapper');
+const color1Display = document.getElementById('color1-display');
+const color2Display = document.getElementById('color2-display');
 const alphaPicker = document.getElementById('alpha-picker');
 const tagSizeRange = document.getElementById('tag-size-range');
 const langPicker = document.getElementById('lang-picker');
 const combineRegionCheckbox = document.getElementById('combine-region-checkbox');
+const color1Picker = new iro.ColorPicker('#color1-picker', {
+  width: 195,
+  borderWidth: 1,
+  borderColor: '#B0B0B0',
+  margin: 5,
+  layout: [
+    { 
+      component: iro.ui.Box,
+      options: { boxHeight: 100 }
+    },
+    { 
+      component: iro.ui.Slider,
+      options: { sliderType: 'hue' }
+    },
+    { 
+      component: iro.ui.Slider,
+      options: { sliderType: 'alpha' }
+    },
+  ]
+});
+const color2Picker = new iro.ColorPicker('#color2-picker', {
+  width: 195,
+  borderWidth: 1,
+  borderColor: '#B0B0B0',
+  margin: 5,
+  layout: [
+    { 
+      component: iro.ui.Box,
+      options: { boxHeight: 100 }
+    },
+    { 
+      component: iro.ui.Slider,
+      options: { sliderType: 'hue' }
+    },
+  ]
+});
 
 var Langs;
-
-var AlphaHex = '99';
-
-var AlphaPersentToHex = {
-  "0": "00",
-  "20": "33",
-  "40": "66",
-  "60": "99",
-  "80": "CC",
-  "100": "FF"
-};
-
 var TagFontSizes = ["1.0rem", "1.1rem", "1.2rem", "1.3rem", "1.4rem", "1.5rem", "1.6rem"];
 
 // utils
-
-function rgbToRgba(rgb, a) {
-  return '#'+rgb.substring(1).substring(0,7) + a;
-}
-
-// function reverseRbg(rbg) {
-//   let dec = parseInt(rbg.substring(1), 16)^0xFFFFFF;
-//   let hex = '#'+dec.toString(16);
-//   while (rbg.length > hex.length) hex+='0';
-//   return hex;
-// }
 
 function getKeyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);
@@ -82,37 +94,22 @@ function setLanguage(lang) {
   chrome.storage.local.set({ 'YT-SUBTITLE-FILTER_lang': lang }, () => {});
 }
 
-function setColor1(color1) {
-  // input[type='color'] doesn't support alpha color,
-  colorPicker1.value = color1.substring(0,7);
-  colorPickerWapper1.style.background = color1.substring(0,7);
+function setColor1(color1, setColorPickerable = true) {
+  if(setColorPickerable) color1Picker.color.hex8String = color1;
+  color1Display.style.background = color1;
   
-  alphaPicker.style.background = color1;
   ccStatusExmaple.style.background = color1;
   // Save data
   chrome.storage.local.set({ 'YT-SUBTITLE-FILTER_color1': color1 }, () => {});
 }
 
-function setColor2(color2) {
-  colorPicker2.value = color2;
-  colorPickerWapper2.style.background = color2;
+function setColor2(color2, setColorPickerable = true) {
+  if(setColorPickerable) color2Picker.color.hexString = color2;
+  color2Display.style.background = color2;
 
-  alphaPicker.style.color = color2;
   ccStatusExmaple.style.color = color2;
   // Save data
   chrome.storage.local.set({ 'YT-SUBTITLE-FILTER_color2': color2 }, () => {});
-}
-
-function setAlpha(alphaHex) {
-  AlphaHex = alphaHex;
-  alphaPicker.value = getKeyByValue(AlphaPersentToHex, alphaHex);
-  // Get rgba
-  let color1_rgba = rgbToRgba(colorPicker1.value, alphaHex);
-
-  alphaPicker.style.background = color1_rgba;
-  ccStatusExmaple.style.background = color1_rgba;
-  // Save data
-  chrome.storage.local.set({ 'YT-SUBTITLE-FILTER_color1': color1_rgba }, () => {});
 }
 
 function setTagFontSize(fontSize) {
@@ -135,35 +132,30 @@ langPicker.onchange = () => {
   sendMessage({ 'YT-SUBTITLE-FILTER_lang': langPicker.value });
 }
 
-colorPicker1.onchange = () => {
-  let color1_rgba = rgbToRgba(colorPicker1.value, AlphaHex);
-  setColor1(color1_rgba);
-  sendMessage({ 'YT-SUBTITLE-FILTER_color1': color1_rgba });
-}
-colorPicker1.oninput = () => {
-  let color1_rgba = rgbToRgba(colorPicker1.value, AlphaHex);
-  setColor1(color1_rgba);
-  sendMessage({ 'YT-SUBTITLE-FILTER_color1': color1_rgba });
-}
-colorPicker2.onchange = () => { 
-  setColor2(colorPicker2.value);
-  sendMessage({ 'YT-SUBTITLE-FILTER_color2': colorPicker2.value });
-}
-colorPicker2.oninput = () => {
-  setColor2(colorPicker2.value);
-  sendMessage({ 'YT-SUBTITLE-FILTER_color2': colorPicker2.value });
-}
-alphaPicker.onclick = () => {
-  let keys = Object.keys(AlphaPersentToHex);
-  let keyIdx = keys.indexOf(alphaPicker.value);
-  // next alpha value
-  alphaPicker.value = keys[(keyIdx+1) % keys.length];
+color1Display.onclick = () => {;
+  if (color1Picker.el.style.display == 'none') color1Picker.el.style.display = 'block';
+  else color1Picker.el.style.display = 'none';
+};
+color2Display.onclick = () => {
+  if (color2Picker.el.style.display == 'none') color2Picker.el.style.display = 'block';
+  else color2Picker.el.style.display = 'none';
+};
 
-  setAlpha(AlphaPersentToHex[alphaPicker.value]);
-
-  let rgba = rgbToRgba(colorPicker1.value, AlphaHex);
-  sendMessage({ 'YT-SUBTITLE-FILTER_color1': rgba });
+mainDiv.onclick = (e) => {
+  if (!['color1-picker', 'color1-display'].includes(e.target.id))
+    color1Picker.el.style.display = 'none';
+  if (!['color2-picker', 'color2-display'].includes(e.target.id))
+    color2Picker.el.style.display = 'none';
 }
+
+color1Picker.on("color:change", (color) => {
+  setColor1(color.hex8String, false);
+  sendMessage({ 'YT-SUBTITLE-FILTER_color1': color.hex8String });
+});
+color2Picker.on("color:change", (color) => {
+  setColor2(color.hexString, false);
+  sendMessage({ 'YT-SUBTITLE-FILTER_color2': color.hexString });
+});
 
 tagSizeRange.oninput = () => {
   let idx = tagSizeRange.value;
@@ -191,14 +183,13 @@ combineRegionCheckbox.onchange = () => {
   chrome.storage.local.get([
     'YT-SUBTITLE-FILTER_lang',
     'YT-SUBTITLE-FILTER_color1', 
-    'YT-SUBTITLE-FILTER_color2', 
+    'YT-SUBTITLE-FILTER_color2',
     'YT-SUBTITLE-FILTER_tag-font-size',
     'YT-SUBTITLE-FILTER_combine-region',
   ], (items) => {
     setLanguage(items['YT-SUBTITLE-FILTER_lang'] || 'en');
     setColor1(items['YT-SUBTITLE-FILTER_color1'] || '#00000099');
     setColor2(items['YT-SUBTITLE-FILTER_color2'] || '#FFFFFF');
-    setAlpha(items['YT-SUBTITLE-FILTER_color1'] ? items['YT-SUBTITLE-FILTER_color1'].substring(7,9) : '99');
     setTagFontSize(items['YT-SUBTITLE-FILTER_tag-font-size'] || TagFontSizes[3]);
     combineRegion('YT-SUBTITLE-FILTER_combine-region' in items ? items['YT-SUBTITLE-FILTER_combine-region'] : true);
   });

@@ -60,7 +60,7 @@ popup-item-page>.value {
   border: none;
 }
 
-color-picker-wapper {
+color-display {
   display: flex;
   width: 24px;
   height: 24px;
@@ -68,13 +68,13 @@ color-picker-wapper {
   border: 0.1px solid rgb(209, 209, 209);
 }
 
-color-picker-wapper>input[type="color" i] {
+color-display>input[type="color" i] {
   opacity: 0;
   display: block;
   border: none;
 }
 
-#cc-status-example-wapper {
+#cc-status-example-wapper, #color-display-wapper {
   background-image: url("../asset/transparent-background.jpg");
 }
 
