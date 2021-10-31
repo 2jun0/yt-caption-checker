@@ -17,7 +17,7 @@ Add a subtitle tag language that you want on the video thumbnail in the YouTube.
 - You can resize the subtitle tags
 - You can search for subtitles by grouping regions. (ex en-US + en-GB)
 
-![Showcase Popup](chrome/asset/showcase_popup.jpg)
+![Showcase Popup](chrome/asset/showcase_popup_1.jpg) ![Showcase Popup](chrome/asset/showcase_popup_2.jpg)
 
 ## Download
 [Chrome Web Store](https://chrome.google.com/webstore/detail/Youtube-subtitle-filter/onmelgncdnoihoaopmkcacadlmjmcehd)

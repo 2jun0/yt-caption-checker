@@ -16,7 +16,7 @@ README 페이지를 영문로 보시려면 아래를 참고하세요.
 - 태그의 크기를 조절 할 수 있습니다.
 - 지역언어 통합 기능으로 여러지역으로 나눠진 자막을 하나로 검색할 수 도 있습니다. (예: 영어(영국) + 영어(미국))
 
-![팝업 예시화면](chrome/asset/showcase_popup_ko.jpg)
+![팝업 예시화면](chrome/asset/showcase_popup_ko_1.jpg) ![팝업 예시화면](chrome/asset/showcase_popup_ko_2.jpg)
 
 ## 다운로드
 [Chrome 웹 스토어](https://chrome.google.com/webstore/detail/Youtube-subtitle-filter/onmelgncdnoihoaopmkcacadlmjmcehd)
