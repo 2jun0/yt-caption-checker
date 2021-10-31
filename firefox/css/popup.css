@@ -32,9 +32,7 @@ popup-multi-page-menu {
 
 popup-item-page {
   display: flex;
-  margin-right: 16px;
-  padding: 0 36px 0 16px;
-  position: relative;
+  padding: 0 16px 0 16px;
   align-items: center;
 }
 
@@ -43,8 +41,7 @@ popup-item-page>.title {
 }
 
 popup-item-page>.value {
-  position: absolute;
-  right:0;
+  margin-left: auto;
 }
 
 #lang-picker {
