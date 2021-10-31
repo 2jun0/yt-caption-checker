@@ -20,3 +20,4 @@ README 페이지를 영문로 보시려면 아래를 참고하세요.
 
 ## 다운로드
 [Chrome 웹 스토어](https://chrome.google.com/webstore/detail/Youtube-subtitle-filter/onmelgncdnoihoaopmkcacadlmjmcehd)
+[Firefox Add On](https://addons.mozilla.org/ko/firefox/addon/youtube-subtitle-filter)

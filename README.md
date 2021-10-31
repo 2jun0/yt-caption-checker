@@ -21,3 +21,4 @@ Add a subtitle tag language that you want on the video thumbnail in the YouTube.
 
 ## Download
 [Chrome Web Store](https://chrome.google.com/webstore/detail/Youtube-subtitle-filter/onmelgncdnoihoaopmkcacadlmjmcehd)
+[Firefox Add On](https://addons.mozilla.org/ko/firefox/addon/youtube-subtitle-filter)
