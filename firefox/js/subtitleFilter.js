@@ -1,7 +1,7 @@
-var ccLang = '??';
-var ccColor1 = '#00000099';
-var ccColor2 = '#FFFFFF';
-var ccFontSize = '1.2rem';
+var ccLang = "??";
+var ccColor1 = "#00000099";
+var ccColor2 = "#FFFFFF";
+var ccFontSize = "1.2rem";
 var ccCombineRegion = true;
 
 var mainObserver;
@@ -16,7 +16,7 @@ function setCCLang(lang) {
 function setCCColor1(color1) {
   if (ccColor1 == color1) return;
   ccColor1 = color1;
-  document.querySelectorAll('#cc-status').forEach(ccStatus => {
+  document.querySelectorAll("#cc-status").forEach((ccStatus) => {
     ccStatus.style.backgroundColor = color1;
   });
 }
@@ -24,7 +24,7 @@ function setCCColor1(color1) {
 function setCCColor2(color2) {
   if (ccColor2 == color2) return;
   ccColor2 = color2;
-  document.querySelectorAll('#cc-status').forEach(ccStatus => {
+  document.querySelectorAll("#cc-status").forEach((ccStatus) => {
     ccStatus.style.color = color2;
   });
 }
@@ -32,26 +32,25 @@ function setCCColor2(color2) {
 function setCCFontSize(fontSize) {
   if (ccFontSize == fontSize) return;
   ccFontSize = fontSize;
-  document.querySelectorAll('#cc-status').forEach(ccStatus => {
+  document.querySelectorAll("#cc-status").forEach((ccStatus) => {
     ccStatus.style.fontSize = fontSize;
   });
 }
 
 function setCCCombineRegion(enable) {
   ccCombineRegion = enable;
-  setCCLang(ccLang.split('-')[0]);
+  setCCLang(ccLang.split("-")[0]);
 }
 
 function tagVideo(e, lang) {
   var url = e.href;
-  
-  if (url) {
-    var overlays = e.querySelector('#overlays');
 
-    var ccStatus = overlays.querySelector('#cc-status');
+  if (url) {
+    var overlays = e.querySelector("#overlays");
+
+    var ccStatus = overlays.querySelector("#cc-status");
     // if already tagged remove it
-    if (ccStatus)
-      ccStatus.remove();
+    if (ccStatus) ccStatus.remove();
 
     var callback = (hasSubtitle) => {
       if (hasSubtitle) {
@@ -60,91 +59,94 @@ function tagVideo(e, lang) {
         function waitLoadingAndAppendElement() {
           if (overlays.childElementCount >= 2) {
             // Once load overlays, insert ccStatus
-            ccStatus = document.createElement('div');
-            ccStatus.id = 'cc-status';
-            ccStatus.style.display = 'inline-block';
-            ccStatus.overlayStyle = 'DEFAULT';
-            ccStatus.className = 'style-scope ytd-thumbnail';
+            ccStatus = document.createElement("div");
+            ccStatus.id = "cc-status";
+            ccStatus.style.display = "inline-block";
+            ccStatus.overlayStyle = "DEFAULT";
+            ccStatus.className = "style-scope ytd-thumbnail";
             ccStatus.style.top = 0;
             ccStatus.style.left = 0;
-            ccStatus.style.right = 'auto';
+            ccStatus.style.right = "auto";
             ccStatus.style.backgroundColor = ccColor1;
             ccStatus.style.color = ccColor2;
-            ccStatus.style.margin = '4px';
-            ccStatus.style.padding = '3px 4px';
+            ccStatus.style.margin = "4px";
+            ccStatus.style.padding = "3px 4px";
             ccStatus.style.fontSize = ccFontSize;
-            ccStatus.style.fontWeight = '500';
-            ccStatus.style.position = 'absolute';
-            ccStatus.style.borderRadius = '2px';
+            ccStatus.style.fontWeight = "500";
+            ccStatus.style.position = "absolute";
+            ccStatus.style.borderRadius = "2px";
             ccStatus.lang = ccLang;
 
-            var span = document.createElement('span');
-            span.className = 'style-scope ytd-thumbnail-overlay-time-status-renderer';
-            span.ariaLabel = ccLang.toUpperCase()+' CC';
-            span.textContent = ccLang.toUpperCase()+' CC';
+            var span = document.createElement("span");
+            span.className =
+              "style-scope ytd-thumbnail-overlay-time-status-renderer";
+            span.ariaLabel = ccLang.toUpperCase() + " CC";
+            span.textContent = ccLang.toUpperCase() + " CC";
             ccStatus.appendChild(span);
 
             // if user change langauge or url in processing,
             // Remove ccStatus
-            if(e.href != url || ccStatus.lang != ccLang) ccStatus.remove();
+            if (e.href != url || ccStatus.lang != ccLang) ccStatus.remove();
 
             overlays.insertBefore(ccStatus, overlays.lastChild);
             return;
           }
-        
-          wlTimeoutId = setTimeout(function() {
+
+          wlTimeoutId = setTimeout(function () {
             waitLoadingAndAppendElement();
           }, 100);
         }
-        
+
         waitLoadingAndAppendElement();
       }
-    }
+    };
 
-    if(ccCombineRegion) {
+    if (ccCombineRegion) {
       var langs = getRelatedLangCodes(ccLang);
       hasSubtitles(url, langs, callback);
-    } else
-      hasSubtitles(url, [lang], callback);
+    } else hasSubtitles(url, [lang], callback);
   }
 }
 
 function hasSubtitles(videoUrl, langs, callback) {
   // URL example : /watch?v=[video_id]
   var videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
-  var langCodeCheck = RegExp(`lang_code="(${langs.join('|')})"`);
+  var langCodeCheck = RegExp(`lang_code="(${langs.join("|")})"`);
 
   var request = new XMLHttpRequest();
-  request.onreadystatechange = function() {
+  request.onreadystatechange = function () {
     if (this.readyState == this.DONE) {
       if (this.status == 200) {
         callback(langCodeCheck.test(this.responseText));
       }
     }
   };
-   
-  request.open("GET", `https://video.google.com/timedtext?type=list&v=${videoId}`);
+
+  request.open(
+    "GET",
+    `https://video.google.com/timedtext?type=list&v=${videoId}`
+  );
   request.send();
 }
 
 function checkNodes(nodes) {
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     // is not http element
-    if (['#text', '#comment'].includes(node.nodeName)) return;
+    if (["#text", "#comment"].includes(node.nodeName)) return;
 
-    node.querySelectorAll('a#thumbnail').forEach(e => {
+    node.querySelectorAll("a#thumbnail").forEach((e) => {
       checkNode(e);
     });
-  })
+  });
 }
 
 function checkNode(node) {
-  if (node.tagName != 'A' || node.id != 'thumbnail') {
+  if (node.tagName != "A" || node.id != "thumbnail") {
     // if (node.id == 'video-title') console.log(node);
     return;
   }
   // except play list
-  if (node.parentElement.tagName == 'YTD-PLAYLIST-THUMBNAIL') return;
+  if (node.parentElement.tagName == "YTD-PLAYLIST-THUMBNAIL") return;
   addVideo(node);
 }
 
@@ -154,28 +156,28 @@ function addVideo(video) {
 
 function checkAllNode() {
   var contentElement = document.querySelector("body");
-  if(!contentElement)
-    return false;
+  if (!contentElement) return false;
 
   checkNodes(Array.from(contentElement.children));
 }
 
 function initObserver() {
-  if (!('MutationObserver' in window))
-    return false;
+  if (!("MutationObserver" in window)) return false;
 
   var contentElement = document.querySelector("body");
-  if(!contentElement)
-    return false;
+  if (!contentElement) return false;
 
   checkNodes(Array.from(contentElement.children));
 
-  mainObserver = new MutationObserver(mutations => {
-    mutations.forEach(mutation => {
+  mainObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
       checkNode(mutation.target);
-    })
+    });
   });
-  mainObserver.observe(contentElement, {subtree: true, attributeFilter: ['href']});
+  mainObserver.observe(contentElement, {
+    subtree: true,
+    attributeFilter: ["href"],
+  });
 
   clearTimeout(timeoutId); // Just for good measure
 
@@ -187,41 +189,52 @@ var timeoutId;
 function initTimeout() {
   clearTimeout(timeoutId);
 
-  if (initObserver())
-    return;
+  if (initObserver()) return;
 
-  timeoutId = setTimeout(function() {
+  timeoutId = setTimeout(function () {
     initTimeout();
   }, 2000);
 }
 
 // option update handlers
 chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
-  if ('YT-SUBTITLE-FILTER_lang' in req) setCCLang(req['YT-SUBTITLE-FILTER_lang']);
-  if ('YT-SUBTITLE-FILTER_color1' in req) setCCColor1(req['YT-SUBTITLE-FILTER_color1']);
-  if ('YT-SUBTITLE-FILTER_color2' in req) setCCColor2(req['YT-SUBTITLE-FILTER_color2']);
-  if ('YT-SUBTITLE-FILTER_tag-font-size' in req) setCCFontSize(req['YT-SUBTITLE-FILTER_tag-font-size']);
-  if ('YT-SUBTITLE-FILTER_combine-region' in req) setCCCombineRegion(items['YT-SUBTITLE-FILTER_combine-region']);
+  if ("YT-SUBTITLE-FILTER_lang" in req)
+    setCCLang(req["YT-SUBTITLE-FILTER_lang"]);
+  if ("YT-SUBTITLE-FILTER_color1" in req)
+    setCCColor1(req["YT-SUBTITLE-FILTER_color1"]);
+  if ("YT-SUBTITLE-FILTER_color2" in req)
+    setCCColor2(req["YT-SUBTITLE-FILTER_color2"]);
+  if ("YT-SUBTITLE-FILTER_tag-font-size" in req)
+    setCCFontSize(req["YT-SUBTITLE-FILTER_tag-font-size"]);
+  if ("YT-SUBTITLE-FILTER_combine-region" in req)
+    setCCCombineRegion(items["YT-SUBTITLE-FILTER_combine-region"]);
 });
 
 (async () => {
   // dynamic import
-  const src = chrome.runtime.getURL('js/lang.js');
+  const src = chrome.runtime.getURL("js/lang.js");
   getRelatedLangCodes = (await import(src)).getRelatedLangCodes;
 
   // Load data
-  chrome.storage.local.get([
-    'YT-SUBTITLE-FILTER_lang',
-    'YT-SUBTITLE-FILTER_color1',
-    'YT-SUBTITLE-FILTER_color2',
-    'YT-SUBTITLE-FILTER_tag-font-size',
-    'YT-SUBTITLE-FILTER_combine-region'
-  ], (items) => {
-    setCCLang(items['YT-SUBTITLE-FILTER_lang'] || 'en');
-    setCCColor1(items['YT-SUBTITLE-FILTER_color1'] || '#00000099');
-    setCCColor2(items['YT-SUBTITLE-FILTER_color2'] || '#FFFFFF');
-    setCCFontSize(items['YT-SUBTITLE-FILTER_tag-font-size'] || '1.2rem');
-    setCCCombineRegion('YT-SUBTITLE-FILTER_combine-region' in items ? items['YT-SUBTITLE-FILTER_combine-region'] : true);
-    initTimeout();
-  });
+  chrome.storage.local.get(
+    [
+      "YT-SUBTITLE-FILTER_lang",
+      "YT-SUBTITLE-FILTER_color1",
+      "YT-SUBTITLE-FILTER_color2",
+      "YT-SUBTITLE-FILTER_tag-font-size",
+      "YT-SUBTITLE-FILTER_combine-region",
+    ],
+    (items) => {
+      setCCLang(items["YT-SUBTITLE-FILTER_lang"] || "en");
+      setCCColor1(items["YT-SUBTITLE-FILTER_color1"] || "#00000099");
+      setCCColor2(items["YT-SUBTITLE-FILTER_color2"] || "#FFFFFF");
+      setCCFontSize(items["YT-SUBTITLE-FILTER_tag-font-size"] || "1.2rem");
+      setCCCombineRegion(
+        "YT-SUBTITLE-FILTER_combine-region" in items
+          ? items["YT-SUBTITLE-FILTER_combine-region"]
+          : true
+      );
+      initTimeout();
+    }
+  );
 })();
