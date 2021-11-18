@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body style="margin: 0">
+    <div id="main">
+      <popup-multi-page-menu class="popup-multi-page-menu">
+        <div class="items">
+          <popup-item-page>
+            <span style="font-weight: 600" data-locale="appName"
+              >Youtube Subtitle Filter</span
+            >
+          </popup-item-page>
+        </div>
+      </popup-multi-page-menu>
+      <popup-multi-page-menu class="popup-multi-page-menu">
+        <div class="items">
+          <popup-item-page>
+            <span class="title" data-locale="selectLang">Select Language</span>
+            <select class="value" id="lang-picker" data-width="fit"></select>
+          </popup-item-page>
+          <popup-item-page>
+            <span class="title" data-locale="color">Color</span>
+            <div class="value" style="display: flex">
+              <div id="color-display-wapper">
+                <color-display id="color1-display"></color-display>
+              </div>
+              <color-display id="color2-display"></color-display>
+            </div>
+          </popup-item-page>
+          <popup-item-page>
+            <div id="color1-picker" style="display: none"></div>
+          </popup-item-page>
+          <popup-item-page>
+            <div id="color2-picker" style="display: none"></div>
+          </popup-item-page>
+          <popup-item-page>
+            <span class="title" data-locale="tagSizeRange">tag size</span>
+            <input id="tag-size-range" class="value" type="range" />
+          </popup-item-page>
+          <popup-item-page>
+            <span class="title" data-locale="example">Example</span>
+            <div id="cc-status-example-wapper" class="value">
+              <div id="cc-status-example"><span>KO CC</span></div>
+            </div>
+          </popup-item-page>
+          <popup-item-page>
+            <span class="title" data-locale="combineRegion"
+              >Combine region</span
+            >
+            <input id="combine-region-checkbox" class="value" type="checkbox" />
+          </popup-item-page>
+        </div>
+      </popup-multi-page-menu>
+    </div>
+  </body>
+  <!-- iro.js -->
+  <script src="../lib/iro.min.js"></script>
+
+  <link rel="stylesheet" href="../css/popup.css" />
+  <script type="text/javascript" src="../js/popup.js"></script>
+  <script type="text/javascript" src="../js/localize.js"></script>
+</html>
