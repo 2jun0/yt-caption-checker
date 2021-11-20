@@ -8,8 +8,9 @@
   "author": "2jun0",
   "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
   "background": {
-    "scripts": ["js/background.js"],
-    "persistent": false
+    "page": "html/background.html",
+    "js": "js/background/activePopup.js",
+    "persistent": true
   },
   "page_action": {
     "default_name": "Options",
@@ -25,7 +26,13 @@
     }
   ],
   "web_accessible_resources": ["js/lang.js"],
-  "permissions": ["storage", "declarativeContent", "*://*.google.com/*"],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "declarativeContent",
+    "*://*.youtube.com/*",
+    "webRequest"
+  ],
   "icons": {
     "128": "asset/logo-big.png"
   }

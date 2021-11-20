@@ -111,22 +111,19 @@ function tagVideo(e, lang) {
 function hasSubtitles(videoUrl, langs, callback) {
   // URL example : /watch?v=[video_id]
   var videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
-  var langCodeCheck = RegExp(`lang_code="(${langs.join("|")})"`);
 
-  var request = new XMLHttpRequest();
-  request.onreadystatechange = function () {
-    if (this.readyState == this.DONE) {
-      if (this.status == 200) {
-        callback(langCodeCheck.test(this.responseText));
-      }
+  chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
+    if (tabs.length > 0) {
+      chrome.tabs.sendMessage(
+        tab.id,
+        {
+          key: "has-subtitles",
+          value: { langs, videoId },
+        },
+        callback
+      );
     }
-  };
-
-  request.open(
-    "GET",
-    `https://video.google.com/timedtext?type=list&v=${videoId}`
-  );
-  request.send();
+  });
 }
 
 function checkNodes(nodes) {
