@@ -117,7 +117,6 @@
     // URL example : /watch?v=[video_id]
     var videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
 
-    chrome.runtime.sendMessage;
     chrome.runtime.sendMessage(
       {
         type: "has-subtitles",
