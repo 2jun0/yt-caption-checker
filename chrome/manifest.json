@@ -4,7 +4,7 @@
   "description": "__MSG_appDesc__",
   "default_locale": "en",
   "manifest_version": 2,
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": "2jun0",
   "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
   "icons": {
