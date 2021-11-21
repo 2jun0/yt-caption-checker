@@ -4,12 +4,16 @@
   "description": "__MSG_appDesc__",
   "default_locale": "en",
   "manifest_version": 2,
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": "2jun0",
   "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
+  "icons": {
+    "128": "asset/logo-big.png"
+  },
   "background": {
-    "scripts": ["js/background.js"],
-    "persistent": false
+    "page": "html/background.html",
+    "js": "js/background/activePopup.js",
+    "persistent": true
   },
   "page_action": {
     "default_name": "Options",
@@ -21,12 +25,15 @@
       "matches": ["*://*.youtube.com/*"],
       "js": ["js/subtitleFilter.js"],
       "run_at": "document_end",
-      "all_frames": true
+      "all_frames": false
     }
   ],
   "web_accessible_resources": ["js/lang.js"],
-  "permissions": ["storage", "declarativeContent", "*://*.google.com/*"],
-  "icons": {
-    "128": "asset/logo-big.png"
-  }
+  "permissions": [
+    "activeTab",
+    "storage",
+    "declarativeContent",
+    "*://*.youtube.com/*"
+  ],
+  "content_security_policy": "script-src 'self' https://www.youtube.com/iframe_api https://www.youtube.com; object-src 'self'"
 }
