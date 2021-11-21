@@ -33,8 +33,7 @@
     "activeTab",
     "storage",
     "declarativeContent",
-    "*://*.youtube.com/*",
-    "webRequest"
+    "*://*.youtube.com/*"
   ],
   "content_security_policy": "script-src 'self' https://www.youtube.com/iframe_api https://www.youtube.com; object-src 'self'"
 }
