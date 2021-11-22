@@ -47,69 +47,86 @@
     setCCLang(ccLang.split("-")[0]);
   }
 
+  function waitOverlayLoaded(e, callback) {
+    let overlays = e.querySelector("#overlays");
+
+    let intervalId = setInterval(() => {
+      if (overlays.childElementCount < 2) return;
+
+      callback(overlays);
+
+      clearInterval(intervalId);
+    }, 100);
+  }
+
+  function showTagLoading(e) {
+    // To avoid deleting the ccLoading,
+    // Wait loading video overlays
+    waitOverlayLoaded(e, (overlays) => {
+      if (overlays.querySelector("#cc-loading")) return;
+
+      let ccLoading = document.createElement("div");
+      ccLoading.id = "cc-loading";
+      ccLoading.style.color = ccColor2;
+
+      overlays.insertBefore(ccLoading, overlays.lastChild);
+    });
+  }
+
   function tagVideo(e, lang) {
-    var url = e.href;
+    let url = e.href;
+    if (!url) return;
 
-    if (url) {
-      var overlays = e.querySelector("#overlays");
+    let ccStatus = e.querySelector("#cc-status");
+    // if already tagged remove it
+    if (ccStatus) ccStatus.remove();
 
-      var ccStatus = overlays.querySelector("#cc-status");
-      // if already tagged remove it
-      if (ccStatus) ccStatus.remove();
+    // Show tag loading
+    showTagLoading(e);
 
-      var callback = (hasSubtitle) => {
-        if (hasSubtitle) {
-          // To avoid deleting the elements,
-          // Wait loading video overlays
-          function waitLoadingAndAppendElement() {
-            if (overlays.childElementCount >= 2) {
-              // Once load overlays, insert ccStatus
-              ccStatus = document.createElement("div");
-              ccStatus.id = "cc-status";
-              ccStatus.style.display = "inline-block";
-              ccStatus.overlayStyle = "DEFAULT";
-              ccStatus.className = "style-scope ytd-thumbnail";
-              ccStatus.style.top = 0;
-              ccStatus.style.left = 0;
-              ccStatus.style.right = "auto";
-              ccStatus.style.backgroundColor = ccColor1;
-              ccStatus.style.color = ccColor2;
-              ccStatus.style.margin = "4px";
-              ccStatus.style.padding = "3px 4px";
-              ccStatus.style.fontSize = ccFontSize;
-              ccStatus.style.fontWeight = "500";
-              ccStatus.style.position = "absolute";
-              ccStatus.style.borderRadius = "2px";
-              ccStatus.lang = ccLang;
-
-              var span = document.createElement("span");
-              span.className =
-                "style-scope ytd-thumbnail-overlay-time-status-renderer";
-              span.ariaLabel = ccLang.toUpperCase() + " CC";
-              span.textContent = ccLang.toUpperCase() + " CC";
-              ccStatus.appendChild(span);
-
-              // if user change langauge or url in processing,
-              // Remove ccStatus
-              if (e.href != url || ccStatus.lang != ccLang) ccStatus.remove();
-
-              overlays.insertBefore(ccStatus, overlays.lastChild);
-              return;
-            }
-
-            wlTimeoutId = setTimeout(function () {
-              waitLoadingAndAppendElement();
-            }, 100);
-          }
-
-          waitLoadingAndAppendElement();
+    var callback = (hasSubtitle) => {
+      // To avoid deleting the ccStatus,
+      // Wait loading video overlays
+      waitOverlayLoaded(e, (overlays) => {
+        function removeLoading() {
+          let ccLoading = overlays.querySelector("#cc-loading");
+          if (ccLoading) ccLoading.remove();
         }
-      };
 
-      if (ccCombineRegion) {
-        var langs = getRelatedLangCodes(ccLang);
-        hasSubtitles(url, langs, callback);
-      } else hasSubtitles(url, [lang], callback);
+        if (!hasSubtitle) {
+          removeLoading();
+          return;
+        }
+        // Once load overlays, insert ccStatus
+        ccStatus = document.createElement("div");
+        ccStatus.id = "cc-status";
+        ccStatus.overlayStyle = "DEFAULT";
+        ccStatus.className = "style-scope ytd-thumbnail";
+        ccStatus.style.backgroundColor = ccColor1;
+        ccStatus.style.color = ccColor2;
+        ccStatus.style.fontSize = ccFontSize;
+        ccStatus.lang = ccLang;
+
+        let span = document.createElement("span");
+        span.className =
+          "style-scope ytd-thumbnail-overlay-time-status-renderer";
+        span.ariaLabel = ccLang.toUpperCase() + " CC";
+        span.textContent = ccLang.toUpperCase() + " CC";
+        ccStatus.appendChild(span);
+
+        // if user change langauge or url in processing,
+        // Remove ccStatus
+        if (e.href != url || ccStatus.lang != ccLang) ccStatus.remove();
+        removeLoading();
+        overlays.insertBefore(ccStatus, overlays.lastChild);
+      });
+    };
+
+    if (ccCombineRegion) {
+      let langs = getRelatedLangCodes(ccLang);
+      hasSubtitles(url, langs, callback);
+    } else {
+      hasSubtitles(url, [lang], callback);
     }
   }
 

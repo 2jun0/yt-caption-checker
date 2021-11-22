@@ -53,7 +53,7 @@ function checkLangCodes(videoId, langs, callback) {
     });
 
     callback(hasSubtitles);
-    ytPlayer.destroy();
+    document.getElementById(`player-${videoId}`).remove();
   });
 }
 
