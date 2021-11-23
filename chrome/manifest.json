@@ -14,10 +14,9 @@
   },
   "background": {
     "page": "html/background.html",
-    "js": "js/background/activePopup.js",
     "persistent": true
   },
-  "page_action": {
+  "browser_action": {
     "default_name": "Options",
     "default_popup": "html/popup.html",
     "default_icon": "asset/logo-little.png"
@@ -32,6 +31,6 @@
     }
   ],
   "web_accessible_resources": ["js/lang.js"],
-  "permissions": ["storage", "declarativeContent", "*://*.youtube.com/*"],
+  "permissions": ["storage", "*://*.youtube.com/*"],
   "content_security_policy": "script-src 'self' https://www.youtube.com/iframe_api https://www.youtube.com; object-src 'self'"
 }
