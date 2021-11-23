@@ -3,14 +3,24 @@
   const { getRelatedLangCodes } = await import(
     chrome.runtime.getURL("js/lang.js")
   );
+  const {
+    FIELD_COLOR_BG,
+    FIELD_COLOR_TXT,
+    FIELD_TAG_FONT_SIZE,
+    FIELD_COMBINE_REGION,
+    FIELD_LANG,
+    DEFAULT_VALUE,
+    loadData,
+  } = await import(chrome.runtime.getURL("js/storage.js"));
 
-  var ccLang = "??";
-  var ccColor1 = "#00000099";
-  var ccColor2 = "#FFFFFF";
-  var ccFontSize = "1.2rem";
-  var ccCombineRegion = true;
+  let ccLang = DEFAULT_VALUE[FIELD_LANG];
+  let ccColorBg = DEFAULT_VALUE[FIELD_COLOR_BG];
+  let ccColorTxt = DEFAULT_VALUE[FIELD_COLOR_TXT];
+  let ccFontSize = DEFAULT_VALUE[FIELD_TAG_FONT_SIZE];
+  let ccCombineRegion = DEFAULT_VALUE[FIELD_COMBINE_REGION];
 
-  var mainObserver;
+  let mainObserver;
+  let intervalId;
 
   function setCCLang(lang) {
     if (ccLang == lang) return;
@@ -18,19 +28,19 @@
     checkAllNode();
   }
 
-  function setCCColor1(color1) {
-    if (ccColor1 == color1) return;
-    ccColor1 = color1;
+  function setCCColorBg(colorBg) {
+    if (ccColorBg == colorBg) return;
+    ccColorBg = colorBg;
     document.querySelectorAll("#cc-status").forEach((ccStatus) => {
-      ccStatus.style.backgroundColor = color1;
+      ccStatus.style.backgroundColor = colorBg;
     });
   }
 
-  function setCCColor2(color2) {
-    if (ccColor2 == color2) return;
-    ccColor2 = color2;
+  function setCCColorTxt(colortxt) {
+    if (ccColorTxt == colortxt) return;
+    ccColorTxt = colortxt;
     document.querySelectorAll("#cc-status").forEach((ccStatus) => {
-      ccStatus.style.color = color2;
+      ccStatus.style.color = colortxt;
     });
   }
 
@@ -67,7 +77,7 @@
 
       let ccLoading = document.createElement("div");
       ccLoading.id = "cc-loading";
-      ccLoading.style.color = ccColor2;
+      ccLoading.style.color = ccColorTxt;
 
       overlays.insertBefore(ccLoading, overlays.lastChild);
     });
@@ -102,8 +112,8 @@
         ccStatus.id = "cc-status";
         ccStatus.overlayStyle = "DEFAULT";
         ccStatus.className = "style-scope ytd-thumbnail";
-        ccStatus.style.backgroundColor = ccColor1;
-        ccStatus.style.color = ccColor2;
+        ccStatus.style.backgroundColor = ccColorBg;
+        ccStatus.style.color = ccColorTxt;
         ccStatus.style.fontSize = ccFontSize;
         ccStatus.lang = ccLang;
 
@@ -193,57 +203,43 @@
       attributeFilter: ["href"],
     });
 
-    clearTimeout(timeoutId); // Just for good measure
+    clearInterval(intervalId); // Just for good measure
 
     return true;
   }
 
-  var timeoutId;
-
-  function initTimeout() {
-    clearTimeout(timeoutId);
-
-    if (initObserver()) return;
-
-    timeoutId = setTimeout(function () {
-      initTimeout();
+  function initInterval() {
+    intervalId = setInterval(() => {
+      if (initObserver()) clearInterval(intervalId);
     }, 2000);
   }
 
   // option update handlers
   chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
-    if ("YT-SUBTITLE-FILTER_lang" in req)
-      setCCLang(req["YT-SUBTITLE-FILTER_lang"]);
-    if ("YT-SUBTITLE-FILTER_color1" in req)
-      setCCColor1(req["YT-SUBTITLE-FILTER_color1"]);
-    if ("YT-SUBTITLE-FILTER_color2" in req)
-      setCCColor2(req["YT-SUBTITLE-FILTER_color2"]);
-    if ("YT-SUBTITLE-FILTER_tag-font-size" in req)
-      setCCFontSize(req["YT-SUBTITLE-FILTER_tag-font-size"]);
-    if ("YT-SUBTITLE-FILTER_combine-region" in req)
-      setCCCombineRegion(items["YT-SUBTITLE-FILTER_combine-region"]);
+    if (FIELD_LANG in req) setCCLang(req[FIELD_LANG]);
+    if (FIELD_COLOR_BG in req) setCCColorBg(req[FIELD_COLOR_BG]);
+    if (FIELD_COLOR_TXT in req) setCCColorTxt(req[FIELD_COLOR_TXT]);
+    if (FIELD_TAG_FONT_SIZE in req) setCCFontSize(req[FIELD_TAG_FONT_SIZE]);
+    if (FIELD_COMBINE_REGION in req)
+      setCCCombineRegion(items[FIELD_COMBINE_REGION]);
   });
 
   // Load data
-  chrome.storage.local.get(
+  loadData(
     [
-      "YT-SUBTITLE-FILTER_lang",
-      "YT-SUBTITLE-FILTER_color1",
-      "YT-SUBTITLE-FILTER_color2",
-      "YT-SUBTITLE-FILTER_tag-font-size",
-      "YT-SUBTITLE-FILTER_combine-region",
+      FIELD_LANG,
+      FIELD_COLOR_BG,
+      FIELD_COLOR_TXT,
+      FIELD_TAG_FONT_SIZE,
+      FIELD_COMBINE_REGION,
     ],
     (items) => {
-      setCCLang(items["YT-SUBTITLE-FILTER_lang"] || "en");
-      setCCColor1(items["YT-SUBTITLE-FILTER_color1"] || "#00000099");
-      setCCColor2(items["YT-SUBTITLE-FILTER_color2"] || "#FFFFFF");
-      setCCFontSize(items["YT-SUBTITLE-FILTER_tag-font-size"] || "1.2rem");
-      setCCCombineRegion(
-        "YT-SUBTITLE-FILTER_combine-region" in items
-          ? items["YT-SUBTITLE-FILTER_combine-region"]
-          : true
-      );
-      initTimeout();
+      setCCLang(items[FIELD_LANG]);
+      setCCColorBg(items[FIELD_COLOR_BG]);
+      setCCColorTxt(items[FIELD_COLOR_TXT]);
+      setCCFontSize(items[FIELD_TAG_FONT_SIZE]);
+      setCCCombineRegion(items[FIELD_COMBINE_REGION]);
+      initInterval();
     }
   );
 })();
