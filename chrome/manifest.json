@@ -8,7 +8,9 @@
   "author": "2jun0",
   "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
   "icons": {
-    "128": "asset/logo-big.png"
+    "32": "asset/logo-big-32.png",
+    "64": "asset/logo-big-64.png",
+    "128": "asset/logo-big-128.png"
   },
   "background": {
     "page": "html/background.html",
