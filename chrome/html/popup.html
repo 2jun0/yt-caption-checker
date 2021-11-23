@@ -24,16 +24,16 @@
             <span class="title" data-locale="color">Color</span>
             <div class="value" style="display: flex">
               <div id="color-display-wapper">
-                <color-display id="color1-display"></color-display>
+                <color-display id="color-bg-display"></color-display>
               </div>
-              <color-display id="color2-display"></color-display>
+              <color-display id="color-txt-display"></color-display>
             </div>
           </popup-item-page>
           <popup-item-page>
-            <div id="color1-picker" style="display: none"></div>
+            <div id="color-bg-picker" style="display: none"></div>
           </popup-item-page>
           <popup-item-page>
-            <div id="color2-picker" style="display: none"></div>
+            <div id="color-txt-picker" style="display: none"></div>
           </popup-item-page>
           <popup-item-page>
             <span class="title" data-locale="tagSizeRange">tag size</span>
@@ -42,7 +42,7 @@
           <popup-item-page>
             <span class="title" data-locale="example">Example</span>
             <div id="cc-status-example-wapper" class="value">
-              <div id="cc-status-example"><span>KO CC</span></div>
+              <div id="cc-status-example"><span>EN CC</span></div>
             </div>
           </popup-item-page>
           <popup-item-page>
@@ -57,8 +57,8 @@
   </body>
   <!-- iro.js -->
   <script src="../lib/iro.min.js"></script>
+  <script src="../js/popup/localize.js"></script>
 
   <link rel="stylesheet" href="../css/popup.css" />
-  <script type="text/javascript" src="../js/popup.js"></script>
-  <script type="text/javascript" src="../js/localize.js"></script>
+  <script type="module" src="../js/popup/popup.js"></script>
 </html>

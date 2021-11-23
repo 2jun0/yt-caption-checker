@@ -4,14 +4,19 @@
   "description": "__MSG_appDesc__",
   "default_locale": "en",
   "manifest_version": 2,
-  "version": "1.1.1",
+  "version": "1.2.3",
   "author": "2jun0",
   "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
-  "background": {
-    "scripts": ["js/background.js"],
-    "persistent": false
+  "icons": {
+    "32": "asset/logo-big-32.png",
+    "64": "asset/logo-big-64.png",
+    "128": "asset/logo-big-128.png"
   },
-  "page_action": {
+  "background": {
+    "page": "html/background.html",
+    "persistent": true
+  },
+  "browser_action": {
     "default_name": "Options",
     "default_popup": "html/popup.html",
     "default_icon": "asset/logo-little.png"
@@ -19,14 +24,13 @@
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],
-      "js": ["js/subtitleFilter.js"],
+      "js": ["js/content_script/subtitleFilter.js"],
+      "css": ["css/content_script.css"],
       "run_at": "document_end",
-      "all_frames": true
+      "all_frames": false
     }
   ],
-  "web_accessible_resources": ["js/lang.js"],
-  "permissions": ["storage", "declarativeContent", "*://*.google.com/*"],
-  "icons": {
-    "128": "asset/logo-big.png"
-  }
+  "web_accessible_resources": ["js/lang.js", "js/storage.js"],
+  "permissions": ["*://*.youtube.com/*", "storage", "unlimitedStorage"],
+  "content_security_policy": "script-src 'self' https://www.youtube.com/iframe_api https://www.youtube.com; object-src 'self'"
 }

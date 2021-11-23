@@ -1,4 +1,4 @@
-const langs = [
+export const langs = [
   {
     code: "ha",
     displayName: "(Hausa) هَوُسَ",
@@ -837,7 +837,7 @@ const langs = [
   },
 ];
 
-function getRelatedLangCodes(originLangCode) {
+export function getRelatedLangCodes(originLangCode) {
   var relatedLangCodes = [originLangCode];
   langs.forEach((lang) => {
     if (lang.code.match(new RegExp(`${originLangCode}-`))) {
@@ -846,5 +846,3 @@ function getRelatedLangCodes(originLangCode) {
   });
   return relatedLangCodes;
 }
-
-export { langs, getRelatedLangCodes };
