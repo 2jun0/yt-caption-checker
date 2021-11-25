@@ -1,3 +1,5 @@
+import { FIELD_VIDEO_LANGS, loadData, saveData } from "../storage.js";
+
 let bgTabId = null;
 
 // Get background tab id
@@ -44,16 +46,28 @@ function loadYtPlayer(videoId, callback) {
 function checkLangCodes(videoId, langs, callback) {
   let hasSubtitles = false;
   let langCodeCheck = RegExp(`(${langs.join("|")})`);
+  let vLangField = `${FIELD_VIDEO_LANGS}_${videoId}`;
 
-  loadYtPlayer(videoId, (ytPlayer) => {
-    let ccList = ytPlayer.getOption("captions", "tracklist");
+  loadData(vLangField, (items) => {
+    console.log(vLangField, items[vLangField]);
+    if (langCodeCheck.test(items[vLangField])) {
+      callback(true);
+    } else {
+      loadYtPlayer(videoId, (ytPlayer) => {
+        let langCodeList = ytPlayer
+          .getOption("captions", "tracklist")
+          .map((cc) => cc.languageCode);
 
-    ccList.forEach((cc) => {
-      hasSubtitles ||= langCodeCheck.test(cc.languageCode);
-    });
+        langCodeList.forEach((langCode) => {
+          hasSubtitles ||= langCodeCheck.test(langCode);
+        });
 
-    callback(hasSubtitles);
-    document.getElementById(`player-${videoId}`).remove();
+        saveData(vLangField, langCodeList.join(","), (a) => console.log(a));
+
+        callback(hasSubtitles);
+        document.getElementById(`player-${videoId}`).remove();
+      });
+    }
   });
 }
 
