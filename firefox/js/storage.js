@@ -15,7 +15,7 @@ export const DEFAULT_VALUE = {
 };
 
 export function loadData(fields, callback) {
-  if (!Array.isArray(fields)) fields = Array.from(fields);
+  if (!Array.isArray(fields)) fields = [fields];
 
   function dataInitizier(items) {
     fields.forEach((field) => {
