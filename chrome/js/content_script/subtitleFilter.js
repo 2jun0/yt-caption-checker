@@ -94,7 +94,7 @@
     // Show tag loading
     showTagLoading(e);
 
-    var callback = (hasSubtitle) => {
+    let callback = (hasSubtitle) => {
       // To avoid deleting the ccStatus,
       // Wait loading video overlays
       waitOverlayLoaded(e, (overlays) => {
@@ -142,7 +142,6 @@
 
   function hasSubtitles(videoUrl, langs, callback) {
     // URL example : /watch?v=[video_id]
-    var videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
 
     chrome.runtime.sendMessage(
       {
@@ -151,6 +150,7 @@
       },
       callback
     );
+    const videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
   }
 
   function checkNodes(nodes) {
@@ -179,7 +179,7 @@
   }
 
   function checkAllNode() {
-    var contentElement = document.querySelector("body");
+    let contentElement = document.querySelector("body");
     if (!contentElement) return false;
 
     checkNodes(Array.from(contentElement.children));
@@ -188,7 +188,7 @@
   function initObserver() {
     if (!("MutationObserver" in window)) return false;
 
-    var contentElement = document.querySelector("body");
+    let contentElement = document.querySelector("body");
     if (!contentElement) return false;
 
     checkNodes(Array.from(contentElement.children));

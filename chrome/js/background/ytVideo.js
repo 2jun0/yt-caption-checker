@@ -44,13 +44,13 @@ function loadYtPlayer(videoId, callback) {
 }
 
 function checkLangCodes(videoId, langs, callback) {
+  const langCodeCheck = RegExp(`(${langs.join("|")})`);
+  const vLangField = `${FIELD_VIDEO_LANGS}_${videoId}`;
   let hasSubtitles = false;
-  let langCodeCheck = RegExp(`(${langs.join("|")})`);
-  let vLangField = `${FIELD_VIDEO_LANGS}_${videoId}`;
 
   loadData(vLangField, (items) => {
     if (langCodeCheck.test(items[vLangField])) {
-      callback(true);
+      hasSubtitles = true;
     } else {
       loadYtPlayer(videoId, (ytPlayer) => {
         let langCodeList = ytPlayer
@@ -62,11 +62,11 @@ function checkLangCodes(videoId, langs, callback) {
         });
 
         saveData(vLangField, langCodeList.join(","));
-
-        callback(hasSubtitles);
         document.getElementById(`player-${videoId}`).remove();
       });
     }
+
+    callback(hasSubtitles);
   });
 }
 
@@ -78,6 +78,5 @@ chrome.runtime.onMessage.addListener(({ type, value }, sender, sendRes) => {
 
     checkLangCodes(videoId, langs, sendRes);
   }
-
-  return true;
+  return true; // Inform Chrome that we will make a delayed sendResponse
 });
