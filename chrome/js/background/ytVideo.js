@@ -49,7 +49,6 @@ function checkLangCodes(videoId, langs, callback) {
   let vLangField = `${FIELD_VIDEO_LANGS}_${videoId}`;
 
   loadData(vLangField, (items) => {
-    console.log(vLangField, items[vLangField]);
     if (langCodeCheck.test(items[vLangField])) {
       callback(true);
     } else {
@@ -62,7 +61,7 @@ function checkLangCodes(videoId, langs, callback) {
           hasSubtitles ||= langCodeCheck.test(langCode);
         });
 
-        saveData(vLangField, langCodeList.join(","), (a) => console.log(a));
+        saveData(vLangField, langCodeList.join(","));
 
         callback(hasSubtitles);
         document.getElementById(`player-${videoId}`).remove();
