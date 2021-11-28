@@ -4,13 +4,13 @@
   "description": "__MSG_appDesc__",
   "default_locale": "en",
   "manifest_version": 2,
-  "version": "1.2.5",
+  "version": "1.3.0",
   "author": "2jun0",
   "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
   "icons": {
-    "32": "asset/logo-big-32.png",
-    "64": "asset/logo-big-64.png",
-    "128": "asset/logo-big-128.png"
+    "32": "asset/logo/logo-big-32.png",
+    "64": "asset/logo/logo-big-64.png",
+    "128": "asset/logo/logo-big-128.png"
   },
   "background": {
     "page": "html/background.html",
@@ -19,7 +19,7 @@
   "browser_action": {
     "default_name": "Options",
     "default_popup": "html/popup.html",
-    "default_icon": "asset/logo-little.png"
+    "default_icon": "asset/logo/logo-little.png"
   },
   "content_scripts": [
     {

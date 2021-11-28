@@ -9,9 +9,9 @@ Add a subtitle tag language that you want on the video thumbnail in the YouTube.
 
 ## Showcase
 
-![Showcase Videos](chrome/asset/showcase_videos.jpg)
+![Showcase Videos](chrome/asset/showcase/showcase_videos.jpg)
 
-![Showcase In Video](chrome/asset/showcase_invideo.jpg)
+![Showcase In Video](chrome/asset/showcase/showcase_invideo.jpg)
 
 ## Customize
 
@@ -19,7 +19,7 @@ Add a subtitle tag language that you want on the video thumbnail in the YouTube.
 - You can resize the subtitle tags
 - You can search for subtitles by grouping regions. (ex en-US + en-GB)
 
-![Showcase Popup](chrome/asset/showcase_popup_1.jpg) ![Showcase Popup](chrome/asset/showcase_popup_2.jpg)
+![Showcase Popup](chrome/asset/showcase/showcase_popup_1.jpg) ![Showcase Popup](chrome/asset/showcase/showcase_popup_2.jpg)
 
 ## Download
 
