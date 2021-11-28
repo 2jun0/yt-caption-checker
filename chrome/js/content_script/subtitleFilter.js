@@ -58,7 +58,8 @@
   }
 
   function waitOverlayLoaded(e, callback) {
-    let overlays = e.querySelector("#overlays");
+    const overlays = e.querySelector("#overlays");
+    if (overlays.childElementCount >= 2) callback(overlays);
 
     let intervalId = setInterval(() => {
       if (overlays.childElementCount < 2) return;
@@ -98,13 +99,13 @@
       // To avoid deleting the ccStatus,
       // Wait loading video overlays
       waitOverlayLoaded(e, (overlays) => {
-        function removeLoading() {
+        function removeTagLoading() {
           let ccLoading = overlays.querySelector("#cc-loading");
           if (ccLoading) ccLoading.remove();
         }
 
         if (!hasSubtitle) {
-          removeLoading();
+          removeTagLoading();
           return;
         }
         // Once load overlays, insert ccStatus
@@ -127,7 +128,7 @@
         // if user change langauge or url in processing,
         // Remove ccStatus
         if (e.href != url || ccStatus.lang != ccLang) ccStatus.remove();
-        removeLoading();
+        removeTagLoading();
         overlays.insertBefore(ccStatus, overlays.lastChild);
       });
     };
@@ -142,15 +143,27 @@
 
   function hasSubtitles(videoUrl, langs, callback) {
     // URL example : /watch?v=[video_id]
-
-    chrome.runtime.sendMessage(
-      {
-        type: "has-subtitles",
-        value: { langs, videoId },
-      },
-      callback
-    );
     const videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
+
+    function sendMsg() {
+      chrome.runtime.sendMessage(
+        {
+          type: "has-subtitles",
+          value: { langs, videoId },
+        },
+        (res) => {
+          let lastError = chrome.runtime.lastError;
+          if (lastError) {
+            console.error(lastError.message);
+            return;
+          }
+
+          callback(res);
+        }
+      );
+    }
+
+    sendMsg();
   }
 
   function checkNodes(nodes) {

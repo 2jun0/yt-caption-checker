@@ -71,10 +71,10 @@ function getKeyByValue(object, value) {
   return Object.keys(object).find((key) => object[key] === value);
 }
 
-function sendMessage(message, callback) {
+function sendMessage(key, value, callback) {
   chrome.tabs.query({}, (tabs) => {
     tabs.forEach((tab) => {
-      chrome.tabs.sendMessage(tab.id, message, callback);
+      chrome.tabs.sendMessage(tab.id, { [key]: value }, callback);
     });
   });
 }
@@ -146,7 +146,7 @@ function combineRegion(enable) {
 }
 langPicker.onchange = () => {
   setLanguage(langPicker.value);
-  sendMessage({ FIELD_LANG: langPicker.value });
+  sendMessage(FIELD_LANG, langPicker.value);
 };
 
 colorBgDisplay.onclick = () => {
@@ -169,24 +169,22 @@ mainDiv.onclick = (e) => {
 
 colorBgPicker.on("color:change", (color) => {
   setColorBg(color.hex8String, false);
-  sendMessage({ FIELD_COLOR_BG: color.hex8String });
+  sendMessage(FIELD_COLOR_BG, color.hex8String);
 });
 colorTxtPicker.on("color:change", (color) => {
   setColorTxt(color.hexString, false);
-  sendMessage({ FIELD_COLOR_TXT: color.hexString });
+  sendMessage(FIELD_COLOR_TXT, color.hexString);
 });
 
 tagSizeRange.oninput = () => {
   let idx = tagSizeRange.value;
   setTagFontSize(TagFontSizes[idx]);
-  sendMessage({ FIELD_TAG_FONT_SIZE: TagFontSizes[idx] });
+  sendMessage(FIELD_TAG_FONT_SIZE, TagFontSizes[ix]);
 };
 
 combineRegionCheckbox.onchange = () => {
   combineRegion(combineRegionCheckbox.checked);
-  sendMessage({
-    FIELD_COMBINE_REGION: combineRegionCheckbox.checked,
-  });
+  sendMessage(FIELD_COMBINE_REGION, combineRegionCheckbox.checked);
 };
 
 // init tag size range

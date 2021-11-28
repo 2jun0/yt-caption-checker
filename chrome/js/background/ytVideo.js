@@ -1,14 +1,5 @@
 import { FIELD_VIDEO_LANGS, loadData, saveData } from "../storage.js";
 
-let bgTabId = null;
-
-// Get background tab id
-chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
-  if (tabs.length > 0) {
-    bgTabId = tabs[0].id;
-  }
-});
-
 // Load YouTube Video Iframe Url
 function loadYtPlayer(videoId, callback) {
   // Already exists
@@ -21,22 +12,25 @@ function loadYtPlayer(videoId, callback) {
   let ytPlayer = new YT.Player(`player-${videoId}`, {
     videoId: videoId,
     playerVars: {
-      cc_load_policy: 1,
       autoplay: 1,
-      origin: window.location.origin,
+      cc_load_policy: 1,
+      suggestedQuality: "tiny",
     },
     events: {
       onReady: ({ target, data }) => {
-        ytPlayer.mute();
+        ytPlayer.pauseVideo();
 
         // Wait until the option is loaded.
+        let count = 0;
         let intervalId = setInterval(() => {
           let ccList = ytPlayer.getOption("captions", "tracklist");
-          if (ccList) {
+          // over 60 sec => video doesn't have any captions
+          if (ccList || count > 600) {
             clearInterval(intervalId);
             callback(ytPlayer);
             return;
           }
+          count++;
         }, 100);
       },
     },
@@ -46,27 +40,39 @@ function loadYtPlayer(videoId, callback) {
 function checkLangCodes(videoId, langs, callback) {
   const langCodeCheck = RegExp(`(${langs.join("|")})`);
   const vLangField = `${FIELD_VIDEO_LANGS}_${videoId}`;
-  let hasSubtitles = false;
 
   loadData(vLangField, (items) => {
-    if (langCodeCheck.test(items[vLangField])) {
-      hasSubtitles = true;
-    } else {
-      loadYtPlayer(videoId, (ytPlayer) => {
-        let langCodeList = ytPlayer
-          .getOption("captions", "tracklist")
-          .map((cc) => cc.languageCode);
+    if (items[vLangField]) {
+      const langCodes = items[vLangField].langCodes;
+      const searchTime = items[vLangField].searchTime;
 
-        langCodeList.forEach((langCode) => {
-          hasSubtitles ||= langCodeCheck.test(langCode);
-        });
-
-        saveData(vLangField, langCodeList.join(","));
-        document.getElementById(`player-${videoId}`).remove();
-      });
+      // After one day, the search starts again.
+      if (Date.now() - searchTime < 86400000) {
+        callback(langCodeCheck.test(langCodes));
+        return;
+      }
     }
 
-    callback(hasSubtitles);
+    // The subtitle search start
+    loadYtPlayer(videoId, (ytPlayer) => {
+      let langCodeList = (
+        ytPlayer.getOption("captions", "tracklist") || []
+      ).map((cc) => cc.languageCode);
+
+      let hasSubtitles = false;
+      langCodeList.forEach((langCode) => {
+        hasSubtitles ||= langCodeCheck.test(langCode);
+      });
+
+      saveData(vLangField, {
+        langCodes: langCodeList.join(","),
+        searchTime: Date.now(),
+      });
+      // remove yt player
+      document.getElementById(`player-${videoId}`).remove();
+
+      callback(hasSubtitles);
+    });
   });
 }
 
