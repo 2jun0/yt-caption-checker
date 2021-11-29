@@ -68,12 +68,12 @@ var TagFontSizes = [
 // utils
 
 function getKeyByValue(object, value) {
-  return Object.keys(object).find((key) => object[key] === value);
+  return Object.keys(object).find(key => object[key] === value);
 }
 
 function sendMessage(key, value, callback) {
-  chrome.tabs.query({}, (tabs) => {
-    tabs.forEach((tab) => {
+  chrome.tabs.query({}, tabs => {
+    tabs.forEach(tab => {
       chrome.tabs.sendMessage(tab.id, { [key]: value }, callback);
     });
   });
@@ -87,7 +87,7 @@ function updateLangOptions() {
   // Reset lang picker's options
   while (langPicker.firstChild) langPicker.removeChild(langPicker.firstChild);
 
-  langs.forEach((lang) => {
+  langs.forEach(lang => {
     if (combineRegionCheckbox.checked && lang.code.includes('-')) return;
 
     var option = document.createElement('option');
@@ -160,18 +160,18 @@ colorTxtDisplay.onclick = () => {
   else colorTxtPicker.el.style.display = 'none';
 };
 
-mainDiv.onclick = (e) => {
+mainDiv.onclick = e => {
   if (!['color-bg-picker', 'color-bg-display'].includes(e.target.id))
     colorBgPicker.el.style.display = 'none';
   if (!['color-txt-picker', 'color-txt-display'].includes(e.target.id))
     colorTxtPicker.el.style.display = 'none';
 };
 
-colorBgPicker.on('color:change', (color) => {
+colorBgPicker.on('color:change', color => {
   setColorBg(color.hex8String, false);
   sendMessage(FIELD_COLOR_BG, color.hex8String);
 });
-colorTxtPicker.on('color:change', (color) => {
+colorTxtPicker.on('color:change', color => {
   setColorTxt(color.hexString, false);
   sendMessage(FIELD_COLOR_TXT, color.hexString);
 });
@@ -202,7 +202,7 @@ loadData(
     FIELD_TAG_FONT_SIZE,
     FIELD_COMBINE_REGION,
   ],
-  (items) => {
+  items => {
     setLanguage(items[FIELD_LANG]);
     setColorBg(items[FIELD_COLOR_BG]);
     setColorTxt(items[FIELD_COLOR_TXT]);

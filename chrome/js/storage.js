@@ -18,7 +18,7 @@ export function loadData(fields, callback) {
   if (!Array.isArray(fields)) fields = [fields];
 
   function dataInitizier(items) {
-    fields.forEach((field) => {
+    fields.forEach(field => {
       if (!items.hasOwnProperty(field)) items[field] = DEFAULT_VALUE[field];
     });
 

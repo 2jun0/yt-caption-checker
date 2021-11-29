@@ -31,7 +31,7 @@
   function setCCColorBg(colorBg) {
     if (ccColorBg == colorBg) return;
     ccColorBg = colorBg;
-    document.querySelectorAll('#cc-status').forEach((ccStatus) => {
+    document.querySelectorAll('#cc-status').forEach(ccStatus => {
       ccStatus.style.backgroundColor = colorBg;
     });
   }
@@ -39,7 +39,7 @@
   function setCCColorTxt(colortxt) {
     if (ccColorTxt == colortxt) return;
     ccColorTxt = colortxt;
-    document.querySelectorAll('#cc-status').forEach((ccStatus) => {
+    document.querySelectorAll('#cc-status').forEach(ccStatus => {
       ccStatus.style.color = colortxt;
     });
   }
@@ -47,7 +47,7 @@
   function setCCFontSize(fontSize) {
     if (ccFontSize == fontSize) return;
     ccFontSize = fontSize;
-    document.querySelectorAll('#cc-status').forEach((ccStatus) => {
+    document.querySelectorAll('#cc-status').forEach(ccStatus => {
       ccStatus.style.fontSize = fontSize;
     });
   }
@@ -73,7 +73,7 @@
   function showTagLoading(e) {
     // To avoid deleting the ccLoading,
     // Wait loading video overlays
-    waitOverlayLoaded(e, (overlays) => {
+    waitOverlayLoaded(e, overlays => {
       if (overlays.querySelector('#cc-loading')) return;
 
       let ccLoading = document.createElement('div');
@@ -95,10 +95,10 @@
     // Show tag loading
     showTagLoading(e);
 
-    let callback = (hasSubtitle) => {
+    let callback = hasSubtitle => {
       // To avoid deleting the ccStatus,
       // Wait loading video overlays
-      waitOverlayLoaded(e, (overlays) => {
+      waitOverlayLoaded(e, overlays => {
         function removeTagLoading() {
           let ccLoading = overlays.querySelector('#cc-loading');
           if (ccLoading) ccLoading.remove();
@@ -151,7 +151,7 @@
           type: 'has-subtitles',
           value: { langs, videoId },
         },
-        (res) => {
+        res => {
           let lastError = chrome.runtime.lastError;
           if (lastError) {
             console.error(lastError.message);
@@ -167,11 +167,11 @@
   }
 
   function checkNodes(nodes) {
-    nodes.forEach((node) => {
+    nodes.forEach(node => {
       // is not http element
       if (['#text', '#comment'].includes(node.nodeName)) return;
 
-      node.querySelectorAll('a#thumbnail').forEach((e) => {
+      node.querySelectorAll('a#thumbnail').forEach(e => {
         checkNode(e);
       });
     });
@@ -206,8 +206,8 @@
 
     checkNodes(Array.from(contentElement.children));
 
-    mainObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
+    mainObserver = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
         checkNode(mutation.target);
       });
     });
@@ -246,7 +246,7 @@
       FIELD_TAG_FONT_SIZE,
       FIELD_COMBINE_REGION,
     ],
-    (items) => {
+    items => {
       setCCLang(items[FIELD_LANG]);
       setCCColorBg(items[FIELD_COLOR_BG]);
       setCCColorTxt(items[FIELD_COLOR_TXT]);
