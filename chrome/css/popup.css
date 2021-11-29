@@ -48,7 +48,7 @@ popup-item-page > .value {
 }
 
 #alpha-picker-wapper {
-  background-image: url("../asset/transparent-background.jpg");
+  background-image: url('../asset/transparent-background.jpg');
 }
 
 #alpha-picker {
@@ -67,7 +67,7 @@ color-display {
   border: 0.1px solid rgb(209, 209, 209);
 }
 
-color-display > input[type="color" i] {
+color-display > input[type='color' i] {
   opacity: 0;
   display: block;
   border: none;
@@ -75,7 +75,7 @@ color-display > input[type="color" i] {
 
 #cc-status-example-wapper,
 #color-display-wapper {
-  background-image: url("../asset/transparent-background.jpg");
+  background-image: url('../asset/transparent-background.jpg');
 }
 
 #cc-status-example {

@@ -1,11 +1,11 @@
-import { FIELD_VIDEO_LANGS, loadData, saveData } from "../storage.js";
+import { FIELD_VIDEO_LANGS, loadData, saveData } from '../storage.js';
 
 // Load YouTube Video Iframe Url
 function loadYtPlayer(videoId, callback) {
   // Already exists
   if (document.getElementById(`player-${videoId}`)) return;
 
-  let playerElm = document.createElement("div");
+  let playerElm = document.createElement('div');
   playerElm.id = `player-${videoId}`;
   document.body.appendChild(playerElm);
 
@@ -14,7 +14,7 @@ function loadYtPlayer(videoId, callback) {
     playerVars: {
       autoplay: 1,
       cc_load_policy: 1,
-      suggestedQuality: "tiny",
+      suggestedQuality: 'tiny',
     },
     events: {
       onReady: ({ target, data }) => {
@@ -23,7 +23,7 @@ function loadYtPlayer(videoId, callback) {
         // Wait until the option is loaded.
         let count = 0;
         let intervalId = setInterval(() => {
-          let ccList = ytPlayer.getOption("captions", "tracklist");
+          let ccList = ytPlayer.getOption('captions', 'tracklist');
           // over 60 sec => video doesn't have any captions
           if (ccList || count > 600) {
             clearInterval(intervalId);
@@ -38,7 +38,7 @@ function loadYtPlayer(videoId, callback) {
 }
 
 function checkLangCodes(videoId, langs, callback) {
-  const langCodeCheck = RegExp(`(${langs.join("|")})`);
+  const langCodeCheck = RegExp(`(${langs.join('|')})`);
   const vLangField = `${FIELD_VIDEO_LANGS}_${videoId}`;
 
   loadData(vLangField, (items) => {
@@ -56,7 +56,7 @@ function checkLangCodes(videoId, langs, callback) {
     // The subtitle search start
     loadYtPlayer(videoId, (ytPlayer) => {
       let langCodeList = (
-        ytPlayer.getOption("captions", "tracklist") || []
+        ytPlayer.getOption('captions', 'tracklist') || []
       ).map((cc) => cc.languageCode);
 
       let hasSubtitles = false;
@@ -65,7 +65,7 @@ function checkLangCodes(videoId, langs, callback) {
       });
 
       saveData(vLangField, {
-        langCodes: langCodeList.join(","),
+        langCodes: langCodeList.join(','),
         searchTime: Date.now(),
       });
       // remove yt player
@@ -78,7 +78,7 @@ function checkLangCodes(videoId, langs, callback) {
 
 // Get content script message
 chrome.runtime.onMessage.addListener(({ type, value }, sender, sendRes) => {
-  if (type === "has-subtitles") {
+  if (type === 'has-subtitles') {
     let langs = value.langs;
     let videoId = value.videoId;
 

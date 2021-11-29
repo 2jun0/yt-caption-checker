@@ -1,7 +1,7 @@
 (async () => {
   // dynamic import
   const { getRelatedLangCodes } = await import(
-    chrome.runtime.getURL("js/lang.js")
+    chrome.runtime.getURL('js/lang.js')
   );
   const {
     FIELD_COLOR_BG,
@@ -11,7 +11,7 @@
     FIELD_LANG,
     DEFAULT_VALUE,
     loadData,
-  } = await import(chrome.runtime.getURL("js/storage.js"));
+  } = await import(chrome.runtime.getURL('js/storage.js'));
 
   let ccLang = DEFAULT_VALUE[FIELD_LANG];
   let ccColorBg = DEFAULT_VALUE[FIELD_COLOR_BG];
@@ -31,7 +31,7 @@
   function setCCColorBg(colorBg) {
     if (ccColorBg == colorBg) return;
     ccColorBg = colorBg;
-    document.querySelectorAll("#cc-status").forEach((ccStatus) => {
+    document.querySelectorAll('#cc-status').forEach((ccStatus) => {
       ccStatus.style.backgroundColor = colorBg;
     });
   }
@@ -39,7 +39,7 @@
   function setCCColorTxt(colortxt) {
     if (ccColorTxt == colortxt) return;
     ccColorTxt = colortxt;
-    document.querySelectorAll("#cc-status").forEach((ccStatus) => {
+    document.querySelectorAll('#cc-status').forEach((ccStatus) => {
       ccStatus.style.color = colortxt;
     });
   }
@@ -47,18 +47,18 @@
   function setCCFontSize(fontSize) {
     if (ccFontSize == fontSize) return;
     ccFontSize = fontSize;
-    document.querySelectorAll("#cc-status").forEach((ccStatus) => {
+    document.querySelectorAll('#cc-status').forEach((ccStatus) => {
       ccStatus.style.fontSize = fontSize;
     });
   }
 
   function setCCCombineRegion(enable) {
     ccCombineRegion = enable;
-    setCCLang(ccLang.split("-")[0]);
+    setCCLang(ccLang.split('-')[0]);
   }
 
   function waitOverlayLoaded(e, callback) {
-    const overlays = e.querySelector("#overlays");
+    const overlays = e.querySelector('#overlays');
     if (overlays.childElementCount >= 2) callback(overlays);
 
     let intervalId = setInterval(() => {
@@ -74,10 +74,10 @@
     // To avoid deleting the ccLoading,
     // Wait loading video overlays
     waitOverlayLoaded(e, (overlays) => {
-      if (overlays.querySelector("#cc-loading")) return;
+      if (overlays.querySelector('#cc-loading')) return;
 
-      let ccLoading = document.createElement("div");
-      ccLoading.id = "cc-loading";
+      let ccLoading = document.createElement('div');
+      ccLoading.id = 'cc-loading';
       ccLoading.style.color = ccColorTxt;
 
       overlays.insertBefore(ccLoading, overlays.lastChild);
@@ -88,7 +88,7 @@
     let url = e.href;
     if (!url) return;
 
-    let ccStatus = e.querySelector("#cc-status");
+    let ccStatus = e.querySelector('#cc-status');
     // if already tagged remove it
     if (ccStatus) ccStatus.remove();
 
@@ -100,7 +100,7 @@
       // Wait loading video overlays
       waitOverlayLoaded(e, (overlays) => {
         function removeTagLoading() {
-          let ccLoading = overlays.querySelector("#cc-loading");
+          let ccLoading = overlays.querySelector('#cc-loading');
           if (ccLoading) ccLoading.remove();
         }
 
@@ -109,20 +109,20 @@
           return;
         }
         // Once load overlays, insert ccStatus
-        ccStatus = document.createElement("div");
-        ccStatus.id = "cc-status";
-        ccStatus.overlayStyle = "DEFAULT";
-        ccStatus.className = "style-scope ytd-thumbnail";
+        ccStatus = document.createElement('div');
+        ccStatus.id = 'cc-status';
+        ccStatus.overlayStyle = 'DEFAULT';
+        ccStatus.className = 'style-scope ytd-thumbnail';
         ccStatus.style.backgroundColor = ccColorBg;
         ccStatus.style.color = ccColorTxt;
         ccStatus.style.fontSize = ccFontSize;
         ccStatus.lang = ccLang;
 
-        let span = document.createElement("span");
+        let span = document.createElement('span');
         span.className =
-          "style-scope ytd-thumbnail-overlay-time-status-renderer";
-        span.ariaLabel = ccLang.toUpperCase() + " CC";
-        span.textContent = ccLang.toUpperCase() + " CC";
+          'style-scope ytd-thumbnail-overlay-time-status-renderer';
+        span.ariaLabel = ccLang.toUpperCase() + ' CC';
+        span.textContent = ccLang.toUpperCase() + ' CC';
         ccStatus.appendChild(span);
 
         // if user change langauge or url in processing,
@@ -148,7 +148,7 @@
     function sendMsg() {
       chrome.runtime.sendMessage(
         {
-          type: "has-subtitles",
+          type: 'has-subtitles',
           value: { langs, videoId },
         },
         (res) => {
@@ -159,7 +159,7 @@
           }
 
           callback(res);
-        }
+        },
       );
     }
 
@@ -169,21 +169,21 @@
   function checkNodes(nodes) {
     nodes.forEach((node) => {
       // is not http element
-      if (["#text", "#comment"].includes(node.nodeName)) return;
+      if (['#text', '#comment'].includes(node.nodeName)) return;
 
-      node.querySelectorAll("a#thumbnail").forEach((e) => {
+      node.querySelectorAll('a#thumbnail').forEach((e) => {
         checkNode(e);
       });
     });
   }
 
   function checkNode(node) {
-    if (node.tagName != "A" || node.id != "thumbnail") {
+    if (node.tagName != 'A' || node.id != 'thumbnail') {
       // if (node.id == 'video-title') console.log(node);
       return;
     }
     // except play list
-    if (node.parentElement.tagName == "YTD-PLAYLIST-THUMBNAIL") return;
+    if (node.parentElement.tagName == 'YTD-PLAYLIST-THUMBNAIL') return;
     addVideo(node);
   }
 
@@ -192,16 +192,16 @@
   }
 
   function checkAllNode() {
-    let contentElement = document.querySelector("body");
+    let contentElement = document.querySelector('body');
     if (!contentElement) return false;
 
     checkNodes(Array.from(contentElement.children));
   }
 
   function initObserver() {
-    if (!("MutationObserver" in window)) return false;
+    if (!('MutationObserver' in window)) return false;
 
-    let contentElement = document.querySelector("body");
+    let contentElement = document.querySelector('body');
     if (!contentElement) return false;
 
     checkNodes(Array.from(contentElement.children));
@@ -213,7 +213,7 @@
     });
     mainObserver.observe(contentElement, {
       subtree: true,
-      attributeFilter: ["href"],
+      attributeFilter: ['href'],
     });
 
     clearInterval(intervalId); // Just for good measure
@@ -253,6 +253,6 @@
       setCCFontSize(items[FIELD_TAG_FONT_SIZE]);
       setCCCombineRegion(items[FIELD_COMBINE_REGION]);
       initInterval();
-    }
+    },
   );
 })();
