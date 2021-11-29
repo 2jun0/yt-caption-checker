@@ -29,7 +29,7 @@
 }
 
 #cc-loading:before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   border: solid 0.35em transparent;

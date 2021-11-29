@@ -1,4 +1,4 @@
-export const EXTENSION_NAME = "YT-SUBTITLE-FILTER";
+export const EXTENSION_NAME = 'YT-SUBTITLE-FILTER';
 export const FIELD_COLOR_BG = `${EXTENSION_NAME}_color-bg`;
 export const FIELD_COLOR_TXT = `${EXTENSION_NAME}_color-txt`;
 export const FIELD_TAG_FONT_SIZE = `${EXTENSION_NAME}_tag-font-size`;
@@ -7,11 +7,11 @@ export const FIELD_LANG = `${EXTENSION_NAME}_lang`;
 export const FIELD_VIDEO_LANGS = `${EXTENSION_NAME}_video-langs`;
 
 export const DEFAULT_VALUE = {
-  [FIELD_COLOR_BG]: "#00000099",
-  [FIELD_COLOR_TXT]: "#FFFFFF",
-  [FIELD_TAG_FONT_SIZE]: "1.3rem",
+  [FIELD_COLOR_BG]: '#00000099',
+  [FIELD_COLOR_TXT]: '#FFFFFF',
+  [FIELD_TAG_FONT_SIZE]: '1.3rem',
   [FIELD_COMBINE_REGION]: true,
-  [FIELD_LANG]: "en",
+  [FIELD_LANG]: 'en',
 };
 
 export function loadData(fields, callback) {

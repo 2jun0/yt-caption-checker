@@ -6,22 +6,22 @@ import {
   FIELD_LANG,
   loadData,
   saveData,
-} from "../storage.js";
-import { langs } from "../lang.js";
+} from '../storage.js';
+import { langs } from '../lang.js';
 
-const mainDiv = document.getElementById("main");
-const ccStatusExmaple = document.getElementById("cc-status-example");
-const colorBgDisplay = document.getElementById("color-bg-display");
-const colorTxtDisplay = document.getElementById("color-txt-display");
-const tagSizeRange = document.getElementById("tag-size-range");
-const langPicker = document.getElementById("lang-picker");
+const mainDiv = document.getElementById('main');
+const ccStatusExmaple = document.getElementById('cc-status-example');
+const colorBgDisplay = document.getElementById('color-bg-display');
+const colorTxtDisplay = document.getElementById('color-txt-display');
+const tagSizeRange = document.getElementById('tag-size-range');
+const langPicker = document.getElementById('lang-picker');
 const combineRegionCheckbox = document.getElementById(
-  "combine-region-checkbox"
+  'combine-region-checkbox',
 );
-const colorBgPicker = new iro.ColorPicker("#color-bg-picker", {
+const colorBgPicker = new iro.ColorPicker('#color-bg-picker', {
   width: 195,
   borderWidth: 1,
-  borderColor: "#B0B0B0",
+  borderColor: '#B0B0B0',
   margin: 5,
   layout: [
     {
@@ -30,18 +30,18 @@ const colorBgPicker = new iro.ColorPicker("#color-bg-picker", {
     },
     {
       component: iro.ui.Slider,
-      options: { sliderType: "hue" },
+      options: { sliderType: 'hue' },
     },
     {
       component: iro.ui.Slider,
-      options: { sliderType: "alpha" },
+      options: { sliderType: 'alpha' },
     },
   ],
 });
-const colorTxtPicker = new iro.ColorPicker("#color-txt-picker", {
+const colorTxtPicker = new iro.ColorPicker('#color-txt-picker', {
   width: 195,
   borderWidth: 1,
-  borderColor: "#B0B0B0",
+  borderColor: '#B0B0B0',
   margin: 5,
   layout: [
     {
@@ -50,19 +50,19 @@ const colorTxtPicker = new iro.ColorPicker("#color-txt-picker", {
     },
     {
       component: iro.ui.Slider,
-      options: { sliderType: "hue" },
+      options: { sliderType: 'hue' },
     },
   ],
 });
 
 var TagFontSizes = [
-  "1.0rem",
-  "1.1rem",
-  "1.2rem",
-  "1.3rem",
-  "1.4rem",
-  "1.5rem",
-  "1.6rem",
+  '1.0rem',
+  '1.1rem',
+  '1.2rem',
+  '1.3rem',
+  '1.4rem',
+  '1.5rem',
+  '1.6rem',
 ];
 
 // utils
@@ -88,9 +88,9 @@ function updateLangOptions() {
   while (langPicker.firstChild) langPicker.removeChild(langPicker.firstChild);
 
   langs.forEach((lang) => {
-    if (combineRegionCheckbox.checked && lang.code.includes("-")) return;
+    if (combineRegionCheckbox.checked && lang.code.includes('-')) return;
 
-    var option = document.createElement("option");
+    var option = document.createElement('option');
     option.value = lang.code;
     option.textContent = lang.displayName;
     langPicker.appendChild(option);
@@ -102,12 +102,12 @@ function updateLangOptions() {
 function initTagSizeRange() {
   tagSizeRange.min = 0;
   tagSizeRange.max = TagFontSizes.length - 1;
-  tagSizeRange.value = getKeyByValue("1.3rem");
+  tagSizeRange.value = getKeyByValue('1.3rem');
 }
 
 function setLanguage(lang) {
   langPicker.value = lang;
-  ccStatusExmaple.textContent = langPicker.value.toUpperCase() + " CC";
+  ccStatusExmaple.textContent = langPicker.value.toUpperCase() + ' CC';
 
   saveData(FIELD_LANG, lang);
 }
@@ -139,7 +139,7 @@ function setTagFontSize(fontSize) {
 
 function combineRegion(enable) {
   combineRegionCheckbox.checked = enable;
-  if (enable) setLanguage(langPicker.value.split("-")[0]);
+  if (enable) setLanguage(langPicker.value.split('-')[0]);
 
   updateLangOptions();
   saveData(FIELD_COMBINE_REGION, enable);
@@ -150,28 +150,28 @@ langPicker.onchange = () => {
 };
 
 colorBgDisplay.onclick = () => {
-  if (colorBgPicker.el.style.display == "none")
-    colorBgPicker.el.style.display = "block";
-  else colorBgPicker.el.style.display = "none";
+  if (colorBgPicker.el.style.display == 'none')
+    colorBgPicker.el.style.display = 'block';
+  else colorBgPicker.el.style.display = 'none';
 };
 colorTxtDisplay.onclick = () => {
-  if (colorTxtPicker.el.style.display == "none")
-    colorTxtPicker.el.style.display = "block";
-  else colorTxtPicker.el.style.display = "none";
+  if (colorTxtPicker.el.style.display == 'none')
+    colorTxtPicker.el.style.display = 'block';
+  else colorTxtPicker.el.style.display = 'none';
 };
 
 mainDiv.onclick = (e) => {
-  if (!["color-bg-picker", "color-bg-display"].includes(e.target.id))
-    colorBgPicker.el.style.display = "none";
-  if (!["color-txt-picker", "color-txt-display"].includes(e.target.id))
-    colorTxtPicker.el.style.display = "none";
+  if (!['color-bg-picker', 'color-bg-display'].includes(e.target.id))
+    colorBgPicker.el.style.display = 'none';
+  if (!['color-txt-picker', 'color-txt-display'].includes(e.target.id))
+    colorTxtPicker.el.style.display = 'none';
 };
 
-colorBgPicker.on("color:change", (color) => {
+colorBgPicker.on('color:change', (color) => {
   setColorBg(color.hex8String, false);
   sendMessage(FIELD_COLOR_BG, color.hex8String);
 });
-colorTxtPicker.on("color:change", (color) => {
+colorTxtPicker.on('color:change', (color) => {
   setColorTxt(color.hexString, false);
   sendMessage(FIELD_COLOR_TXT, color.hexString);
 });
@@ -208,5 +208,5 @@ loadData(
     setColorTxt(items[FIELD_COLOR_TXT]);
     setTagFontSize(items[FIELD_TAG_FONT_SIZE]);
     combineRegion(items[FIELD_COMBINE_REGION]);
-  }
+  },
 );
