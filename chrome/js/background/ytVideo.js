@@ -41,7 +41,7 @@ function checkLangCodes(videoId, langs, callback) {
   const langCodeCheck = RegExp(`(${langs.join('|')})`);
   const vLangField = `${FIELD_VIDEO_LANGS}_${videoId}`;
 
-  loadData(vLangField, (items) => {
+  loadData(vLangField, items => {
     if (items[vLangField]) {
       const langCodes = items[vLangField].langCodes;
       const searchTime = items[vLangField].searchTime;
@@ -54,13 +54,13 @@ function checkLangCodes(videoId, langs, callback) {
     }
 
     // The subtitle search start
-    loadYtPlayer(videoId, (ytPlayer) => {
+    loadYtPlayer(videoId, ytPlayer => {
       let langCodeList = (
         ytPlayer.getOption('captions', 'tracklist') || []
-      ).map((cc) => cc.languageCode);
+      ).map(cc => cc.languageCode);
 
       let hasSubtitles = false;
-      langCodeList.forEach((langCode) => {
+      langCodeList.forEach(langCode => {
         hasSubtitles ||= langCodeCheck.test(langCode);
       });
 
