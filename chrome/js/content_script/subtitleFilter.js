@@ -1,5 +1,6 @@
 (async () => {
   // dynamic import
+  const { getYTVideoId } = await import(chrome.runtime.getURL('js/common.js'));
   const { getRelatedLangCodes } = await import(
     chrome.runtime.getURL('js/lang.js')
   );
@@ -13,6 +14,7 @@
     loadData,
   } = await import(chrome.runtime.getURL('js/storage.js'));
 
+  // tag const values
   let ccLang = DEFAULT_VALUE[FIELD_LANG];
   let ccColorBg = DEFAULT_VALUE[FIELD_COLOR_BG];
   let ccColorTxt = DEFAULT_VALUE[FIELD_COLOR_TXT];
@@ -74,7 +76,11 @@
     // To avoid deleting the ccLoading,
     // Wait loading video overlays
     waitOverlayLoaded(e, overlays => {
-      if (overlays.querySelector('#cc-loading')) return;
+      if (
+        overlays.querySelector('#cc-loading') ||
+        overlays.querySelector('#cc-status')
+      )
+        return;
 
       let ccLoading = document.createElement('div');
       ccLoading.id = 'cc-loading';
@@ -143,7 +149,7 @@
 
   function hasSubtitles(videoUrl, langs, callback) {
     // URL example : /watch?v=[video_id]
-    const videoId = videoUrl.match(/\?v=([\w-]+)/)[1];
+    const videoId = getYTVideoId(videoUrl);
 
     function sendMsg() {
       chrome.runtime.sendMessage(
