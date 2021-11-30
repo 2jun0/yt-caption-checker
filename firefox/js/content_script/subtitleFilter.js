@@ -76,7 +76,11 @@
     // To avoid deleting the ccLoading,
     // Wait loading video overlays
     waitOverlayLoaded(e, overlays => {
-      if (overlays.querySelector('#cc-loading')) return;
+      if (
+        overlays.querySelector('#cc-loading') ||
+        overlays.querySelector('#cc-status')
+      )
+        return;
 
       let ccLoading = document.createElement('div');
       ccLoading.id = 'cc-loading';
