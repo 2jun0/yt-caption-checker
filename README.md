@@ -1,4 +1,8 @@
-# YouTube Subtitle Filter
+<p align="center">
+  <img src="https://github.com/2jun0/yt-subtitle-filter/blob/main/chrome/asset/logo/logo-big-128.png" width="75" height="75"/>
+</p>
+
+<h1 align="center">YouTube Subtitle Filter</h1>
 
 We support Korean version!
 follow the below page to read it in multiple languages.

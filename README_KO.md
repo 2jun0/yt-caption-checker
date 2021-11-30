@@ -1,4 +1,8 @@
-# 유튜브 자막 필터
+<p align="center">
+  <img src="https://github.com/2jun0/yt-subtitle-filter/blob/main/chrome/asset/logo/logo-big-128.png" width="75" height="75"/>
+</p>
+
+<h1 align="center">유튜브 자막 필터</h1>
 
 README 페이지를 영문로 보시려면 아래를 참고하세요.
 
