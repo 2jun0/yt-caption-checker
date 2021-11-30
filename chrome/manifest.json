@@ -4,7 +4,7 @@
   "description": "__MSG_appDesc__",
   "default_locale": "en",
   "manifest_version": 2,
-  "version": "1.3.0",
+  "version": "1.3.1",
   "author": "2jun0",
   "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
   "icons": {
@@ -30,7 +30,12 @@
       "all_frames": false
     }
   ],
-  "web_accessible_resources": ["js/lang.js", "js/storage.js"],
-  "permissions": ["*://*.youtube.com/*", "storage", "unlimitedStorage"],
+  "web_accessible_resources": ["js/lang.js", "js/storage.js", "js/common.js"],
+  "permissions": [
+    "*://*.youtube.com/*",
+    "storage",
+    "unlimitedStorage",
+    "webRequest"
+  ],
   "content_security_policy": "script-src 'self' https://www.youtube.com/iframe_api https://www.youtube.com; object-src 'self'"
 }
