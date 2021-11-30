@@ -179,7 +179,7 @@ colorTxtPicker.on('color:change', color => {
 tagSizeRange.oninput = () => {
   let idx = tagSizeRange.value;
   setTagFontSize(TagFontSizes[idx]);
-  sendMessage(FIELD_TAG_FONT_SIZE, TagFontSizes[ix]);
+  sendMessage(FIELD_TAG_FONT_SIZE, TagFontSizes[idx]);
 };
 
 combineRegionCheckbox.onchange = () => {
