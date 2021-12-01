@@ -7,7 +7,6 @@ import {
 import {
   FIELD_VIDEO_LANG_LIST_URL,
   loadDataAsync,
-  saveData,
   saveDataAsync,
 } from '../storage.js';
 
