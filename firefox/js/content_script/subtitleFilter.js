@@ -59,117 +59,115 @@
     setCCLang(ccLang.split('-')[0]);
   }
 
-  function waitOverlayLoaded(e, callback) {
+  async function waitOverlayLoadedAsnyc(e) {
     const overlays = e.querySelector('#overlays');
-    if (overlays.childElementCount >= 2) callback(overlays);
 
-    let intervalId = setInterval(() => {
-      if (overlays.childElementCount < 2) return;
-
-      callback(overlays);
-
-      clearInterval(intervalId);
-    }, 100);
-  }
-
-  function showTagLoading(e) {
-    // To avoid deleting the ccLoading,
-    // Wait loading video overlays
-    waitOverlayLoaded(e, overlays => {
-      if (
-        overlays.querySelector('#cc-loading') ||
-        overlays.querySelector('#cc-status')
-      )
-        return;
-
-      let ccLoading = document.createElement('div');
-      ccLoading.id = 'cc-loading';
-      ccLoading.style.color = ccColorTxt;
-
-      overlays.insertBefore(ccLoading, overlays.lastChild);
+    return new Promise(resolve => {
+      let intervalId = setInterval(() => {
+        if (overlays.childElementCount > 0) {
+          resolve(overlays);
+          clearInterval(intervalId);
+        }
+      }, 100);
     });
   }
 
-  function tagVideo(e, lang) {
-    let url = e.href;
-    if (!url) return;
+  function createLoadingTag() {
+    let ccLoading = document.createElement('div');
+    ccLoading.id = 'cc-loading';
+    ccLoading.style.color = ccColorTxt;
 
-    let ccStatus = e.querySelector('#cc-status');
-    // if already tagged remove it
-    if (ccStatus) ccStatus.remove();
-
-    // Show tag loading
-    showTagLoading(e);
-
-    let callback = hasSubtitle => {
-      // To avoid deleting the ccStatus,
-      // Wait loading video overlays
-      waitOverlayLoaded(e, overlays => {
-        function removeTagLoading() {
-          let ccLoading = overlays.querySelector('#cc-loading');
-          if (ccLoading) ccLoading.remove();
-        }
-
-        if (!hasSubtitle) {
-          removeTagLoading();
-          return;
-        }
-        // Once load overlays, insert ccStatus
-        ccStatus = document.createElement('div');
-        ccStatus.id = 'cc-status';
-        ccStatus.overlayStyle = 'DEFAULT';
-        ccStatus.className = 'style-scope ytd-thumbnail';
-        ccStatus.style.backgroundColor = ccColorBg;
-        ccStatus.style.color = ccColorTxt;
-        ccStatus.style.fontSize = ccFontSize;
-        ccStatus.lang = ccLang;
-
-        let span = document.createElement('span');
-        span.className =
-          'style-scope ytd-thumbnail-overlay-time-status-renderer';
-        span.ariaLabel = ccLang.toUpperCase() + ' CC';
-        span.textContent = ccLang.toUpperCase() + ' CC';
-        ccStatus.appendChild(span);
-
-        // if user change langauge or url in processing,
-        // Remove ccStatus
-        if (e.href != url || ccStatus.lang != ccLang) ccStatus.remove();
-        removeTagLoading();
-        overlays.insertBefore(ccStatus, overlays.lastChild);
-      });
-    };
-
-    if (ccCombineRegion) {
-      let langs = getRelatedLangCodes(ccLang);
-      hasSubtitles(url, langs, callback);
-    } else {
-      hasSubtitles(url, [lang], callback);
-    }
+    return ccLoading;
   }
 
-  function hasSubtitles(videoUrl, langs, callback) {
+  function createSubtitleTag() {
+    let ccStatus = document.createElement('div');
+    Object.assign(ccStatus, {
+      id: 'cc-status',
+      overlayStyle: 'DEFAULT',
+      className: 'style-scope ytd-thumbnail',
+      lang: ccLang,
+    });
+    Object.assign(ccStatus.style, {
+      backgroundColor: ccColorBg,
+      color: ccColorTxt,
+      fontSize: ccFontSize,
+    });
+
+    let span = document.createElement('span');
+    Object.assign(span, {
+      className: 'style-scope ytd-thumbnail-overlay-time-status-renderer',
+      ariaLabel: ccLang.toUpperCase() + ' CC',
+      textContent: ccLang.toUpperCase() + ' CC',
+    });
+
+    ccStatus.appendChild(span);
+
+    return ccStatus;
+  }
+
+  async function tagVideo(e, lang) {
+    const url = e.href;
+    if (!url) return;
+
+    const langs = ccCombineRegion ? getRelatedLangCodes(ccLang) : [lang];
+
+    // if already tagged remove it
+    let ccStatus = e.querySelector('#cc-status');
+    if (ccStatus) ccStatus.remove();
+
+    // To avoid deleting the ccStatus and ccLoading
+    // Wait loading video overlays
+    const overlays = await waitOverlayLoadedAsnyc(e);
+
+    // Show the loading tag
+    let ccLoading = e.querySelector('#cc-loading') || createLoadingTag();
+    overlays.insertBefore(ccLoading, overlays.lastChild);
+
+    // Check if video has subtitles
+    const hasSubtitles = await hasSubtitlesAsync(url, langs);
+
+    if (hasSubtitles) {
+      // Once load overlays, insert ccStatus
+
+      ccStatus = createSubtitleTag();
+
+      // if user change langauge or url in processing,
+      // Remove ccStatus and ccLoading
+      if (e.href != url || ccStatus.lang != ccLang) {
+        ccStatus.remove();
+      } else {
+        overlays.insertBefore(ccStatus, overlays.lastChild);
+      }
+    }
+
+    ccLoading.remove();
+    let a = e.querySelector('#cc-loading');
+  }
+
+  async function hasSubtitlesAsync(videoUrl, langs) {
     // URL example : /watch?v=[video_id]
     const videoId = getYTVideoId(videoUrl);
 
-    function sendMsg() {
+    return new Promise((resolve, reject) => {
       chrome.runtime.sendMessage(
         {
           type: 'has-subtitles',
           value: { langs, videoId },
         },
-        res => {
+        hasSubtitle => {
           let lastError = chrome.runtime.lastError;
           if (lastError) {
-            console.error(lastError.message);
-            return;
+            reject(lastError);
+          } else {
+            resolve(hasSubtitle);
           }
-
-          callback(res);
         },
       );
-    }
-
-    sendMsg();
+    }).catch(e => {
+      console.error(videoId, e.message);
+      return hasSubtitlesAsync(videoUrl, langs);
+    });
   }
 
   function checkNodes(nodes) {
@@ -184,17 +182,11 @@
   }
 
   function checkNode(node) {
-    if (node.tagName != 'A' || node.id != 'thumbnail') {
-      // if (node.id == 'video-title') console.log(node);
-      return;
-    }
+    // except thumbnail
+    if (node.tagName != 'A' || node.id != 'thumbnail') return;
     // except play list
     if (node.parentElement.tagName == 'YTD-PLAYLIST-THUMBNAIL') return;
-    addVideo(node);
-  }
-
-  function addVideo(video) {
-    tagVideo(video, ccLang);
+    tagVideo(node);
   }
 
   function checkAllNode() {

@@ -20,15 +20,15 @@ README 페이지를 영문로 보시려면 아래를 참고하세요.
 
 ## 예시화면
 
-![동영상 목록 예시화면](chrome/asset/showcase/showcase_videos.jpg)
+![동영상 목록 예시화면](showcase/showcase_videos.jpg)
 
-![동영상 실행 중 예시화면](chrome/asset/showcase/showcase_invideo.jpg)
+![동영상 실행 중 예시화면](showcase/showcase_invideo.jpg)
 
 ---
 
 ## 사용자 설정
 
-<img src="chrome/asset/showcase/showcase_popup.jpg" align="right" width="200">
+<img src="showcase/showcase_popup.jpg" align="right" width="200">
 
 - 팝업 메뉴에서 태그의 색상을 선택할 수 있습니다. (배경색상, 글자색상)
 
