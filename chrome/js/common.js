@@ -23,15 +23,16 @@ export function requestAysnc(method, url, msg = null) {
   return new Promise(resolve => {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-      if (this.readyState == this.DONE) {
-        if (this.status == 200) {
+      if (this.readyState === this.DONE) {
+        if (this.status === 200) {
           resolve(this.responseText);
+        } else if (this.status === 404) {
+          resolve(null);
         }
       }
     };
 
     xhr.open(method, url);
-    console.log(method, url, msg);
     xhr.send(msg);
   });
 }

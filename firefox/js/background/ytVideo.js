@@ -7,7 +7,7 @@ import {
 import {
   FIELD_VIDEO_LANG_LIST_URL,
   loadDataAsync,
-  saveData,
+  saveDataAsync,
 } from '../storage.js';
 
 let TabId;
@@ -48,65 +48,75 @@ async function createWattingIntervalAsync(videoId) {
   return new Promise(resolve => {
     let count = 0;
     waittingIntervals[videoId] = {
-      id: setInterval(() => {
-        // during 1 sec, wait web request
-        if (count >= 60) {
+      id: setInterval(async () => {
+        // during 30 sec, wait web request
+        if (count >= 300) {
           resolve();
           return;
         }
 
         // when find timedtext url, save url and return
         if (waittingIntervals[videoId].langListUrl) {
-          saveData(vLangListUrlField, waittingIntervals[videoId].langListUrl);
+          await saveDataAsync(
+            vLangListUrlField,
+            waittingIntervals[videoId].langListUrl,
+          );
           resolve(waittingIntervals[videoId].langListUrl);
           return;
         }
         count++;
-      }, 1000),
+      }, 100),
     };
   }).then(langListUrl => {
     // remove yt player and interval
     document.getElementById(`player-${videoId}`).remove();
     clearInterval(waittingIntervals[videoId].id);
+    delete waittingIntervals[videoId];
+
     return langListUrl;
   });
 }
 
-async function getLangListUrlAsync(videoId) {
+async function getLangListUrlByStorageAsync(videoId) {
   const vLangListUrlField = `${FIELD_VIDEO_LANG_LIST_URL}_${videoId}`;
 
   return loadDataAsync(vLangListUrlField).then(items => {
-    let langListUrl = items[vLangListUrlField];
+    // Test if url is vaild
+    if (!items[vLangListUrlField]) return null;
 
-    if (langListUrl) {
-      // already saved
-      return langListUrl;
-    } else {
-      // load Youtube Player (wait until the "onReady" event occurs)
-      return loadYtPlayerAsync(videoId).then(() => {
-        return createWattingIntervalAsync(videoId);
-      });
-    }
+    return requestAysnc('GET', items[vLangListUrlField]).then(res => {
+      return res ? items[vLangListUrlField] : null;
+    });
+  });
+}
+
+async function getLangListUrlByIframeUrlAsync(videoId) {
+  // load Youtube Player (wait until the "onReady" event occurs)
+  return loadYtPlayerAsync(videoId).then(() => {
+    return createWattingIntervalAsync(videoId);
   });
 }
 
 async function hasSubtitlesAsync(videoId, langs) {
   const langCodeCheck = RegExp(`lang_code="(${langs.join('|')})"`);
 
-  return getLangListUrlAsync(videoId).then(langListUrl => {
-    if (!langListUrl) {
-      return false;
-    } else {
-      return requestAysnc('GET', langListUrl).then(res => {
-        return langCodeCheck.test(res);
-      });
-    }
+  let langListUrl = await getLangListUrlByStorageAsync(videoId);
+
+  if (!langListUrl) langListUrl = await getLangListUrlByIframeUrlAsync(videoId);
+
+  if (!langListUrl) return false;
+
+  return requestAysnc('GET', langListUrl).then(res => {
+    return res ? langCodeCheck.test(res) : false;
   });
 }
 
 // Get web Request
 chrome.webRequest.onBeforeRequest.addListener(
   details => {
+    // Avoid self check
+    if (details.url.includes('type=list')) return;
+
     let videoId = getYTVideoId(details.url);
     let langListUrl = getLangListUrl(details.url);
 
@@ -120,8 +130,8 @@ chrome.webRequest.onBeforeRequest.addListener(
 // Get content script message
 chrome.runtime.onMessage.addListener(({ type, value }, sender, sendRes) => {
   if (type === 'has-subtitles') {
-    let langs = value.langs;
-    let videoId = value.videoId;
+    const langs = value.langs;
+    const videoId = value.videoId;
 
     hasSubtitlesAsync(videoId, langs).then(sendRes);
   }

@@ -47,3 +47,11 @@ export async function loadDataAsync(fields) {
 export function saveData(field, value, callback = null) {
   chrome.storage.local.set({ [field]: value }, callback);
 }
+
+export async function saveDataAsync(field, value) {
+  return new Promise(resolve => {
+    chrome.storage.local.set({ [field]: value }, () => {
+      resolve();
+    });
+  });
+}
