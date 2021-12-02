@@ -65,8 +65,8 @@
     return new Promise(resolve => {
       let intervalId = setInterval(() => {
         if (overlays.childElementCount > 0) {
-          resolve(overlays);
           clearInterval(intervalId);
+          return resolve(overlays);
         }
       }, 100);
     });
@@ -157,15 +157,13 @@
         },
         hasSubtitle => {
           let lastError = chrome.runtime.lastError;
-          if (lastError) {
-            reject(lastError);
-          } else {
-            resolve(hasSubtitle);
-          }
+
+          if (lastError) return reject(lastError);
+          else return resolve(hasSubtitle);
         },
       );
     }).catch(e => {
-      console.error(videoId, e.message);
+      // console.error(videoId, e.message);
       return hasSubtitlesAsync(videoUrl, langs);
     });
   }
