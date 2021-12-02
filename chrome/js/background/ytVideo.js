@@ -35,7 +35,25 @@ async function loadYtPlayerAsync(videoId) {
       events: {
         onReady: ({ target, data }) => {
           ytPlayer.pauseVideo();
-          resolve();
+
+          // Has no captions
+          if (
+            ytPlayer.getOptions &&
+            ytPlayer.getOptions('captions').length === 0
+          ) {
+            return resolve(false);
+          }
+
+          // Has only auto-generated captions
+          if (
+            ytPlayer.getOption &&
+            ytPlayer.setOption('captions', 'tracklist').length === 0
+          ) {
+            return resolve(false);
+          }
+
+          // Has any captions
+          return resolve(true);
         },
       },
     });
@@ -50,10 +68,7 @@ async function createWattingIntervalAsync(videoId) {
     waittingIntervals[videoId] = {
       id: setInterval(async () => {
         // during 30 sec, wait web request
-        if (count >= 300) {
-          resolve();
-          return;
-        }
+        if (count >= 300) return resolve();
 
         // when find timedtext url, save url and return
         if (waittingIntervals[videoId].langListUrl) {
@@ -61,20 +76,31 @@ async function createWattingIntervalAsync(videoId) {
             vLangListUrlField,
             waittingIntervals[videoId].langListUrl,
           );
-          resolve(waittingIntervals[videoId].langListUrl);
-          return;
+          return resolve(waittingIntervals[videoId].langListUrl);
         }
         count++;
       }, 100),
     };
-  }).then(langListUrl => {
-    // remove yt player and interval
-    document.getElementById(`player-${videoId}`).remove();
-    clearInterval(waittingIntervals[videoId].id);
-    delete waittingIntervals[videoId];
-
-    return langListUrl;
   });
+}
+
+async function getLangListUrlByIframeUrlAsync(videoId) {
+  // load Youtube Player (wait until the "onReady" event occurs)
+  return loadYtPlayerAsync(videoId)
+    .then(hasAnyCaptions => {
+      return hasAnyCaptions ? createWattingIntervalAsync(videoId) : null;
+    })
+    .then(langListUrl => {
+      // remove yt player and interval
+      document.getElementById(`player-${videoId}`).remove();
+
+      if (waittingIntervals[videoId]) {
+        clearInterval(waittingIntervals[videoId].id);
+        delete waittingIntervals[videoId];
+      }
+
+      return langListUrl;
+    });
 }
 
 async function getLangListUrlByStorageAsync(videoId) {
@@ -87,13 +113,6 @@ async function getLangListUrlByStorageAsync(videoId) {
     return requestAysnc('GET', items[vLangListUrlField]).then(res => {
       return res ? items[vLangListUrlField] : null;
     });
-  });
-}
-
-async function getLangListUrlByIframeUrlAsync(videoId) {
-  // load Youtube Player (wait until the "onReady" event occurs)
-  return loadYtPlayerAsync(videoId).then(() => {
-    return createWattingIntervalAsync(videoId);
   });
 }
 
