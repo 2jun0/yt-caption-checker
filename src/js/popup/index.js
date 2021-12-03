@@ -1,3 +1,4 @@
+import { localize } from '../common.js';
 import {
   FIELD_COLOR_BG,
   FIELD_COLOR_TXT,
@@ -8,6 +9,8 @@ import {
   saveData,
 } from '../storage.js';
 import { langs } from '../lang.js';
+
+localize();
 
 const mainDiv = document.getElementById('main');
 const ccStatusExmaple = document.getElementById('cc-status-example');

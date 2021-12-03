@@ -22,17 +22,20 @@ export function getTabId(callback) {
 export function requestAysnc(method, url, msg = null) {
   return new Promise(resolve => {
     let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-      if (this.readyState === this.DONE) {
-        if (this.status === 200) {
-          resolve(this.responseText);
-        } else if (this.status === 404) {
-          resolve(null);
-        }
-      }
+    xhr.onload = function () {
+      if (this.readyState === this.DONE)
+        if (this.status === 200) resolve(this.responseText);
+
+      if (this.status === 404) resolve(null);
     };
 
     xhr.open(method, url);
     xhr.send(msg);
+  });
+}
+
+export function localize() {
+  document.querySelectorAll('[data-locale]').forEach(e => {
+    e.innerText = chrome.i18n.getMessage(e.dataset.locale);
   });
 }
