@@ -7,7 +7,7 @@ const version = require('../package.json').version;
 module.exports = (env, argv) => {
   try {
     let manifest = fs.readFileSync(
-      path.resolve(__dirname, `../manifest/${env.browser}.json`),
+      path.resolve(__dirname, `../manifest/${argv.browser}.json`),
       'utf-8',
     );
     manifest = JSON.parse(manifest);
@@ -16,7 +16,7 @@ module.exports = (env, argv) => {
 
     manifest.version = version;
     fs.writeFileSync(
-      path.resolve(__dirname, `../manifest/${env.browser}.json`),
+      path.resolve(__dirname, `../manifest/${argv.browser}.json`),
       JSON.stringify(manifest, ' ', 2),
       'utf-8',
     );

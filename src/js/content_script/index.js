@@ -145,20 +145,9 @@ async function hasSubtitlesAsync(videoUrl, langs) {
   // URL example : /watch?v=[video_id]
   const videoId = getYTVideoId(videoUrl);
 
-  return new Promise((resolve, reject) => {
-    chrome.runtime.sendMessage(
-      {
-        type: 'has-subtitles',
-        value: { langs, videoId },
-      },
-      hasSubtitle => {
-        let lastError = chrome.runtime.lastError;
-
-        if (lastError) return reject(lastError);
-        else return resolve(hasSubtitle);
-      },
-    );
-  });
+  // return youtubedl(videoUrl, {
+  //   listSubs: true,
+  // }).then(output => console.log(output, 1));
 }
 
 function checkNodes(nodes) {

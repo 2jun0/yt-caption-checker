@@ -1,6 +1,10 @@
 const { resolve } = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const FriendlyErrors = require('friendly-errors-webpack-plugin');
+const {
+  YoutudeDlDownloaderWebpackPlugin,
+} = require('youtube-dl-downloader-wepback-plugin');
 
 module.exports = (env, argv) => {
   return {
@@ -11,7 +15,7 @@ module.exports = (env, argv) => {
     output: {
       filename: 'js/[name].js',
       path:
-        env.browser === 'chrome'
+        argv.browser === 'chrome'
           ? resolve(__dirname, '../dist/chrome')
           : resolve(__dirname, '../dist/firefox'),
     },
@@ -42,16 +46,26 @@ module.exports = (env, argv) => {
         },
       ],
     },
+    node: {
+      fs: 'empty',
+      child_process: 'empty',
+    },
     resolve: {
       modules: ['./src', './node_modules'],
+      extensions: ['.js', '.json'],
     },
     plugins: [
+      new FriendlyErrors(),
       new CleanWebpackPlugin(),
+      new YoutudeDlDownloaderWebpackPlugin({
+        to: 'lib',
+        from: 'auto',
+      }),
       new CopyWebpackPlugin({
         patterns: [
           {
             from:
-              env.browser === 'chrome'
+              argv.browser === 'chrome'
                 ? resolve(__dirname, '../manifest/chrome.json')
                 : resolve(__dirname, '../manifest/firefox.json'),
             to: 'manifest.json',
