@@ -8,7 +8,7 @@
     "build": "npm run build:chrome && npm run build:firefox",
     "build:chrome": "webpack --config=build.config/webpack.prod.js --browser chrome",
     "build:firefox": "webpack --config=build.config/webpack.prod.js --browser firefox",
-    "build:zip": "node ./build.config/zip.js --browser=chrome && node ./build.config/zip.js --browser=firefox",
+    "build:zip": "node ./build.config/zip.js chrome && node ./build.config/zip.js firefox",
     "lint": "prettier --write ."
   },
   "repository": {
@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@babel/preset-react": "^7.16.0",
+    "archiver": "^5.3.0",
     "ytdl-core": "^4.9.2"
   },
   "devDependencies": {

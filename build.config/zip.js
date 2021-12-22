@@ -2,34 +2,34 @@ const fs = require('fs')
 const { resolve } = require('path')
 const pkg = require('../package.json')
 
-module.exports = function (browser, argv) {
-  const entryDir = resolve(__dirname, '../dist')
-  const outputDir = resolve(
-    __dirname,
-    `../[${browser}] yt-subtitle-filter-${pkg.version}.zip`,
-  )
-  const hasDir = fs.existsSync(entryDir)
+const browser = process.argv[2]
 
-  if (hasDir) {
-    console.log(`zip: "${entryDir}"`)
-    try {
-      const output = fs.createWriteStream(outputDir)
-      const archive = require('archiver')('zip', {
-        zlib: { level: 9 },
-      })
+const entryDir = resolve(__dirname, '../dist')
+const outputDir = resolve(
+  __dirname,
+  `../[${browser}] yt-subtitle-filter-${pkg.version}.zip`,
+)
+const hasDir = fs.existsSync(entryDir)
 
-      archive.on('error', console.error)
+if (hasDir) {
+  console.log(`zip: "${entryDir}"`)
+  try {
+    const output = fs.createWriteStream(outputDir)
+    const archive = require('archiver')('zip', {
+      zlib: { level: 9 },
+    })
 
-      output.on('close', () => {
-        console.log(`output: "${outputDir}"`)
-        console.log(archive.pointer() + ' total bytes')
-      })
+    archive.on('error', console.error)
 
-      archive.pipe(output)
-      archive.directory(entryDir, false)
-      archive.finalize()
-    } catch (err) {
-      console.error(err)
-    }
+    output.on('close', () => {
+      console.log(`output: "${outputDir}"`)
+      console.log(archive.pointer() + ' total bytes')
+    })
+
+    archive.pipe(output)
+    archive.directory(entryDir, false)
+    archive.finalize()
+  } catch (err) {
+    console.error(err)
   }
 }
