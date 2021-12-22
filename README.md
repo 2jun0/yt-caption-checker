@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="chrome/asset/logo/logo-big-128.png" width="75" height="75"/>
+  <img src="src/asset/logo/logo-big-128.png" width="75" height="75"/>
 </p>
 
 <h1 align="center">YouTube Subtitle Filter</h1>

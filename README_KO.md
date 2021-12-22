@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="chrome/asset/logo/logo-big-128.png" width="75" height="75"/>
+  <img src="src/asset/logo/logo-big-128.png" width="75" height="75"/>
 </p>
 
 <h1 align="center">유튜브 자막 필터</h1>
