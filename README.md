@@ -21,15 +21,15 @@ Add a subtitle tag language that you want on the video thumbnail in the YouTube.
 
 ## Showcase
 
-![Showcase Videos](showcase/showcase_videos.jpg)
+![Showcase Videos](docs/showcase/showcase_videos.jpg)
 
-![Showcase In Video](showcase/showcase_invideo.jpg)
+![Showcase In Video](docs/showcase/showcase_invideo.jpg)
 
 ---
 
 ## Customize
 
-<img src="showcase/showcase_popup.jpg" align="right" width="200">
+<img src="docs/showcase/showcase_popup.jpg" align="right" width="200">
 
 - You can customize tag color in popup menu (background and text color)
 

@@ -1,1 +1,0 @@
-bz.exe c -r -ex:*.sh ./yt-subtitle-filter.zip ./*
