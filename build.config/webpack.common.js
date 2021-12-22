@@ -1,12 +1,10 @@
-const { resolve } = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const FriendlyErrors = require('friendly-errors-webpack-plugin');
-const {
-  YoutudeDlDownloaderWebpackPlugin,
-} = require('youtube-dl-downloader-wepback-plugin');
+const { resolve } = require('path')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const FriendlyErrors = require('friendly-errors-webpack-plugin')
 
 module.exports = (env, argv) => {
+  global.XXX = 'XXXX'
   return {
     entry: {
       content_script: resolve(__dirname, '../src/js/content_script/index.js'),
@@ -26,7 +24,6 @@ module.exports = (env, argv) => {
           exclude: /node_modules/,
           loader: 'babel-loader',
         },
-
         {
           test: /\.css$/,
           use: ['style-loader', 'css-loader'],
@@ -57,10 +54,6 @@ module.exports = (env, argv) => {
     plugins: [
       new FriendlyErrors(),
       new CleanWebpackPlugin(),
-      new YoutudeDlDownloaderWebpackPlugin({
-        to: 'lib',
-        from: 'auto',
-      }),
       new CopyWebpackPlugin({
         patterns: [
           {
@@ -93,5 +86,5 @@ module.exports = (env, argv) => {
         ],
       }),
     ],
-  };
-};
+  }
+}

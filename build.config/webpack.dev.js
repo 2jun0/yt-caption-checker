@@ -1,6 +1,6 @@
-const { merge } = require('webpack-merge');
-const commonConfig = require('./webpack.common.js');
-const ExtensionReloader = require('webpack-extension-reloader');
+const { merge } = require('webpack-merge')
+const commonConfig = require('./webpack.common.js')
+const ExtensionReloader = require('webpack-extension-reloader')
 
 module.exports = (env, argv) => {
   return merge(commonConfig(env, argv), {
@@ -11,5 +11,5 @@ module.exports = (env, argv) => {
       ignored: [/node_modules/, /dist/],
     },
     plugins: [new ExtensionReloader()],
-  });
-};
+  })
+}
