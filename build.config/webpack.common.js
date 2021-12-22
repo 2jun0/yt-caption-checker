@@ -1,8 +1,10 @@
-const { resolve } = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { resolve } = require('path')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const FriendlyErrors = require('friendly-errors-webpack-plugin')
 
 module.exports = (env, argv) => {
+  global.XXX = 'XXXX'
   return {
     entry: {
       content_script: resolve(__dirname, '../src/js/content_script/index.js'),
@@ -11,7 +13,7 @@ module.exports = (env, argv) => {
     output: {
       filename: 'js/[name].js',
       path:
-        env.browser === 'chrome'
+        argv.browser === 'chrome'
           ? resolve(__dirname, '../dist/chrome')
           : resolve(__dirname, '../dist/firefox'),
     },
@@ -22,7 +24,6 @@ module.exports = (env, argv) => {
           exclude: /node_modules/,
           loader: 'babel-loader',
         },
-
         {
           test: /\.css$/,
           use: ['style-loader', 'css-loader'],
@@ -42,16 +43,22 @@ module.exports = (env, argv) => {
         },
       ],
     },
+    node: {
+      fs: 'empty',
+      child_process: 'empty',
+    },
     resolve: {
       modules: ['./src', './node_modules'],
+      extensions: ['.js', '.json'],
     },
     plugins: [
+      new FriendlyErrors(),
       new CleanWebpackPlugin(),
       new CopyWebpackPlugin({
         patterns: [
           {
             from:
-              env.browser === 'chrome'
+              argv.browser === 'chrome'
                 ? resolve(__dirname, '../manifest/chrome.json')
                 : resolve(__dirname, '../manifest/firefox.json'),
             to: 'manifest.json',
@@ -79,5 +86,5 @@ module.exports = (env, argv) => {
         ],
       }),
     ],
-  };
-};
+  }
+}

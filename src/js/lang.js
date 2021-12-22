@@ -835,14 +835,14 @@ export const langs = [
     code: 'ko',
     displayName: '한국어',
   },
-];
+]
 
 export function getRelatedLangCodes(originLangCode) {
-  let relatedLangCodes = [originLangCode];
+  let relatedLangCodes = [originLangCode]
   langs.forEach(lang => {
     if (lang.code.match(new RegExp(`${originLangCode}-`))) {
-      relatedLangCodes.push(lang.code);
+      relatedLangCodes.push(lang.code)
     }
-  });
-  return relatedLangCodes;
+  })
+  return relatedLangCodes
 }
