@@ -4,7 +4,7 @@ const pkg = require('../package.json')
 
 const browser = process.argv[2]
 
-const entryDir = resolve(__dirname, '../dist')
+const entryDir = resolve(__dirname, `../dist/${browser}`)
 const outputDir = resolve(
   __dirname,
   `../[${browser}] yt-subtitle-filter-${pkg.version}.zip`,
