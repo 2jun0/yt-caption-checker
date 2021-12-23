@@ -146,7 +146,7 @@ async function hasSubtitlesAsync(videoUrl, langs) {
   // URL example : /watch?v=[video_id]
   const videoId = getYTVideoId(videoUrl)
 
-  return ytdl.getInfo(videoId).then(info => {
+  return ytdl.getBasicInfo(videoId).then(info => {
     let captions = info.player_response.captions
     if (!captions) return false
 
