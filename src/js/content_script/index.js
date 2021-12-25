@@ -139,7 +139,6 @@ async function tagVideo(e, lang) {
   }
 
   ccLoading.remove()
-  let a = e.querySelector('#cc-loading')
 }
 
 async function hasSubtitlesAsync(videoUrl, langs) {
