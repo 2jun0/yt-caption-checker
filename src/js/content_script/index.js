@@ -191,7 +191,7 @@ function initObserver() {
   let contentElement = document.querySelector('body')
   if (!contentElement) return false
 
-  checkNodes(Array.from(contentElement.children))
+  // checkNodes(Array.from(contentElement.children))
 
   mainObserver = new MutationObserver(mutations => {
     mutations.forEach(mutation => {
