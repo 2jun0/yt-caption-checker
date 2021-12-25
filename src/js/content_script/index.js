@@ -152,7 +152,8 @@ async function hasSubtitlesAsync(videoUrl, langs) {
 
     let existsCaptions =
       captions.playerCaptionsTracklistRenderer.captionTracks.filter(
-        ({ languageCode }) => langs.includes(languageCode),
+        ({ languageCode, kind }) =>
+          kind !== 'asr' && langs.includes(languageCode),
       )
 
     return existsCaptions.length > 0
