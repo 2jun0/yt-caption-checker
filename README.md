@@ -49,6 +49,6 @@ Add a subtitle tag language that you want on the video thumbnail in the YouTube.
 ### Step by step
 
 1. run `npm install` in terminal.
-2. run `npm build:[chrome or firefox]` in terminal. (built source will be created in `dist` folder)
-3. run `npm build:zip` in terminal.
+2. run `npm run build:[chrome or firefox]` in terminal. (built source will be created in `dist` folder)
+3. run `npm run build:zip` in terminal.
 4. then, `[chrome or firefox] yt-subtitle-filter-[version].zip` will be created.
