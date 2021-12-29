@@ -1,6 +1,6 @@
 {
   "name": "yt-subtitle-filter",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Add a subtitle tag language that you want on the video thumbnail in the YouTube.",
   "scripts": {
     "dev:chrome": "webpack --config=build.config/webpack.dev.js --browser chrome",
@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@babel/preset-react": "^7.16.0",
+    "@jaames/iro": "^5.5.2",
     "archiver": "^5.3.0",
     "ytdl-core": "^4.9.2"
   },

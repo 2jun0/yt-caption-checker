@@ -29,10 +29,26 @@ Add a subtitle tag language that you want on the video thumbnail in the YouTube.
 
 ## Customize
 
-<img src="docs/showcase/showcase_popup.jpg" align="right" width="200">
+<img src="docs/showcase/showcase_popup.jpg" width="200">
 
 - You can customize tag color in popup menu (background and text color)
 
 - You can resize the subtitle tags
 
 - You can search for subtitles by grouping regions. (ex en-US + en-GB)
+
+---
+
+## How to build
+
+### Prerequisite
+
+- Node.js
+- npm
+
+### Step by step
+
+1. run `npm install` in terminal.
+2. run `npm build:[chrome or firefox]` in terminal. (built source will be created in `dist` folder)
+3. run `npm build:zip` in terminal.
+4. then, `[chrome or firefox] yt-subtitle-filter-[version].zip` will be created.

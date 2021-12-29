@@ -79,10 +79,6 @@ module.exports = (env, argv) => {
             from: resolve(__dirname, '../src/html'),
             to: 'html',
           },
-          {
-            from: resolve(__dirname, '../src/lib'),
-            to: 'lib',
-          },
         ],
       }),
     ],
