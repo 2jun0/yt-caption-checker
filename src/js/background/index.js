@@ -19,4 +19,7 @@ chrome.runtime.onMessage.addListener(({ type, value }, sender, sendRes) => {
       return sendRes(existsCaptions.length > 0)
     })
   }
+
+  // this will keep the message channel open to the other end until sendResponse is called
+  return true
 })
