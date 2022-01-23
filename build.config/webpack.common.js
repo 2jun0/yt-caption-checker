@@ -47,8 +47,6 @@ module.exports = (env, argv) => {
     node: {
       fs: 'empty',
       child_process: 'empty',
-      net: 'empty',
-      tls: 'empty',
     },
     resolve: {
       modules: ['./src', './node_modules'],
