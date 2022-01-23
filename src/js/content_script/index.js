@@ -1,4 +1,3 @@
-import ytdl from 'ytdl-core'
 import { getYTVideoId } from '../common.js'
 import { getRelatedLangCodes } from '../lang.js'
 import {
@@ -145,17 +144,11 @@ async function hasSubtitlesAsync(videoUrl, langs) {
   // URL example : /watch?v=[video_id]
   const videoId = getYTVideoId(videoUrl)
 
-  return ytdl.getBasicInfo(videoId).then(info => {
-    let captions = info.player_response.captions
-    if (!captions) return false
-
-    let existsCaptions =
-      captions.playerCaptionsTracklistRenderer.captionTracks.filter(
-        ({ languageCode, kind }) =>
-          kind !== 'asr' && langs.includes(languageCode),
-      )
-
-    return existsCaptions.length > 0
+  return new Promise(resolve => {
+    chrome.runtime.sendMessage(
+      { type: 'has-subtitles', value: { videoId, langs } },
+      res => resolve(res),
+    )
   })
 }
 

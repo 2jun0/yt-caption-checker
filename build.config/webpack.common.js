@@ -7,6 +7,7 @@ module.exports = (env, argv) => {
   global.XXX = 'XXXX'
   return {
     entry: {
+      background: resolve(__dirname, '../src/js/background/index.js'),
       content_script: resolve(__dirname, '../src/js/content_script/index.js'),
       popup: resolve(__dirname, '../src/js/popup/index.js'),
     },
@@ -46,6 +47,8 @@ module.exports = (env, argv) => {
     node: {
       fs: 'empty',
       child_process: 'empty',
+      net: 'empty',
+      tls: 'empty',
     },
     resolve: {
       modules: ['./src', './node_modules'],
