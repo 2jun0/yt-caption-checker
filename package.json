@@ -1,6 +1,6 @@
 {
   "name": "yt-subtitle-filter",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Add a subtitle tag language that you want on the video thumbnail in the YouTube.",
   "scripts": {
     "dev:chrome": "webpack --config=build.config/webpack.dev.js --browser chrome",
@@ -11,6 +11,7 @@
     "build:zip:chrome": "node ./build.config/zip.js chrome",
     "build:zip:firefox": "node ./build.config/zip.js firefox",
     "build:zip": "npm run build:zip:chrome && npm run build:zip:firefox",
+    "build:all": "npm run build && npm run build:zip",
     "lint": "prettier --write ."
   },
   "repository": {
