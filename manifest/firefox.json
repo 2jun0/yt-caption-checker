@@ -4,7 +4,7 @@
   "description": "__MSG_appDesc__",
   "default_locale": "en",
   "manifest_version": 2,
-  "version": "1.5.0",
+  "version": "1.5.1",
   "author": "2jun0",
   "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
   "icons": {
@@ -13,7 +13,9 @@
     "128": "asset/logo/logo-big-128.png"
   },
   "background": {
-    "scripts": ["js/background.js"],
+    "scripts": [
+      "js/background.js"
+    ],
     "persistent": false
   },
   "browser_action": {
@@ -23,12 +25,22 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.youtube.com/*"],
-      "js": ["js/content_script.js"],
-      "css": ["css/content_script.css"],
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "js": [
+        "js/content_script.js"
+      ],
+      "css": [
+        "css/content_script.css"
+      ],
       "run_at": "document_end",
       "all_frames": false
     }
   ],
-  "permissions": ["*://*.youtube.com/*", "storage", "tabs"]
+  "permissions": [
+    "*://*.youtube.com/*",
+    "storage",
+    "tabs"
+  ]
 }
