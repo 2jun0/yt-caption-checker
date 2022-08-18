@@ -1,7 +1,7 @@
 {
-  "name": "yt-subtitle-filter",
-  "version": "1.5.2",
-  "description": "Add a subtitle tag language that you want on the video thumbnail in the YouTube.",
+  "name": "yt-caption-checker",
+  "version": "1.5.4",
+  "description": "Show if there are captions for the language you want in YouTube videos.",
   "scripts": {
     "dev:chrome": "webpack --config=build.config/webpack.dev.js --browser chrome",
     "dev:firefox": "webpack --config=build.config/webpack.dev.js --browser firefox",
@@ -16,18 +16,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/2jun0/yt-subtitle-filter.git"
+    "url": "git+https://github.com/2jun0/yt-caption-checker.git"
   },
   "author": "2jun0",
   "license": "MIT",
-  "homepage": "https://github.com/2jun0/yt-subtitle-filter#readme",
+  "homepage": "https://github.com/2jun0/yt-caption-checker#readme",
   "keywords": [
     "YouTube",
     "Caption",
     "Subtitle"
   ],
   "bugs": {
-    "url": "https://github.com/2jun0/yt-subtitle-filter/issues"
+    "url": "https://github.com/2jun0/yt-caption-checker/issues"
   },
   "dependencies": {
     "@babel/preset-react": "^7.16.0",

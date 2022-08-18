@@ -7,7 +7,7 @@ const browser = process.argv[2]
 const entryDir = resolve(__dirname, `../dist/${browser}`)
 const outputDir = resolve(
   __dirname,
-  `../[${browser}] yt-subtitle-filter-${pkg.version}.zip`,
+  `../[${browser}] yt-caption-checker-${pkg.version}.zip`,
 )
 const hasDir = fs.existsSync(entryDir)
 

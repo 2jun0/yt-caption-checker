@@ -1,4 +1,4 @@
-export const EXTENSION_NAME = 'YT-SUBTITLE-FILTER'
+export const EXTENSION_NAME = 'yt-caption-checker'
 export const FIELD_COLOR_BG = `${EXTENSION_NAME}_color-bg`
 export const FIELD_COLOR_TXT = `${EXTENSION_NAME}_color-txt`
 export const FIELD_TAG_FONT_SIZE = `${EXTENSION_NAME}_tag-font-size`

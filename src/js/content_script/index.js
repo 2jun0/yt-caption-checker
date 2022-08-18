@@ -76,7 +76,7 @@ function createLoadingTag() {
   return ccLoading
 }
 
-function createSubtitleTag() {
+function createCaptionTag() {
   let ccStatus = document.createElement('div')
   Object.assign(ccStatus, {
     id: 'cc-status',
@@ -120,13 +120,13 @@ async function tagVideo(e, lang) {
   let ccLoading = e.querySelector('#cc-loading') || createLoadingTag()
   overlays.insertBefore(ccLoading, overlays.lastChild)
 
-  // Check if video has subtitles
-  const hasSubtitles = await hasSubtitlesAsync(url, langs)
+  // Check if video has captions
+  const hasCaptions = await hasCaptionsAsync(url, langs)
 
-  if (hasSubtitles) {
+  if (hasCaptions) {
     // Once load overlays, insert ccStatus
 
-    ccStatus = createSubtitleTag()
+    ccStatus = createCaptionTag()
 
     // if user change langauge or url in processing,
     // Remove ccStatus and ccLoading
@@ -140,13 +140,13 @@ async function tagVideo(e, lang) {
   ccLoading.remove()
 }
 
-async function hasSubtitlesAsync(videoUrl, langs) {
+async function hasCaptionsAsync(videoUrl, langs) {
   // URL example : /watch?v=[video_id]
   const videoId = getYTVideoId(videoUrl)
 
   return new Promise(resolve => {
     chrome.runtime.sendMessage(
-      { type: 'has-subtitles', value: { videoId, langs } },
+      { type: 'has-captions', value: { videoId, langs } },
       res => resolve(res),
     )
   })

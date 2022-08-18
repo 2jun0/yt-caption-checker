@@ -1,11 +1,11 @@
 {
   "appName": {
-    "message": "YouTube subtitle filter",
-    "description": "Add a subtitle tag language that you want on the video thumbnail in the YouTube."
+    "message": "YouTube Caption Checker",
+    "description": "Show if there are captions for the language you want in YouTube videos."
   },
   "appDesc": {
-    "message": "Add a subtitle tag language that you want on the video thumbnail in the YouTube.",
-    "description": "This extension add a subtitle tag language that you want on the video thumbnail in the YouTube. (But if there are no subtitle, it doesn't add tags)"
+    "message": "Show if there are captions for the language you want in YouTube videos.",
+    "description": "This extension add a caption tag for the language you want on the video thumbnail in the YouTube. (But if there are no caption, it doesn't add tags)"
   },
   "selectLang": {
     "message": "Select Language",

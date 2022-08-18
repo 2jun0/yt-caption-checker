@@ -1,12 +1,12 @@
 {
   "name": "__MSG_appName__",
-  "short_name": "yt-subtitle-filter",
+  "short_name": "yt-caption-checker",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
   "manifest_version": 2,
-  "version": "1.5.2",
+  "version": "1.5.4",
   "author": "2jun0",
-  "homepage_url": "https://github.com/2jun0/yt-subtitle-filter",
+  "homepage_url": "https://github.com/2jun0/yt-caption-checker",
   "icons": {
     "32": "asset/logo/logo-big-32.png",
     "64": "asset/logo/logo-big-64.png",

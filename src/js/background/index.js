@@ -1,7 +1,7 @@
 import { getYtInfo } from '../yt-info'
 
 chrome.runtime.onMessage.addListener(({ type, value }, sender, sendRes) => {
-  if (type === 'has-subtitles') {
+  if (type === 'has-captions') {
     let { videoId, langs } = value
 
     getYtInfo(videoId, { credentials: 'omit' }).then((info, err) => {
