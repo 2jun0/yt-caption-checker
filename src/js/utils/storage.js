@@ -14,44 +14,32 @@ export const DEFAULT_VALUE = {
   [FIELD_LANG]: 'en',
 }
 
-export function loadData(fields, callback) {
+export const loadData = (fields, callback) => {
   if (!Array.isArray(fields)) fields = [fields]
 
-  function dataInitizier(items) {
+  chrome.storage.local.get(fields, items => {
     fields.forEach(field => {
       if (!items.hasOwnProperty(field)) items[field] = DEFAULT_VALUE[field]
     })
 
     callback(items)
-  }
-
-  chrome.storage.local.get(fields, dataInitizier)
-}
-
-export async function loadDataAsync(fields) {
-  return new Promise(resolve => {
-    if (!Array.isArray(fields)) fields = [fields]
-
-    function dataInitizier(items) {
-      fields.forEach(field => {
-        if (!items.hasOwnProperty(field)) items[field] = DEFAULT_VALUE[field]
-      })
-
-      resolve(items)
-    }
-
-    chrome.storage.local.get(fields, dataInitizier)
   })
 }
 
-export function saveData(field, value, callback = null) {
+export const loadDataAsync = async fields => {
+  return new Promise(resolve => {
+    loadData(fields, items => {
+      resolve(items)
+    })
+  })
+}
+
+export const saveData = (field, value, callback = null) => {
   chrome.storage.local.set({ [field]: value }, callback)
 }
 
 export async function saveDataAsync(field, value) {
   return new Promise(resolve => {
-    chrome.storage.local.set({ [field]: value }, () => {
-      resolve()
-    })
+    saveData(field, value, resolve)
   })
 }

@@ -1,15 +1,13 @@
 {
   "name": "yt-caption-checker",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "Show if there are captions for the language you want in YouTube videos.",
   "scripts": {
-    "dev:chrome": "webpack --config=build.config/webpack.dev.js --browser chrome",
-    "dev:firefox": "webpack --config=build.config/webpack.dev.js --browser firefox",
     "build": "npm run build:chrome && npm run build:firefox",
-    "build:chrome": "webpack --config=build.config/webpack.prod.js --browser chrome",
-    "build:firefox": "webpack --config=build.config/webpack.prod.js --browser firefox",
-    "build:zip:chrome": "node ./build.config/zip.js chrome",
-    "build:zip:firefox": "node ./build.config/zip.js firefox",
+    "build:chrome": "node ./build/build.js chrome",
+    "build:firefox": "node ./build/build.js firefox",
+    "build:zip:chrome": "node ./build/zip.js chrome",
+    "build:zip:firefox": "node ./build/zip.js firefox",
     "build:zip": "npm run build:zip:chrome && npm run build:zip:firefox",
     "build:all": "npm run build && npm run build:zip",
     "lint": "prettier --write ."
@@ -30,27 +28,9 @@
     "url": "https://github.com/2jun0/yt-caption-checker/issues"
   },
   "dependencies": {
-    "@babel/preset-react": "^7.16.0",
-    "@jaames/iro": "^5.5.2",
-    "archiver": "^5.3.0"
+    "archiver": "^5.3.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/preset-env": "^7.16.4",
-    "@types/chrome": "0.0.166",
-    "@types/firefox-webext-browser": "^94.0.0",
-    "babel-loader": "^8.2.3",
-    "clean-webpack-plugin": "^4.0.0",
-    "copy-webpack-plugin": "^6.4.1",
-    "css-loader": "^5.2.7",
-    "friendly-errors-webpack-plugin": "^1.7.0",
-    "prettier": "^2.5.0",
-    "style-loader": "^2.0.0",
-    "typescript": "^4.5.2",
-    "url-loader": "^4.1.1",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-extension-reloader": "^1.1.4",
-    "webpack-merge": "^5.8.0"
+    "prettier": "^2.7.1"
   }
 }

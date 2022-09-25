@@ -1,13 +1,13 @@
-import { getYtInfo } from '../yt-info'
+import { getYtInfo } from './utils/yt-info.js'
 
 chrome.runtime.onMessage.addListener(({ type, value }, sender, sendRes) => {
   if (type === 'has-captions') {
-    let { videoId, langs } = value
+    const { videoId, langs } = value
 
-    getYtInfo(videoId, { credentials: 'omit' }).then((info, err) => {
+    getYtInfo(videoId).then((info, err) => {
       if (err) console.error(err)
 
-      let captions = info.player_response.captions
+      const { captions } = info.player_response
       if (!captions) return sendRes(false)
 
       let existsCaptions =

@@ -1,5 +1,4 @@
-import iro from '@jaames/iro'
-import { localize } from '../common.js'
+import { localize } from './utils/common.js'
 import {
   FIELD_COLOR_BG,
   FIELD_COLOR_TXT,
@@ -8,8 +7,10 @@ import {
   FIELD_LANG,
   loadData,
   saveData,
-} from '../storage.js'
-import { langs } from '../lang.js'
+} from './utils/storage.js'
+import { langs } from './utils/lang.js'
+
+const iro = window.iro
 
 localize()
 
@@ -69,21 +70,23 @@ var TagFontSizes = [
 
 // utils
 
-function getKeyByValue(object, value) {
+const getKeyByValue = (object, value) => {
   return Object.keys(object).find(key => object[key] === value)
 }
 
-function sendMessage(key, value, callback) {
-  chrome.tabs.query({}, tabs => {
-    tabs.forEach(tab => {
-      chrome.tabs.sendMessage(tab.id, { [key]: value }, callback)
-    })
+const sendMessage = async (key, value) => {
+  const tabs = await chrome.tabs.query({
+    active: true,
+  })
+
+  tabs.forEach(tab => {
+    chrome.tabs.sendMessage(tab.id, { [key]: value }).catch(e => {})
   })
 }
 
 // mains
 
-function updateLangOptions() {
+const updateLangOptions = () => {
   var prevLang = langPicker.value
 
   // Reset lang picker's options
@@ -101,20 +104,20 @@ function updateLangOptions() {
   langPicker.value = prevLang
 }
 
-function initTagSizeRange() {
+const initTagSizeRange = () => {
   tagSizeRange.min = 0
   tagSizeRange.max = TagFontSizes.length - 1
   tagSizeRange.value = getKeyByValue('1.3rem')
 }
 
-function setLanguage(lang) {
+const setLanguage = lang => {
   langPicker.value = lang
   ccStatusExmaple.textContent = langPicker.value.toUpperCase() + ' CC'
 
   saveData(FIELD_LANG, lang)
 }
 
-function setColorBg(colorBg, setColorPickerable = true) {
+const setColorBg = (colorBg, setColorPickerable = true) => {
   if (setColorPickerable) colorBgPicker.color.hex8String = colorBg
   colorBgDisplay.style.background = colorBg
 
@@ -123,7 +126,7 @@ function setColorBg(colorBg, setColorPickerable = true) {
   saveData(FIELD_COLOR_BG, colorBg)
 }
 
-function setColorTxt(colorTxt, setColorPickerable = true) {
+const setColorTxt = (colorTxt, setColorPickerable = true) => {
   if (setColorPickerable) colorTxtPicker.color.hexString = colorTxt
   colorTxtDisplay.style.background = colorTxt
 
@@ -132,14 +135,14 @@ function setColorTxt(colorTxt, setColorPickerable = true) {
   saveData(FIELD_COLOR_TXT, colorTxt)
 }
 
-function setTagFontSize(fontSize) {
+const setTagFontSize = fontSize => {
   tagSizeRange.value = TagFontSizes.indexOf(fontSize)
   ccStatusExmaple.style.fontSize = `calc(${fontSize} - 0.4rem)`
   // Save data
   saveData(FIELD_TAG_FONT_SIZE, fontSize)
 }
 
-function combineRegion(enable) {
+const combineRegion = enable => {
   combineRegionCheckbox.checked = enable
   if (enable) setLanguage(langPicker.value.split('-')[0])
 

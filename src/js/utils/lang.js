@@ -837,7 +837,7 @@ export const langs = [
   },
 ]
 
-export function getRelatedLangCodes(originLangCode) {
+export const getRelatedLangCodes = originLangCode => {
   let relatedLangCodes = [originLangCode]
   langs.forEach(lang => {
     if (lang.code.match(new RegExp(`${originLangCode}-`))) {

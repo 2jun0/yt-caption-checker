@@ -1,5 +1,5 @@
-import { getYTVideoId } from '../common.js'
-import { getRelatedLangCodes } from '../lang.js'
+import { getYTVideoId } from './utils/common.js'
+import { getRelatedLangCodes } from './utils/lang.js'
 import {
   FIELD_COLOR_BG,
   FIELD_COLOR_TXT,
@@ -8,7 +8,7 @@ import {
   FIELD_LANG,
   DEFAULT_VALUE,
   loadData,
-} from '../storage.js'
+} from './utils/storage.js'
 
 // tag const values
 let ccLang = DEFAULT_VALUE[FIELD_LANG]
@@ -20,13 +20,13 @@ let ccCombineRegion = DEFAULT_VALUE[FIELD_COMBINE_REGION]
 let mainObserver
 let intervalId
 
-function setCCLang(lang) {
+const setCCLang = lang => {
   if (ccLang == lang) return
   ccLang = lang
   checkAllNode()
 }
 
-function setCCColorBg(colorBg) {
+const setCCColorBg = colorBg => {
   if (ccColorBg == colorBg) return
   ccColorBg = colorBg
   document.querySelectorAll('#cc-status').forEach(ccStatus => {
@@ -34,7 +34,7 @@ function setCCColorBg(colorBg) {
   })
 }
 
-function setCCColorTxt(colortxt) {
+const setCCColorTxt = colortxt => {
   if (ccColorTxt == colortxt) return
   ccColorTxt = colortxt
   document.querySelectorAll('#cc-status').forEach(ccStatus => {
@@ -42,7 +42,7 @@ function setCCColorTxt(colortxt) {
   })
 }
 
-function setCCFontSize(fontSize) {
+const setCCFontSize = fontSize => {
   if (ccFontSize == fontSize) return
   ccFontSize = fontSize
   document.querySelectorAll('#cc-status').forEach(ccStatus => {
@@ -50,12 +50,12 @@ function setCCFontSize(fontSize) {
   })
 }
 
-function setCCCombineRegion(enable) {
+const setCCCombineRegion = enable => {
   ccCombineRegion = enable
   setCCLang(ccLang.split('-')[0])
 }
 
-async function waitOverlayLoadedAsnyc(e) {
+const waitOverlayLoadedAsnyc = async e => {
   const overlays = e.querySelector('#overlays')
 
   return new Promise(resolve => {
@@ -68,16 +68,16 @@ async function waitOverlayLoadedAsnyc(e) {
   })
 }
 
-function createLoadingTag() {
-  let ccLoading = document.createElement('div')
+const createLoadingTag = () => {
+  const ccLoading = document.createElement('div')
   ccLoading.id = 'cc-loading'
   ccLoading.style.color = ccColorTxt
 
   return ccLoading
 }
 
-function createCaptionTag() {
-  let ccStatus = document.createElement('div')
+const createCaptionTag = () => {
+  const ccStatus = document.createElement('div')
   Object.assign(ccStatus, {
     id: 'cc-status',
     overlayStyle: 'DEFAULT',
@@ -90,7 +90,7 @@ function createCaptionTag() {
     fontSize: ccFontSize,
   })
 
-  let span = document.createElement('span')
+  const span = document.createElement('span')
   Object.assign(span, {
     className: 'style-scope ytd-thumbnail-overlay-time-status-renderer',
     ariaLabel: ccLang.toUpperCase() + ' CC',
@@ -102,7 +102,7 @@ function createCaptionTag() {
   return ccStatus
 }
 
-async function tagVideo(e, lang) {
+const tagVideo = async (e, lang) => {
   const url = e.href
   if (!url) return
 
@@ -117,13 +117,11 @@ async function tagVideo(e, lang) {
   const overlays = await waitOverlayLoadedAsnyc(e)
 
   // Show the loading tag
-  let ccLoading = e.querySelector('#cc-loading') || createLoadingTag()
+  const ccLoading = e.querySelector('#cc-loading') || createLoadingTag()
   overlays.insertBefore(ccLoading, overlays.lastChild)
 
   // Check if video has captions
-  const hasCaptions = await hasCaptionsAsync(url, langs)
-
-  if (hasCaptions) {
+  if (await hasCaptions(url, langs)) {
     // Once load overlays, insert ccStatus
 
     ccStatus = createCaptionTag()
@@ -140,19 +138,17 @@ async function tagVideo(e, lang) {
   ccLoading.remove()
 }
 
-async function hasCaptionsAsync(videoUrl, langs) {
+const hasCaptions = async (videoUrl, langs) => {
   // URL example : /watch?v=[video_id]
   const videoId = getYTVideoId(videoUrl)
 
-  return new Promise(resolve => {
-    chrome.runtime.sendMessage(
-      { type: 'has-captions', value: { videoId, langs } },
-      res => resolve(res),
-    )
+  return chrome.runtime.sendMessage({
+    type: 'has-captions',
+    value: { videoId, langs },
   })
 }
 
-function checkNodes(nodes) {
+const checkNodes = nodes => {
   nodes.forEach(node => {
     // is not http element
     if (['#text', '#comment'].includes(node.nodeName)) return
@@ -163,22 +159,23 @@ function checkNodes(nodes) {
   })
 }
 
-function checkNode(node) {
+const checkNode = node => {
   // except thumbnail
   if (node.tagName != 'A' || node.id != 'thumbnail') return
   // except play list
   if (node.parentElement.tagName == 'YTD-PLAYLIST-THUMBNAIL') return
+
   tagVideo(node)
 }
 
-function checkAllNode() {
-  let contentElement = document.querySelector('body')
+const checkAllNode = () => {
+  const contentElement = document.querySelector('body')
   if (!contentElement) return false
 
   checkNodes(Array.from(contentElement.children))
 }
 
-function initObserver() {
+const initObserver = () => {
   if (!('MutationObserver' in window)) return false
 
   let contentElement = document.querySelector('body')
@@ -201,7 +198,7 @@ function initObserver() {
   return true
 }
 
-function initInterval() {
+const initInterval = () => {
   intervalId = setInterval(() => {
     if (initObserver()) clearInterval(intervalId)
   }, 2000)
