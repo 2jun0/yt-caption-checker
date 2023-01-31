@@ -14,6 +14,51 @@ export const DEFAULT_VALUE = {
   [FIELD_LANG]: 'en',
 }
 
+/**
+ * @example 
+ * s = Storage(chrome.storage.local)
+ * @param {any} localStorage
+ * @returns 
+ */
+export const Storage = (localStorage) => {
+  const loadDataAsync = async fields => {
+    return new Promise(resolve => {
+      loadData(fields, items => {
+        resolve(items)
+      })
+    })
+  }
+
+  const saveDataAsync = async (field, value) => {
+    return new Promise(resolve => {
+      saveData(field, value, resolve)
+    })
+  }
+
+  const _loadData = (fields, callback) => {
+    if (!Array.isArray(fields)) 
+      fields = [fields]
+  
+    localStorage.get(fields, items => {
+      fields.forEach(field => {
+        if (!items.hasOwnProperty(field)) 
+          items[field] = DEFAULT_VALUE[field]
+      })
+  
+      callback(items)
+    })
+  }
+
+  const _saveData = (field, value, callback = null) => {
+    localStorage.set({ [field]: value }, callback)
+  }
+
+  return {
+    loadDataAsync,
+    saveDataAsync
+  }
+}
+
 export const loadData = (fields, callback) => {
   if (!Array.isArray(fields)) fields = [fields]
 
