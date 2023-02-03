@@ -123,6 +123,7 @@ export const PopupContext = (document, iro) => {
   const mainDiv = () => {
     if (!_mainDiv) {
       _mainDiv = MainDiv(document)
+      _mainDiv.init(colorBgPresenter(), colorTxtPresenter())
     }
 
     return _mainDiv
