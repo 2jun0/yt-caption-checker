@@ -34,7 +34,7 @@ export const CcPreviewFontSizePicker = document => {
     ccPreviewFontSizePicker.max = FONT_SIZES.length - 1
     ccPreviewFontSizePicker.value = 3
     ccPreviewFontSizePicker.oninput = () => {
-      const currentFontSize = ccPreviewFontSizePicker[ccPreviewFontSizePicker.value]
+      const currentFontSize = FONT_SIZES[ccPreviewFontSizePicker.value]
       presenter.setFontSize(currentFontSize)
     }
   }
