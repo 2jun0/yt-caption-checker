@@ -48,7 +48,7 @@ export const ColorBgPresenter = () => {
   }
 
   const hideBackgroundColorPicker = () => {
-    _colorBgDisplay.hide()
+    _colorBgPicker.hide()
   }
 
   const setBackgroundColor = async bgColor => {
