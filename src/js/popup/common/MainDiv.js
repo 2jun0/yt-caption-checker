@@ -27,14 +27,34 @@ export const MainDiv = document => {
    */
   const init = (colorBgPresenter, colorTxtPresenter) => {
     mainDiv.onclick = e => {
-      if (![COLOR_BG_PICKER_ID, COLOR_BG_DISPLAY_ID].includes(e.target.id)) {
+      const el = e.target;
+
+      if (!isChildOf(el, COLOR_BG_DISPLAY_ID) && !isChildOf(el, COLOR_BG_PICKER_ID)) {
         colorBgPresenter.hideBackgroundColorPicker()
       }
 
-      if (![COLOR_TXT_PICKER_ID, COLOR_TXT_DISPLAY_ID].includes(e.target.id)) {
+      if (!isChildOf(el, COLOR_TXT_PICKER_ID) && !isChildOf(el, COLOR_TXT_DISPLAY_ID)) {
         colorTxtPresenter.hideTextColorPicker()
       }
     }
+  }
+
+  /**
+   * get is child of parent that have parentId
+   * @param {HTMLElement} el 
+   * @param {*} parentId 
+   */
+  const isChildOf = (el, parentId) => {
+    let currEl = el
+    while (currEl) {
+      if (currEl.id == parentId) {
+        return true
+      }
+
+      currEl = currEl.parentElement
+    }
+
+    return false
   }
 
   return {
