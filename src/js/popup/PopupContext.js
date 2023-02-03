@@ -149,7 +149,7 @@ export const PopupContext = (document, iro) => {
   const ccPreviewFontSizeModel = () => {
     if (!_ccPreviewFontSizeModel) {
       _ccPreviewFontSizeModel = CcPreviewFontSizeModel()
-      _ccPreviewFontSizeModel.init(storage())
+      _ccPreviewFontSizeModel.init(storage(), messageManager())
     }
 
     return _ccPreviewFontSizeModel
@@ -186,7 +186,7 @@ export const PopupContext = (document, iro) => {
   const languageModel = () => {
     if (!_languageModel) {
       _languageModel = LanguageModel()
-      _languageModel.init(storage())
+      _languageModel.init(storage(), messageManager())
     }
 
     return _languageModel
@@ -275,9 +275,11 @@ export const PopupContext = (document, iro) => {
   }
 
   const messageManager = () => {
-    if (_messageManager) {
+    if (!_messageManager) {
       _messageManager = MessageManager()
     }
+
+    return _messageManager
   }
 
   return {
