@@ -22,11 +22,14 @@ export const LanguagePicker = document => {
   /**
    * initialize
    * @param {LanguagePresenter} languagePresenter 
+   * @param {*} langs
    */
-  const init = languagePresenter => {
+  const init = (languagePresenter, langs) => {
     languagePicker.onchange = () => {
       languagePresenter.setLanguage(languagePicker.value)
     }
+
+    updateLanuageList(langs)
   }
   
   const updateLanuageList = langs => {

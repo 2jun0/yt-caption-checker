@@ -21,6 +21,7 @@ import { ColorTxtPicker } from "./textColor/ColorTxtPicker.js"
 import { ColorTxtModel } from "./textColor/ColorTxtModel.js"
 import { MessageManager } from "../utils/MessageManager.js"
 import { Storage } from "../utils/storage.js"
+import { langs } from "../utils/lang.js"
 
 /**
  * @typedef {Object} PopupContext
@@ -177,7 +178,7 @@ export const PopupContext = (document, iro) => {
   const languagePicker = () => {
     if (!_languagePicker) {
       _languagePicker = LanguagePicker(document)
-      _languagePicker.init(languagePresenter())
+      _languagePicker.init(languagePresenter(), langs)
     }
 
     return _languagePicker
