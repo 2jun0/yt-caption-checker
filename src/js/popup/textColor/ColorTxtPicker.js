@@ -1,4 +1,4 @@
-import { ColorTxtPresenter } from "./ColorTxtPresenter";
+import { ColorTxtPresenter } from "./ColorTxtPresenter.js";
 
 export const COLOR_TXT_PICKER_ID = 'color-txt-picker'
 

@@ -1,4 +1,4 @@
-import { LanguagePresenter } from "./LanguagePresenter";
+import { LanguagePresenter } from "./LanguagePresenter.js";
 
 const COMBINE_REGION_CHECK_BOX_ID = 'combine-region-checkbox'
 

@@ -1,12 +1,12 @@
+import { CcPreviewFontSizeModel } from "./CcPreviewFontSizeModel.js"
+import { CcPreviewFontSizePicker } from "./CcPreviewFontSizePicker.js"
+import { CcStatusExample } from "./CcStatusExample.js"
+
 /**
  * @typedef {Object} CcPreviewFontSizePresenter
  * @property {(ccPreviewFontSizePicker: CcPreviewFontSizePicker, ccStatusExample: CcStatusExample, ccPreviewFontSizeModel: CcPreviewFontSizeModel) => void} init
  * @property {(fontSize: any) => Promise<void>} setFontSize
  */
-
-import { CcPreviewFontSizeModel } from "./CcPreviewFontSizeModel"
-import { CcPreviewFontSizePicker } from "./CcPreviewFontSizePicker"
-import { CcStatusExample } from "./CcStatusExample"
 
 /**
  * CC Preview Size Picker Presenter

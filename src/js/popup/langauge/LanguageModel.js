@@ -1,5 +1,5 @@
-import { MessageManager } from "../../utils/MessageManager"
-import { IS_COMBINED_REGION_FIELD, LANGUAGE_FIELD, Storage } from "../../utils/storage"
+import { MessageManager } from "../../utils/MessageManager.js"
+import { IS_COMBINED_REGION_FIELD, LANGUAGE_FIELD, Storage } from "../../utils/storage.js"
 
 /**
  * @typedef {Object} LanguageModel

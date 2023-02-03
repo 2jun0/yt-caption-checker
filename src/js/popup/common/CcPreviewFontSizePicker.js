@@ -1,4 +1,4 @@
-import { CcPreviewFontSizePresenter } from "./CcPreviewFontSizePresenter"
+import { CcPreviewFontSizePresenter } from "./CcPreviewFontSizePresenter.js"
 
 const CC_PREVIEW_FONT_SIZE_PICKER_ID = 'tag-size-range'
 const FONT_SIZES = [

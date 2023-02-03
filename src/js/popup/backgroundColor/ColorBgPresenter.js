@@ -1,7 +1,7 @@
-import { CcStatusExample } from "../common/CcStatusExample";
-import { ColorBgDisplay } from "./ColorBgDisplay";
-import { ColorBgModel } from "./ColorBgModel";
-import { ColorBgPicker } from "./ColorBgPicker";
+import { CcStatusExample } from "../common/CcStatusExample.js";
+import { ColorBgDisplay } from "./ColorBgDisplay.js";
+import { ColorBgModel } from "./ColorBgModel.js";
+import { ColorBgPicker } from "./ColorBgPicker.js";
 
 /**
  * @typedef {Object} ColorBgPresenter

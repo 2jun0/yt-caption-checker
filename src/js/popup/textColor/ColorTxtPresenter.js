@@ -1,7 +1,7 @@
-import { CcStatusExample } from "../common/CcStatusExample";
-import { ColorTxtDisplay } from "./ColorTxtDisplay";
-import { ColorTxtModel } from "./ColorTxtModel";
-import { ColorTxtPicker } from "./ColorTxtPicker";
+import { CcStatusExample } from "../common/CcStatusExample.js"
+import { ColorTxtDisplay } from "./ColorTxtDisplay.js"
+import { ColorTxtModel } from "./ColorTxtModel.js"
+import { ColorTxtPicker } from "./ColorTxtPicker.js"
 
 /**
  * @typedef {Object} ColorTxtPresenter

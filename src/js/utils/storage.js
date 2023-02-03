@@ -1,4 +1,4 @@
-import { EXTENSION_NAME } from "./common"
+import { EXTENSION_NAME } from "./common.js"
 
 export const COLOR_BG_FIELD = `${EXTENSION_NAME}_color-bg`
 export const COLOR_TXT_FIELD = `${EXTENSION_NAME}_color-txt`

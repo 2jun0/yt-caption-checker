@@ -1,8 +1,8 @@
-import { langs } from "../../utils/lang";
-import { CcStatusExample } from "../common/CcStatusExample";
-import { CombineRegionCheckBox } from "./CombineRegionCheckBox";
-import { LanguageModel } from "./LanguageModel";
-import { LanguagePicker } from "./LanguagePicker";
+import { langs } from "../../utils/lang.js"
+import { CcStatusExample } from "../common/CcStatusExample.js"
+import { CombineRegionCheckBox } from "./CombineRegionCheckBox.js"
+import { LanguageModel } from "./LanguageModel.js"
+import { LanguagePicker } from "./LanguagePicker.js"
 
 /**
  * @typedef {Object} LanguagePresenter

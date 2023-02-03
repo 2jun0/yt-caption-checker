@@ -1,4 +1,4 @@
-import { ColorBgPresenter } from "./ColorBgPresenter";
+import { ColorBgPresenter } from "./ColorBgPresenter.js";
 
 export const COLOR_BG_PICKER_ID = 'color-bg-picker'
 

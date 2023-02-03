@@ -1,4 +1,4 @@
-import { LanguagePresenter } from "./LanguagePresenter";
+import { LanguagePresenter } from "./LanguagePresenter.js";
 
 const LANG_PICKER_ID = 'lang-picker'
 

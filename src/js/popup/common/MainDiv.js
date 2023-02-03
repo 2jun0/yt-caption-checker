@@ -1,9 +1,9 @@
-import { COLOR_BG_DISPLAY_ID } from "../backgroundColor/ColorBgDisplay"
-import { COLOR_BG_PICKER_ID } from "../backgroundColor/ColorBgPicker"
-import { ColorBgPresenter } from "../backgroundColor/ColorBgPresenter"
-import { COLOR_TXT_DISPLAY_ID } from "../textColor/ColorTxtDisplay"
-import { COLOR_TXT_PICKER_ID } from "../textColor/ColorTxtPicker"
-import { ColorTxtPresenter } from "../textColor/ColorTxtPresenter"
+import { COLOR_BG_DISPLAY_ID } from "../backgroundColor/ColorBgDisplay.js"
+import { COLOR_BG_PICKER_ID } from "../backgroundColor/ColorBgPicker.js"
+import { ColorBgPresenter } from "../backgroundColor/ColorBgPresenter.js"
+import { COLOR_TXT_DISPLAY_ID } from "../textColor/ColorTxtDisplay.js"
+import { COLOR_TXT_PICKER_ID } from "../textColor/ColorTxtPicker.js"
+import { ColorTxtPresenter } from "../textColor/ColorTxtPresenter.js"
 
 const MAIN_DIV_ID = 'main'
 

@@ -1,5 +1,5 @@
-import { MessageManager } from "../../utils/MessageManager"
-import { CC_PREVIEW_FONT_SIZE_FIELD, Storage } from "../../utils/storage"
+import { MessageManager } from "../../utils/MessageManager.js"
+import { CC_PREVIEW_FONT_SIZE_FIELD, Storage } from "../../utils/storage.js"
 
 /**
  * @typedef {Object} CcPreviewFontSizeModel

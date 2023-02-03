@@ -1,4 +1,4 @@
-import { ColorTxtPresenter } from "./ColorTxtPresenter";
+import { ColorTxtPresenter } from "./ColorTxtPresenter.js"
 
 export const COLOR_TXT_DISPLAY_ID = 'color-txt-display'
 
