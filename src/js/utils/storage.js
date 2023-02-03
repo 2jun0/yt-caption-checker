@@ -9,11 +9,11 @@ export const LANGUAGE_FIELD = `${EXTENSION_NAME}_lang`
 export const FIELD_VIDEO_LANG_LIST_URL = `${EXTENSION_NAME}_video-lang-list-url`
 
 export const DEFAULT_VALUE = {
-  [FIELD_COLOR_BG]: '#00000099',
-  [FIELD_COLOR_TXT]: '#FFFFFF',
-  [FIELD_TAG_FONT_SIZE]: '1.3rem',
-  [FIELD_COMBINE_REGION]: true,
-  [FIELD_LANG]: 'en',
+  [COLOR_BG_FIELD]: '#00000099',
+  [COLOR_TXT_FIELD]: '#FFFFFF',
+  [CC_PREVIEW_FONT_SIZE_FIELD]: '1.3rem',
+  [IS_COMBINED_REGION_FIELD]: true,
+  [LANGUAGE_FIELD]: 'en',
 }
 
 /**

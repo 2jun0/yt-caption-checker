@@ -1,6 +1,7 @@
 /**
  * @typedef {Object} MessageManager
  * @property {(key: any, value: any) => Promise<void>} sendMessage
+ * @property {(listener: (req: any) => void) => void} addOnMessageListener
  */
 
 /**
@@ -18,7 +19,18 @@ export const MessageManager = () => {
     })
   }
 
+  /**
+   * add onMessage Listener
+   * @param {(req: any) => void} listener 
+   */
+  const addOnMessageListener = listener => {
+    chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
+      listener(req)
+    })
+  }
+
   return {
-    sendMessage
+    sendMessage,
+    addOnMessageListener
   }
 }
