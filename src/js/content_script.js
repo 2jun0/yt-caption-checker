@@ -7,7 +7,7 @@ import {
   FIELD_COMBINE_REGION,
   FIELD_LANG,
   DEFAULT_VALUE,
-  loadData,
+  loadData
 } from './utils/storage.js'
 
 // tag const values

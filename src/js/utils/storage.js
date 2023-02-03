@@ -1,9 +1,11 @@
-export const EXTENSION_NAME = 'yt-caption-checker'
-export const FIELD_COLOR_BG = `${EXTENSION_NAME}_color-bg`
-export const FIELD_COLOR_TXT = `${EXTENSION_NAME}_color-txt`
-export const FIELD_TAG_FONT_SIZE = `${EXTENSION_NAME}_tag-font-size`
-export const FIELD_COMBINE_REGION = `${EXTENSION_NAME}_combine-region`
-export const FIELD_LANG = `${EXTENSION_NAME}_lang`
+import { EXTENSION_NAME } from "./common"
+
+export const COLOR_BG_FIELD = `${EXTENSION_NAME}_color-bg`
+export const COLOR_TXT_FIELD = `${EXTENSION_NAME}_color-txt`
+export const CC_PREVIEW_FONT_SIZE_FIELD = `${EXTENSION_NAME}_tag-font-size`
+export const IS_COMBINED_REGION_FIELD = `${EXTENSION_NAME}_combine-region`
+export const LANGUAGE_FIELD = `${EXTENSION_NAME}_lang`
+
 export const FIELD_VIDEO_LANG_LIST_URL = `${EXTENSION_NAME}_video-lang-list-url`
 
 export const DEFAULT_VALUE = {
@@ -15,10 +17,18 @@ export const DEFAULT_VALUE = {
 }
 
 /**
+ * @typedef {Object} Storage
+ * @property {(fields: any, callback: any) => void} loadData
+ * @property {(fields: any) => Promise<any>} loadDataAsync
+ * @property {(field: any, value: any, callback?: null) => void} saveData
+ * @property {(field: any, value: any) => Promise<any>} saveDataAsync
+ */
+
+/**
  * @example 
  * s = Storage(chrome.storage.local)
  * @param {any} localStorage
- * @returns 
+ * @returns {Storage}
  */
 export const Storage = (localStorage) => {
   const loadDataAsync = async fields => {
@@ -35,7 +45,7 @@ export const Storage = (localStorage) => {
     })
   }
 
-  const _loadData = (fields, callback) => {
+  const loadData = (fields, callback) => {
     if (!Array.isArray(fields)) 
       fields = [fields]
   
@@ -49,13 +59,15 @@ export const Storage = (localStorage) => {
     })
   }
 
-  const _saveData = (field, value, callback = null) => {
+  const saveData = (field, value, callback = null) => {
     localStorage.set({ [field]: value }, callback)
   }
 
   return {
     loadDataAsync,
-    saveDataAsync
+    loadData,
+    saveDataAsync,
+    saveData
   }
 }
 
