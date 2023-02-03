@@ -42,6 +42,7 @@ export const LanguagePresenter = () => {
   const setLanguage = async lang => {
     await _languageModel.setLanguage(lang)
     _languagePicker.setCurrentLanguage(lang)
+    _ccStatusExample.setLanguage(lang)
   }
 
   const setCombineRegion = async isCombinedRegion => {
