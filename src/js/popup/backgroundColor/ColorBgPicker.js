@@ -17,30 +17,26 @@ export const COLOR_BG_PICKER_ID = 'color-bg-picker'
  * @returns {ColorBgPicker}
  */
 export const ColorBgPicker = iro => {
-  const colorBgPicker = getColorBgPicker(iro);
-
-  const getColorBgPicker = iro => {
-    return new iro.ColorPicker(`#${COLOR_BG_PICKER_ID}`, {
-      width: 195,
-      borderWidth: 1,
-      borderColor: '#B0B0B0',
-      margin: 5,
-      layout: [
-        {
-          component: iro.ui.Box,
-          options: { boxHeight: 100 },
-        },
-        {
-          component: iro.ui.Slider,
-          options: { sliderType: 'hue' },
-        },
-        {
-          component: iro.ui.Slider,
-          options: { sliderType: 'alpha' },
-        },
-      ],
-    });
-  };
+  const colorBgPicker = new iro.ColorPicker(`#${COLOR_BG_PICKER_ID}`, {
+    width: 195,
+    borderWidth: 1,
+    borderColor: '#B0B0B0',
+    margin: 5,
+    layout: [
+      {
+        component: iro.ui.Box,
+        options: { boxHeight: 100 },
+      },
+      {
+        component: iro.ui.Slider,
+        options: { sliderType: 'hue' },
+      },
+      {
+        component: iro.ui.Slider,
+        options: { sliderType: 'alpha' },
+      },
+    ],
+  });
 
   /**
    * init function

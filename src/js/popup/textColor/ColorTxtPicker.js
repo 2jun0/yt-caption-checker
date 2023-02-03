@@ -17,26 +17,22 @@ export const COLOR_TXT_PICKER_ID = 'color-txt-picker'
  * @returns {ColorTxtPicker}
  */
 export const ColorTxtPicker = iro => {
-  const colorTxtPicker = getColorTxtPicker(iro)
-
-  const getColorTxtPicker = iro => {
-    return new iro.ColorPicker(`#${COLOR_TXT_PICKER_ID}`, {
-      width: 195,
-      borderWidth: 1,
-      borderColor: '#B0B0B0',
-      margin: 5,
-      layout: [
-        {
-          component: iro.ui.Box,
-          options: { boxHeight: 100 },
-        },
-        {
-          component: iro.ui.Slider,
-          options: { sliderType: 'hue' },
-        },
-      ],
-    });
-  }
+  const colorTxtPicker = new iro.ColorPicker(`#${COLOR_TXT_PICKER_ID}`, {
+    width: 195,
+    borderWidth: 1,
+    borderColor: '#B0B0B0',
+    margin: 5,
+    layout: [
+      {
+        component: iro.ui.Box,
+        options: { boxHeight: 100 },
+      },
+      {
+        component: iro.ui.Slider,
+        options: { sliderType: 'hue' },
+      },
+    ],
+  });
 
   /**
    * init function
