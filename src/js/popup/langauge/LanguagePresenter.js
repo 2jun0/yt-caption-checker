@@ -51,7 +51,7 @@ export const LanguagePresenter = () => {
     if (isCombinedRegion) {
       const lang = _languagePicker.getCurrentLanguageWithoutRegion()
 
-      _languagePicker.setCombineRegion(lang)
+      _languagePicker.setCurrentLanguage(lang)
       _ccStatusExample.setLanguage(lang)
 
       _languagePicker.updateLanuageList(langs.filter(
