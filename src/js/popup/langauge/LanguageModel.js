@@ -9,7 +9,7 @@ import { IS_COMBINED_REGION_FIELD, LANGUAGE_FIELD, Storage } from "../../utils/s
  */
 
 /**
- * CC Preview Language Model
+ * CC Tag Language Model
  * @returns {LanguageModel}
  */
 export const LanguageModel = () => {

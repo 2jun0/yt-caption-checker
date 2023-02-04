@@ -1,10 +1,10 @@
-import { CcPreviewTextColorPresenter } from "./CcPreviewTextColorPresenter.js";
+import { CcTagTextColorPresenter } from "./CcTagTextColorPresenter.js";
 
 export const CC_PREVIEW_TEXT_COLOR_PICKER_ID = 'color-txt-picker'
 
 /**
- * @typedef {Object} CcPreviewTextColorPicker
- * @property {(presenter: CcPreviewTextColorPresenter) => void} init
+ * @typedef {Object} CcTagTextColorPicker
+ * @property {(presenter: CcTagTextColorPresenter) => void} init
  * @property {function} setColor
  * @property {function} display 
  * @property {function} hide
@@ -12,11 +12,11 @@ export const CC_PREVIEW_TEXT_COLOR_PICKER_ID = 'color-txt-picker'
  */
 
 /**
- * CC Preview Text Color Picker Element
+ * CC Tag Text Color Picker Element
  * @param {*} iro 
- * @returns {CcPreviewTextColorPicker}
+ * @returns {CcTagTextColorPicker}
  */
-export const CcPreviewTextColorPicker = iro => {
+export const CcTagTextColorPicker = iro => {
   const textColorPicker = new iro.ColorPicker(`#${CC_PREVIEW_TEXT_COLOR_PICKER_ID}`, {
     width: 195,
     borderWidth: 1,
@@ -36,7 +36,7 @@ export const CcPreviewTextColorPicker = iro => {
 
   /**
    * init function
-   * @param {CcPreviewTextColorPresenter} presenter 
+   * @param {CcTagTextColorPresenter} presenter 
    */
   const init = presenter => {
     textColorPicker.on('color:change', _color => {

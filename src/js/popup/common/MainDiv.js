@@ -1,19 +1,19 @@
-import { CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID } from "../CcPreviewBackgroundColor/CcPreviewBackgroundColorDisplay.js"
-import { CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID } from "../CcPreviewBackgroundColor/CcPreviewBackgroundColorPicker.js"
-import { CcPreviewBackgroundColorPresenter } from "../CcPreviewBackgroundColor/CcPreviewBackgroundColorPresenter.js"
-import { CC_PREVIEW_TEXT_COLOR_DISPLAY_ID } from "../textColor/CcPreviewTextColorDisplay.js"
-import { CC_PREVIEW_TEXT_COLOR_PICKER_ID } from "../textColor/CcPreviewTextColorPicker.js"
-import { CcPreviewTextColorPresenter } from "../textColor/CcPreviewTextColorPresenter.js"
+import { CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID } from "../ccTagBackgroundColor/CcTagBackgroundColorDisplay.js"
+import { CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID } from "../ccTagBackgroundColor/CcTagBackgroundColorPicker.js"
+import { CcTagBackgroundColorPresenter } from "../ccTagBackgroundColor/CcTagBackgroundColorPresenter.js"
+import { CC_PREVIEW_TEXT_COLOR_DISPLAY_ID } from "../textColor/CcTagTextColorDisplay.js"
+import { CC_PREVIEW_TEXT_COLOR_PICKER_ID } from "../textColor/CcTagTextColorPicker.js"
+import { CcTagTextColorPresenter } from "../textColor/CcTagTextColorPresenter.js"
 
 const MAIN_DIV_ID = 'main'
 
 /**
  * @typedef {Object} MainDiv
- * @property {(ccPreviewBackgroundColorPresenter: CcPreviewBackgroundColorPresenter, ccPreviewTextColorPresenter: CcPreviewTextColorPresenter) => void} init
+ * @property {(ccTagBackgroundColorPresenter: CcTagBackgroundColorPresenter, ccTagTextColorPresenter: CcTagTextColorPresenter) => void} init
  */
 
 /**
- * CC Preview Background Color Display Element
+ * CC Tag Background Color Display Element
  * @param {Document} document 
  * @returns {MainDiv}
  */
@@ -22,19 +22,19 @@ export const MainDiv = document => {
 
   /**
    * init function
-   * @param {CcPreviewBackgroundColorPresenter} ccPreviewBackgroundColorPresenter
-   * @param {CcPreviewTextColorPresenter} ccPreviewTextColorPresenter
+   * @param {CcTagBackgroundColorPresenter} ccTagBackgroundColorPresenter
+   * @param {CcTagTextColorPresenter} ccTagTextColorPresenter
    */
-  const init = (ccPreviewBackgroundColorPresenter, ccPreviewTextColorPresenter) => {
+  const init = (ccTagBackgroundColorPresenter, ccTagTextColorPresenter) => {
     mainDiv.onclick = e => {
       const el = e.target;
 
       if (!isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID) && !isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID)) {
-        ccPreviewBackgroundColorPresenter.hideBackgroundColorPicker()
+        ccTagBackgroundColorPresenter.hideBackgroundColorPicker()
       }
 
       if (!isChildOf(el, CC_PREVIEW_TEXT_COLOR_PICKER_ID) && !isChildOf(el, CC_PREVIEW_TEXT_COLOR_DISPLAY_ID)) {
-        ccPreviewTextColorPresenter.hideTextColorPicker()
+        ccTagTextColorPresenter.hideTextColorPicker()
       }
     }
   }

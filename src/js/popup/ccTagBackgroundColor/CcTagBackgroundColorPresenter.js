@@ -1,36 +1,36 @@
 import { CcTagPreview } from "../common/CcTagPreview.js";
-import { CcPreviewBackgroundColorDisplay } from "./CcPreviewBackgroundColorDisplay.js";
-import { CcPreviewBackgroundColorModel } from "./CcPreviewBackgroundColorModel.js";
-import { CcPreviewBackgroundColorPicker } from "./CcPreviewBackgroundColorPicker.js";
+import { CcTagBackgroundColorDisplay } from "./CcTagBackgroundColorDisplay.js";
+import { CcTagBackgroundColorModel } from "./CcTagBackgroundColorModel.js";
+import { CcTagBackgroundColorPicker } from "./CcTagBackgroundColorPicker.js";
 
 /**
- * @typedef {Object} CcPreviewBackgroundColorPresenter
- * @property {(backgroundColorPicker: CcPreviewBackgroundColorPicker, backgroundColorDisplay: CcPreviewBackgroundColorDisplay, ccTagPreview: CcTagPreview, model: CcPreviewBackgroundColorModel) => void} init
+ * @typedef {Object} CcTagBackgroundColorPresenter
+ * @property {(backgroundColorPicker: CcTagBackgroundColorPicker, backgroundColorDisplay: CcTagBackgroundColorDisplay, ccTagPreview: CcTagPreview, model: CcTagBackgroundColorModel) => void} init
  * @property {function} toggleBackgroundColorPicker
  * @property {function} hideBackgroundColorPicker
  * @property {(bgColor: any) => Promise<void>} setBackgroundColor
  */
 
 /**
- * CC Preview Background Color Picker Presenter
- * @returns {CcPreviewBackgroundColorPresenter}
+ * CC Tag Background Color Picker Presenter
+ * @returns {CcTagBackgroundColorPresenter}
  */
-export const CcPreviewBackgroundColorPresenter = () => {
-  /** @type {CcPreviewBackgroundColorPicker} */
+export const CcTagBackgroundColorPresenter = () => {
+  /** @type {CcTagBackgroundColorPicker} */
   let _backgroundColorPicker = null;
-  /** @type {CcPreviewBackgroundColorDisplay} */
+  /** @type {CcTagBackgroundColorDisplay} */
   let _backgroundColorDisplay = null;
   /** @type {CcTagPreview} */
   let _ccTagPreview = null;
-  /** @type {CcPreviewBackgroundColorModel} */
+  /** @type {CcTagBackgroundColorModel} */
   let _model = null;
 
   /**
    * initialize
-   * @param {CcPreviewBackgroundColorPicker} backgroundColorPicker 
-   * @param {CcPreviewBackgroundColorDisplay} backgroundColorDisplay 
+   * @param {CcTagBackgroundColorPicker} backgroundColorPicker 
+   * @param {CcTagBackgroundColorDisplay} backgroundColorDisplay 
    * @param {CcTagPreview} ccTagPreview
-   * @param {CcPreviewBackgroundColorModel} model 
+   * @param {CcTagBackgroundColorModel} model 
    */
   const init = (backgroundColorPicker, backgroundColorDisplay, ccTagPreview, model) => {
     _backgroundColorPicker = backgroundColorPicker

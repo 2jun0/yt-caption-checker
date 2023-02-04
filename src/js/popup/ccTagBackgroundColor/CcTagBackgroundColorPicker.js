@@ -1,10 +1,10 @@
-import { CcPreviewBackgroundColorPresenter } from "./CcPreviewBackgroundColorPresenter.js";
+import { CcTagBackgroundColorPresenter } from "./CcTagBackgroundColorPresenter.js";
 
 export const CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID = 'color-bg-picker'
 
 /**
- * @typedef {Object} CcPreviewBackgroundColorPicker
- * @property {(presenter: CcPreviewBackgroundColorPresenter) => void} init
+ * @typedef {Object} CcTagBackgroundColorPicker
+ * @property {(presenter: CcTagBackgroundColorPresenter) => void} init
  * @property {function} setColor
  * @property {function} display 
  * @property {function} hide
@@ -12,11 +12,11 @@ export const CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID = 'color-bg-picker'
  */
 
 /**
- * CC Preview Background Color Picker Element
+ * CC Tag Background Color Picker Element
  * @param {*} iro
- * @returns {CcPreviewBackgroundColorPicker}
+ * @returns {CcTagBackgroundColorPicker}
  */
-export const CcPreviewBackgroundColorPicker = iro => {
+export const CcTagBackgroundColorPicker = iro => {
   const backgroundColorPicker = new iro.ColorPicker(`#${CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID}`, {
     width: 195,
     borderWidth: 1,
@@ -40,7 +40,7 @@ export const CcPreviewBackgroundColorPicker = iro => {
 
   /**
    * init function
-   * @param {CcPreviewBackgroundColorPresenter} presenter
+   * @param {CcTagBackgroundColorPresenter} presenter
    */
   const init = presenter => {
     backgroundColorPicker.on('color:change', _color => {

@@ -12,7 +12,7 @@ import { LanguagePicker } from "./LanguagePicker.js"
  */
 
 /**
- * CC Preview Language Picker Presenter
+ * CC Tag Language Picker Presenter
  * @returns {LanguagePresenter}
  */
 export const LanguagePresenter = () => {
