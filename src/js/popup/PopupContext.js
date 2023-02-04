@@ -5,10 +5,10 @@ import { CcTagFontSizePicker } from "./common/CcTagFontSizePicker.js"
 import { CcTagFontSizePresenter } from "./common/CcTagFontSizePresenter.js"
 import { CcTagFontSizeModel } from "./common/CcTagFontSizeModel.js"
 
-import { CombineRegionCheckBox } from "./langauge/CombineRegionCheckBox.js"
-import { LanguagePicker } from "./langauge/LanguagePicker.js"
-import { LanguagePresenter } from "./langauge/LanguagePresenter.js"
-import { LanguageModel } from "./langauge/LanguageModel.js"
+import { CcTagCombineRegionCheckBox } from "./langauge/CcTagCombineRegionCheckBox.js"
+import { CcTagLanguagePicker } from "./langauge/CcTagLanguagePicker.js"
+import { CcTagLanguagePresenter } from "./langauge/CcTagLanguagePresenter.js"
+import { CcTagLanguageModel } from "./langauge/CcTagLanguageModel.js"
 
 import { CcTagBackgroundColorPresenter } from "./ccTagBackgroundColor/CcTagBackgroundColorPresenter.js"
 import { CcTagBackgroundColorDisplay } from "./ccTagBackgroundColor/CcTagBackgroundColorDisplay.js"
@@ -28,7 +28,7 @@ import { langs } from "../utils/lang.js"
  * @typedef {Object} PopupContext
  * @property {function} init
  * @property {() => Storage} stoarge
- * @property {() => LanguagePresenter} languagePresenter
+ * @property {() => CcTagLanguagePresenter} ccTagLanguagePresenter
  * @property {() => CcTagBackgroundColorPresenter} ccTagBackgroundColorPresenter
  * @property {() => CcTagTextColorPresenter} ccTagTextColorPresenter
  * @property {() => CcTagFontSizePresenter} ccTagFontSizePresenter
@@ -55,14 +55,14 @@ export const PopupContext = (document, iro) => {
   let _ccTagFontSizeModel = null
 
   /** cc tag language */
-  /** @type {CombineRegionCheckBox} */
-  let _combineRegionCheckBox = null
-  /** @type {LanguagePicker} */
-  let _languagePicker = null
-  /** @type {LanguagePresenter} */
-  let _languagePresenter = null
-  /** @type {LanguageModel} */
-  let _languageModel = null
+  /** @type {CcTagCombineRegionCheckBox} */
+  let _ccTagCombineRegionCheckBox = null
+  /** @type {CcTagLanguagePicker} */
+  let _ccTagLanguagePicker = null
+  /** @type {CcTagLanguagePresenter} */
+  let _ccTagLanguagePresenter = null
+  /** @type {CcTagLanguageModel} */
+  let _ccTagLanguageModel = null
 
   /** cc tag background color */
   /** @type {CcTagBackgroundColorDisplay} */
@@ -106,10 +106,10 @@ export const PopupContext = (document, iro) => {
     ccTagTextColorDisplay()
     ccTagTextColorPicker()
     ccTagTextColorModel()
-    languagePresenter()
-    combineRegionCheckBox()
-    languagePicker()
-    languageModel()
+    ccTagLanguagePresenter()
+    ccTagCombineRegionCheckBox()
+    ccTagLanguagePicker()
+    ccTagLanguageModel()
   }
 
   /** common */
@@ -159,40 +159,40 @@ export const PopupContext = (document, iro) => {
   }
 
   /** cc tag language */
-  const languagePresenter = () => {
-    if (!_languagePresenter) {
-      _languagePresenter = LanguagePresenter()
-      _languagePresenter.init(languagePicker(), combineRegionCheckBox(), ccTagPreview(), languageModel())
+  const ccTagLanguagePresenter = () => {
+    if (!_ccTagLanguagePresenter) {
+      _ccTagLanguagePresenter = CcTagLanguagePresenter()
+      _ccTagLanguagePresenter.init(ccTagLanguagePicker(), ccTagCombineRegionCheckBox(), ccTagPreview(), ccTagLanguageModel())
     }
 
-    return _languagePresenter
+    return _ccTagLanguagePresenter
   }
 
-  const combineRegionCheckBox = () => {
-    if (!_combineRegionCheckBox) {
-      _combineRegionCheckBox = CombineRegionCheckBox(document)
-      _combineRegionCheckBox.init(languagePresenter())
+  const ccTagCombineRegionCheckBox = () => {
+    if (!_ccTagCombineRegionCheckBox) {
+      _ccTagCombineRegionCheckBox = CcTagCombineRegionCheckBox(document)
+      _ccTagCombineRegionCheckBox.init(ccTagLanguagePresenter())
     }
 
-    return _combineRegionCheckBox
+    return _ccTagCombineRegionCheckBox
   }
 
-  const languagePicker = () => {
-    if (!_languagePicker) {
-      _languagePicker = LanguagePicker(document)
-      _languagePicker.init(languagePresenter(), langs)
+  const ccTagLanguagePicker = () => {
+    if (!_ccTagLanguagePicker) {
+      _ccTagLanguagePicker = CcTagLanguagePicker(document)
+      _ccTagLanguagePicker.init(ccTagLanguagePresenter(), langs)
     }
 
-    return _languagePicker
+    return _ccTagLanguagePicker
   }
 
-  const languageModel = () => {
-    if (!_languageModel) {
-      _languageModel = LanguageModel()
-      _languageModel.init(storage(), messageManager())
+  const ccTagLanguageModel = () => {
+    if (!_ccTagLanguageModel) {
+      _ccTagLanguageModel = CcTagLanguageModel()
+      _ccTagLanguageModel.init(storage(), messageManager())
     }
 
-    return _languageModel
+    return _ccTagLanguageModel
   }
 
   /** cc tag background color */
@@ -288,7 +288,7 @@ export const PopupContext = (document, iro) => {
   return {
     init,
     storage,
-    languagePresenter,
+    ccTagLanguagePresenter,
     ccTagBackgroundColorPresenter,
     ccTagTextColorPresenter,
     ccTagFontSizePresenter

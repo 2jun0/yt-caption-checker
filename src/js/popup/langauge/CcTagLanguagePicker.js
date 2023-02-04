@@ -1,10 +1,10 @@
-import { LanguagePresenter } from "./LanguagePresenter.js";
+import { CcTagLanguagePresenter } from "./CcTagLanguagePresenter.js";
 
 const LANG_PICKER_ID = 'lang-picker'
 
 /**
- * @typedef {Object} LanguagePicker
- * @property {(languagePresenter: LanguagePresenter) => void} init
+ * @typedef {Object} CcTagLanguagePicker
+ * @property {(ccTagLanguagePresenter: CcTagLanguagePresenter) => void} init
  * @property {function} updateLanuageList
  * @property {function} getCurrentLanguage
  * @property {function} getCurrentLanguageWithoutRegion
@@ -12,21 +12,21 @@ const LANG_PICKER_ID = 'lang-picker'
  */
 
 /**
- * Language Picker Element
+ * CC Tag Language Picker Element
  * @param {Document} document 
- * @returns {LanguagePicker}
+ * @returns {CcTagLanguagePicker}
  */
-export const LanguagePicker = document => {
+export const CcTagLanguagePicker = document => {
   const languagePicker = document.getElementById(LANG_PICKER_ID);
 
   /**
    * initialize
-   * @param {LanguagePresenter} languagePresenter 
+   * @param {CcTagLanguagePresenter} ccTagLanguagePresenter 
    * @param {*} langs
    */
-  const init = (languagePresenter, langs) => {
+  const init = (ccTagLanguagePresenter, langs) => {
     languagePicker.onchange = () => {
-      languagePresenter.setLanguage(languagePicker.value)
+      ccTagLanguagePresenter.setLanguage(languagePicker.value)
     }
 
     updateLanuageList(langs)

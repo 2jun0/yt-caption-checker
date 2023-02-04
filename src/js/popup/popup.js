@@ -7,7 +7,7 @@ localize()
 const popupContext = PopupContext(document, window.iro)
 popupContext.init()
 const storage = popupContext.storage()
-const languagePresenter = popupContext.languagePresenter()
+const ccTagLanguagePresenter = popupContext.ccTagLanguagePresenter()
 const ccTagBackgroundColorPresenter = popupContext.ccTagBackgroundColorPresenter()
 const ccTagTextColorPresenter = popupContext.ccTagTextColorPresenter()
 const ccTagFontSizePresenter = popupContext.ccTagFontSizePresenter()
@@ -21,8 +21,8 @@ storage.loadData(
     IS_COMBINED_REGION_FIELD,
   ],
   items => {
-    languagePresenter.setLanguage(items[LANGUAGE_FIELD])
-    languagePresenter.setCombineRegion(items[IS_COMBINED_REGION_FIELD])
+    ccTagLanguagePresenter.setLanguage(items[LANGUAGE_FIELD])
+    ccTagLanguagePresenter.setCombineRegion(items[IS_COMBINED_REGION_FIELD])
     ccTagBackgroundColorPresenter.setBackgroundColor(items[COLOR_BG_FIELD])
     ccTagTextColorPresenter.setTextColor(items[COLOR_TXT_FIELD])
     ccTagFontSizePresenter.setFontSize(items[CC_PREVIEW_FONT_SIZE_FIELD])

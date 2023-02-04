@@ -2,7 +2,7 @@ import { MessageManager } from "../../utils/MessageManager.js"
 import { IS_COMBINED_REGION_FIELD, LANGUAGE_FIELD, Storage } from "../../utils/storage.js"
 
 /**
- * @typedef {Object} LanguageModel
+ * @typedef {Object} CcTagLanguageModel
  * @property {(stoarge: Storage, messageManager: MessageManager) => void} init
  * @property {(lang: any) => Promise<void>} setLanguage
  * @property {(isCombinedRegion: any) => Promise<void>} setCombineRegion 
@@ -10,9 +10,9 @@ import { IS_COMBINED_REGION_FIELD, LANGUAGE_FIELD, Storage } from "../../utils/s
 
 /**
  * CC Tag Language Model
- * @returns {LanguageModel}
+ * @returns {CcTagLanguageModel}
  */
-export const LanguageModel = () => {
+export const CcTagLanguageModel = () => {
   /** @type {Storage} */
   let _storage = null
   /** @type {MessageManager} */
