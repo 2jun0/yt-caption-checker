@@ -1,7 +1,7 @@
-const CCSTATUS_EXAMPLE_ID = 'cc-status-example'
+const CC_TAG_PREVIEW_ID = 'cc-status-example'
 
 /**
- * @typedef {Object} CcStatusExample
+ * @typedef {Object} CcTagPreview
  * @property {function} setLanguage
  * @property {function} setTxtColor
  * @property {function} setBackgroundColor
@@ -9,30 +9,30 @@ const CCSTATUS_EXAMPLE_ID = 'cc-status-example'
  */
 
 /**
- * CC Previce Example Element
+ * CC Tag Previce Element
  * @param {Document} document 
- * @returns {CcStatusExample}
+ * @returns {CcTagPreview}
  */
-export const CcStatusExample = document => {
-  const ccStatusExample = document.getElementById(CCSTATUS_EXAMPLE_ID);
+export const CcTagPreview = document => {
+  const ccTagPreview = document.getElementById(CC_TAG_PREVIEW_ID);
 
   /**
    * @param {string} lang
    */
   const setLanguage = lang => {
-    ccStatusExample.textContent = lang.toUpperCase() + ' CC'
+    ccTagPreview.textContent = lang.toUpperCase() + ' CC'
   }
 
   const setTxtColor = txtColor => {
-    ccStatusExample.style.color = txtColor;
+    ccTagPreview.style.color = txtColor;
   }
 
   const setBackgroundColor = bgColor => {
-    ccStatusExample.style.background = bgColor;
+    ccTagPreview.style.background = bgColor;
   }
 
   const setFontSize = fontSize => {
-    ccStatusExample.style.fontSize = `calc(${fontSize} - 0.4rem)` 
+    ccTagPreview.style.fontSize = `calc(${fontSize} - 0.4rem)` 
   }
 
   return {

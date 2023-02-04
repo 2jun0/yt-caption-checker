@@ -1,11 +1,11 @@
-import { CcStatusExample } from "../common/CcStatusExample.js"
+import { CcTagPreview } from "../common/CcTagPreview.js"
 import { CcPreviewTextColorDisplay } from "./CcPreviewTextColorDisplay.js"
 import { CcPreviewTextColorModel } from "./CcPreviewTextColorModel.js"
 import { CcPreviewTextColorPicker } from "./CcPreviewTextColorPicker.js"
 
 /**
  * @typedef {Object} CcPreviewTextColorPresenter
- * @property {(ccPreviewTextColorPicker: CcPreviewTextColorPicker, ccPreviewTextColorDisplay: CcPreviewTextColorDisplay, ccStatusExample: CcStatusExample, model: CcPreviewTextColorModel) => void} init
+ * @property {(ccPreviewTextColorPicker: CcPreviewTextColorPicker, ccPreviewTextColorDisplay: CcPreviewTextColorDisplay, ccTagPreview: CcTagPreview, model: CcPreviewTextColorModel) => void} init
  * @property {function} toggleTextColorPicker
  * @property {function} hideTextColorPicker
  * @property {(txtColor: any) => Promise<void>} setTextColor
@@ -20,8 +20,8 @@ export const CcPreviewTextColorPresenter = () => {
   let _ccPreviewTextColorPicker = null;
   /** @type {CcPreviewTextColorDisplay} */
   let _ccPreviewTextColorDisplay = null;
-  /** @type {CcStatusExample} */
-  let _ccStatusExample = null;
+  /** @type {CcTagPreview} */
+  let _ccTagPreview = null;
   /** @type {CcPreviewTextColorModel} */
   let _model = null;
 
@@ -29,13 +29,13 @@ export const CcPreviewTextColorPresenter = () => {
    * initiaize
    * @param {CcPreviewTextColorPicker} ccPreviewTextColorPicker 
    * @param {CcPreviewTextColorDisplay} ccPreviewTextColorDisplay 
-   * @param {CcStatusExample} ccStatusExample
+   * @param {CcTagPreview} ccTagPreview
    * @param {CcPreviewTextColorModel} model 
    */
-  const init = (ccPreviewTextColorPicker, ccPreviewTextColorDisplay, ccStatusExample, model) => {
+  const init = (ccPreviewTextColorPicker, ccPreviewTextColorDisplay, ccTagPreview, model) => {
     _ccPreviewTextColorPicker = ccPreviewTextColorPicker
     _ccPreviewTextColorDisplay = ccPreviewTextColorDisplay
-    _ccStatusExample = ccStatusExample
+    _ccTagPreview = ccTagPreview
     _model = model
   }
 
@@ -56,7 +56,7 @@ export const CcPreviewTextColorPresenter = () => {
 
     _ccPreviewTextColorPicker.setColor(txtColor)
     _ccPreviewTextColorDisplay.setColor(txtColor)
-    _ccStatusExample.setTxtColor(txtColor)
+    _ccTagPreview.setTxtColor(txtColor)
   }
 
   return {

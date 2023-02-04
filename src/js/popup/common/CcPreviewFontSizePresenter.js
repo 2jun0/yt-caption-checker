@@ -1,10 +1,10 @@
 import { CcPreviewFontSizeModel } from "./CcPreviewFontSizeModel.js"
 import { CcPreviewFontSizePicker } from "./CcPreviewFontSizePicker.js"
-import { CcStatusExample } from "./CcStatusExample.js"
+import { CcTagPreview } from "./CcTagPreview.js"
 
 /**
  * @typedef {Object} CcPreviewFontSizePresenter
- * @property {(ccPreviewFontSizePicker: CcPreviewFontSizePicker, ccStatusExample: CcStatusExample, ccPreviewFontSizeModel: CcPreviewFontSizeModel) => void} init
+ * @property {(ccPreviewFontSizePicker: CcPreviewFontSizePicker, ccTagPreview: CcTagPreview, ccPreviewFontSizeModel: CcPreviewFontSizeModel) => void} init
  * @property {(fontSize: any) => Promise<void>} setFontSize
  */
 
@@ -15,27 +15,27 @@ import { CcStatusExample } from "./CcStatusExample.js"
 export const CcPreviewFontSizePresenter = () => {
   /** @type {CcPreviewFontSizePicker} */
   let _ccPreviewFontSizePicker = null
-  /** @type {CcStatusExample} */
-  let _ccStatusExample = null
+  /** @type {CcTagPreview} */
+  let _ccTagPreview = null
   /** @type {CcPreviewFontSizeModel} */
   let _ccPreviewFontSizeModel = null
 
   /**
    * init function
    * @param {CcPreviewFontSizePicker} ccPreviewFontSizePicker 
-   * @param {CcStatusExample} ccStatusExample
+   * @param {CcTagPreview} ccTagPreview
    * @param {CcPreviewFontSizeModel} ccPreviewFontSizeModel
    */
-  const init = (ccPreviewFontSizePicker, ccStatusExample, ccPreviewFontSizeModel) => {
+  const init = (ccPreviewFontSizePicker, ccTagPreview, ccPreviewFontSizeModel) => {
     _ccPreviewFontSizePicker = ccPreviewFontSizePicker
-    _ccStatusExample = ccStatusExample
+    _ccTagPreview = ccTagPreview
     _ccPreviewFontSizeModel = ccPreviewFontSizeModel
   }
 
   const setFontSize = async fontSize => {
     await _ccPreviewFontSizeModel.setFontSize(fontSize)
     _ccPreviewFontSizePicker.setFontSize(fontSize)
-    _ccStatusExample.setFontSize(fontSize)
+    _ccTagPreview.setFontSize(fontSize)
   }
 
   return {

@@ -1,12 +1,12 @@
 import { langs } from "../../utils/lang.js"
-import { CcStatusExample } from "../common/CcStatusExample.js"
+import { CcTagPreview } from "../common/CcTagPreview.js"
 import { CombineRegionCheckBox } from "./CombineRegionCheckBox.js"
 import { LanguageModel } from "./LanguageModel.js"
 import { LanguagePicker } from "./LanguagePicker.js"
 
 /**
  * @typedef {Object} LanguagePresenter
- * @property {(languagePicker: LanguagePicker, combineRegionCheckBox: CombineRegionCheckBox, ccStatusExample: CcStatusExample, model: LanguageModel) => void} init
+ * @property {(languagePicker: LanguagePicker, combineRegionCheckBox: CombineRegionCheckBox, ccTagPreview: CcTagPreview, model: LanguageModel) => void} init
  * @property {(lang: any) => Promise<void>} setLanguage
  * @property {(isCombinedRegion: any) => Promise<void>} setCombineRegion
  */
@@ -20,8 +20,8 @@ export const LanguagePresenter = () => {
   let _languagePicker = null
   /** @type {CombineRegionCheckBox} */
   let _combineRegionCheckBox = null
-  /** @type {CcStatusExample} */
-  let _ccStatusExample = null
+  /** @type {CcTagPreview} */
+  let _ccTagPreview = null
   /** @type {LanguageModel} */
   let _languageModel = null
 
@@ -29,20 +29,20 @@ export const LanguagePresenter = () => {
    * initialize
    * @param {LanguagePicker} languagePicker 
    * @param {CombineRegionCheckBox} combineRegionCheckBox 
-   * @param {CcStatusExample} ccStatusExample
+   * @param {CcTagPreview} ccTagPreview
    * @param {LanguageModel} model
    */
-  const init = (languagePicker, combineRegionCheckBox, ccStatusExample, model) => {
+  const init = (languagePicker, combineRegionCheckBox, ccTagPreview, model) => {
     _languagePicker = languagePicker
     _combineRegionCheckBox = combineRegionCheckBox
-    _ccStatusExample = ccStatusExample
+    _ccTagPreview = ccTagPreview
     _languageModel = model
   }
 
   const setLanguage = async lang => {
     await _languageModel.setLanguage(lang)
     _languagePicker.setCurrentLanguage(lang)
-    _ccStatusExample.setLanguage(lang)
+    _ccTagPreview.setLanguage(lang)
   }
 
   const setCombineRegion = async isCombinedRegion => {
@@ -53,7 +53,7 @@ export const LanguagePresenter = () => {
       const lang = _languagePicker.getCurrentLanguageWithoutRegion()
 
       _languagePicker.setCurrentLanguage(lang)
-      _ccStatusExample.setLanguage(lang)
+      _ccTagPreview.setLanguage(lang)
 
       _languagePicker.updateLanuageList(langs.filter(
         lang => !lang.code.includes('-')))

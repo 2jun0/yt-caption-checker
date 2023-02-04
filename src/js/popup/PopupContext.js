@@ -1,4 +1,4 @@
-import { CcStatusExample } from "./common/CcStatusExample.js"
+import { CcTagPreview } from "./common/CcTagPreview.js"
 import { MainDiv } from "./common/MainDiv.js"
 
 import { CcPreviewFontSizePicker } from "./common/CcPreviewFontSizePicker.js"
@@ -44,8 +44,8 @@ import { langs } from "../utils/lang.js"
  */
 export const PopupContext = (document, iro) => {
   /** common */
-  /** @type {CcStatusExample} */
-  let _ccStatusExample = null
+  /** @type {CcTagPreview} */
+  let _ccTagPreview = null
   /** @type {MainDiv} */
   let _mainDiv = null
   
@@ -96,7 +96,7 @@ export const PopupContext = (document, iro) => {
     storage()
     messageManager()
 
-    ccStatusExample()
+    ccTagPreview()
     mainDiv()
     ccPreviewFontSizePresenter()
     ccPreviewFontSizePicker()
@@ -116,12 +116,12 @@ export const PopupContext = (document, iro) => {
   }
 
   /** common */
-  const ccStatusExample = () => {
-    if (!_ccStatusExample) {
-      _ccStatusExample = CcStatusExample(document)
+  const ccTagPreview = () => {
+    if (!_ccTagPreview) {
+      _ccTagPreview = CcTagPreview(document)
     }
     
-    return _ccStatusExample
+    return _ccTagPreview
   }
 
   const mainDiv = () => {
@@ -137,7 +137,7 @@ export const PopupContext = (document, iro) => {
   const ccPreviewFontSizePresenter = () => {
     if (!_ccPreviewFontSizePresenter) {
       _ccPreviewFontSizePresenter = CcPreviewFontSizePresenter()
-      _ccPreviewFontSizePresenter.init(ccPreviewFontSizePicker(), ccStatusExample(), ccPreviewFontSizeModel())
+      _ccPreviewFontSizePresenter.init(ccPreviewFontSizePicker(), ccTagPreview(), ccPreviewFontSizeModel())
     }
 
     return _ccPreviewFontSizePresenter
@@ -165,7 +165,7 @@ export const PopupContext = (document, iro) => {
   const languagePresenter = () => {
     if (!_languagePresenter) {
       _languagePresenter = LanguagePresenter()
-      _languagePresenter.init(languagePicker(), combineRegionCheckBox(), ccStatusExample(), languageModel())
+      _languagePresenter.init(languagePicker(), combineRegionCheckBox(), ccTagPreview(), languageModel())
     }
 
     return _languagePresenter
@@ -202,7 +202,7 @@ export const PopupContext = (document, iro) => {
   const ccPreviewBackgroundColorPresenter = () => {
     if (!_ccPreviewBackgroundColorPresenter) {
       _ccPreviewBackgroundColorPresenter = CcPreviewBackgroundColorPresenter()
-      _ccPreviewBackgroundColorPresenter.init(ccPreviewBackgroundColorPicker(), ccPreviewBackgroundColorDisplay(), ccStatusExample(), ccPreviewBackgroundColorModel())
+      _ccPreviewBackgroundColorPresenter.init(ccPreviewBackgroundColorPicker(), ccPreviewBackgroundColorDisplay(), ccTagPreview(), ccPreviewBackgroundColorModel())
     }
 
     return _ccPreviewBackgroundColorPresenter
@@ -239,7 +239,7 @@ export const PopupContext = (document, iro) => {
   const ccPreviewTextColorPresenter = () => {
     if (!_ccPreviewTextColorPresenter) {
       _ccPreviewTextColorPresenter = CcPreviewTextColorPresenter()
-      _ccPreviewTextColorPresenter.init(ccPreviewTextColorPicker(), ccPreviewTextColorDisplay(), ccStatusExample(), ccPreviewTextColorModel())
+      _ccPreviewTextColorPresenter.init(ccPreviewTextColorPicker(), ccPreviewTextColorDisplay(), ccTagPreview(), ccPreviewTextColorModel())
     }
 
     return _ccPreviewTextColorPresenter
