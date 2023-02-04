@@ -19,10 +19,10 @@ import { CcPreviewBackgroundColorDisplay } from "./CcPreviewBackgroundColor/CcPr
 import { CcPreviewBackgroundColorPicker } from "./CcPreviewBackgroundColor/CcPreviewBackgroundColorPicker.js"
 import { CcPreviewBackgroundColorModel } from "./CcPreviewBackgroundColor/CcPreviewBackgroundColorModel.js"
 
-import { ColorTxtPresenter } from "./textColor/ColorTxtPresenter.js"
-import { ColorTxtDisplay } from "./textColor/ColorTxtDisplay.js"
-import { ColorTxtPicker } from "./textColor/ColorTxtPicker.js"
-import { ColorTxtModel } from "./textColor/ColorTxtModel.js"
+import { CcPreviewTextColorPresenter } from "./textColor/CcPreviewTextColorPresenter.js"
+import { CcPreviewTextColorDisplay } from "./textColor/CcPreviewTextColorDisplay.js"
+import { CcPreviewTextColorPicker } from "./textColor/CcPreviewTextColorPicker.js"
+import { CcPreviewTextColorModel } from "./textColor/CcPreviewTextColorModel.js"
 import { MessageManager } from "../utils/MessageManager.js"
 import { Storage } from "../utils/storage.js"
 import { langs } from "../utils/lang.js"
@@ -33,7 +33,7 @@ import { langs } from "../utils/lang.js"
  * @property {() => Storage} stoarge
  * @property {() => LanguagePresenter} languagePresenter
  * @property {() => CcPreviewBackgroundColorPresenter} ccPreviewBackgroundColorPresenter
- * @property {() => ColorTxtPresenter} colorTxtPresenter
+ * @property {() => CcPreviewTextColorPresenter} ccPreviewTextColorPresenter
  * @property {() => CcPreviewFontSizePresenter} ccPreviewFontSizePresenter
  */
 
@@ -78,14 +78,14 @@ export const PopupContext = (document, iro) => {
   let _ccPreviewBackgroundColorModel = null
 
   /** cc preview text color */
-  /** @type {ColorTxtDisplay} */
-  let _colorTxtDisplay = null
-  /** @type {ColorTxtPicker} */
-  let _colorTxtPicker = null
-  /** @type {ColorTxtPresenter} */
-  let _colorTxtPresenter = null
-  /** @type {ColorTxtModel} */
-  let _colorTxtModel = null
+  /** @type {CcPreviewTextColorDisplay} */
+  let _ccPreviewTextColorDisplay = null
+  /** @type {CcPreviewTextColorPicker} */
+  let _ccPreviewTextColorPicker = null
+  /** @type {CcPreviewTextColorPresenter} */
+  let _ccPreviewTextColorPresenter = null
+  /** @type {CcPreviewTextColorModel} */
+  let _ccPreviewTextColorModel = null
 
   /** @type {Storage} */
   let _storage = null
@@ -105,10 +105,10 @@ export const PopupContext = (document, iro) => {
     ccPreviewBackgroundColorDisplay()
     ccPreviewBackgroundColorPicker()
     ccPreviewBackgroundColorModel()
-    colorTxtPresenter()
-    colorTxtDisplay()
-    colorTxtPicker()
-    colorTxtModel()
+    ccPreviewTextColorPresenter()
+    ccPreviewTextColorDisplay()
+    ccPreviewTextColorPicker()
+    ccPreviewTextColorModel()
     languagePresenter()
     combineRegionCheckBox()
     languagePicker()
@@ -127,7 +127,7 @@ export const PopupContext = (document, iro) => {
   const mainDiv = () => {
     if (!_mainDiv) {
       _mainDiv = MainDiv(document)
-      _mainDiv.init(ccPreviewBackgroundColorPresenter(), colorTxtPresenter())
+      _mainDiv.init(ccPreviewBackgroundColorPresenter(), ccPreviewTextColorPresenter())
     }
 
     return _mainDiv
@@ -236,40 +236,40 @@ export const PopupContext = (document, iro) => {
   }
 
   /** cc preview text color */
-  const colorTxtPresenter = () => {
-    if (!_colorTxtPresenter) {
-      _colorTxtPresenter = ColorTxtPresenter()
-      _colorTxtPresenter.init(colorTxtPicker(), colorTxtDisplay(), ccStatusExample(), colorTxtModel())
+  const ccPreviewTextColorPresenter = () => {
+    if (!_ccPreviewTextColorPresenter) {
+      _ccPreviewTextColorPresenter = CcPreviewTextColorPresenter()
+      _ccPreviewTextColorPresenter.init(ccPreviewTextColorPicker(), ccPreviewTextColorDisplay(), ccStatusExample(), ccPreviewTextColorModel())
     }
 
-    return _colorTxtPresenter
+    return _ccPreviewTextColorPresenter
   }
 
-  const colorTxtDisplay = () => {
-    if (!_colorTxtDisplay) {
-      _colorTxtDisplay = ColorTxtDisplay(document)
-      _colorTxtDisplay.init(colorTxtPresenter())
+  const ccPreviewTextColorDisplay = () => {
+    if (!_ccPreviewTextColorDisplay) {
+      _ccPreviewTextColorDisplay = CcPreviewTextColorDisplay(document)
+      _ccPreviewTextColorDisplay.init(ccPreviewTextColorPresenter())
     }
     
-    return _colorTxtDisplay
+    return _ccPreviewTextColorDisplay
   }
 
-  const colorTxtPicker = () => {
-    if (!_colorTxtPicker) {
-      _colorTxtPicker = ColorTxtPicker(iro)
-      _colorTxtPicker.init(colorTxtPresenter())
+  const ccPreviewTextColorPicker = () => {
+    if (!_ccPreviewTextColorPicker) {
+      _ccPreviewTextColorPicker = CcPreviewTextColorPicker(iro)
+      _ccPreviewTextColorPicker.init(ccPreviewTextColorPresenter())
     }
 
-    return _colorTxtPicker
+    return _ccPreviewTextColorPicker
   }
 
-  const colorTxtModel = () => {
-    if (!_colorTxtModel) {
-      _colorTxtModel = ColorTxtModel()
-      _colorTxtModel.init(storage(), messageManager())
+  const ccPreviewTextColorModel = () => {
+    if (!_ccPreviewTextColorModel) {
+      _ccPreviewTextColorModel = CcPreviewTextColorModel()
+      _ccPreviewTextColorModel.init(storage(), messageManager())
     }
 
-    return _colorTxtModel
+    return _ccPreviewTextColorModel
   }
 
   const storage = () => {
@@ -293,7 +293,7 @@ export const PopupContext = (document, iro) => {
     storage,
     languagePresenter,
     ccPreviewBackgroundColorPresenter,
-    colorTxtPresenter,
+    ccPreviewTextColorPresenter,
     ccPreviewFontSizePresenter
   }
 }

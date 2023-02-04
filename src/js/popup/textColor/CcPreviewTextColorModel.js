@@ -2,16 +2,16 @@ import { MessageManager } from "../../utils/MessageManager.js"
 import { COLOR_TXT_FIELD, Storage } from "../../utils/storage.js"
 
 /**
- * @typedef {Object} ColorTxtModel
+ * @typedef {Object} CcPreviewTextColorModel
  * @property {(stoarge: Storage, messageManager: MessageManager) => void} init
  * @property {(txtColor: any) => Promise<void>} setTextColor
  */
 
 /**
  * CC Preview Text Color Model
- * @returns {ColorTxtModel}
+ * @returns {CcPreviewTextColorModel}
  */
-export const ColorTxtModel = () => {
+export const CcPreviewTextColorModel = () => {
   /** @type {Storage} */
   let _storage = null
   /** @type {MessageManager} */

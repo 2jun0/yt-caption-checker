@@ -1,15 +1,15 @@
 import { CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID } from "../CcPreviewBackgroundColor/CcPreviewBackgroundColorDisplay.js"
 import { CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID } from "../CcPreviewBackgroundColor/CcPreviewBackgroundColorPicker.js"
 import { CcPreviewBackgroundColorPresenter } from "../CcPreviewBackgroundColor/CcPreviewBackgroundColorPresenter.js"
-import { COLOR_TXT_DISPLAY_ID } from "../textColor/ColorTxtDisplay.js"
-import { COLOR_TXT_PICKER_ID } from "../textColor/ColorTxtPicker.js"
-import { ColorTxtPresenter } from "../textColor/ColorTxtPresenter.js"
+import { CC_PREVIEW_TEXT_COLOR_DISPLAY_ID } from "../textColor/CcPreviewTextColorDisplay.js"
+import { CC_PREVIEW_TEXT_COLOR_PICKER_ID } from "../textColor/CcPreviewTextColorPicker.js"
+import { CcPreviewTextColorPresenter } from "../textColor/CcPreviewTextColorPresenter.js"
 
 const MAIN_DIV_ID = 'main'
 
 /**
  * @typedef {Object} MainDiv
- * @property {(ccPreviewBackgroundColorPresenter: CcPreviewBackgroundColorPresenter, colorTxtPresenter: ColorTxtPresenter) => void} init
+ * @property {(ccPreviewBackgroundColorPresenter: CcPreviewBackgroundColorPresenter, ccPreviewTextColorPresenter: CcPreviewTextColorPresenter) => void} init
  */
 
 /**
@@ -23,9 +23,9 @@ export const MainDiv = document => {
   /**
    * init function
    * @param {CcPreviewBackgroundColorPresenter} ccPreviewBackgroundColorPresenter
-   * @param {ColorTxtPresenter} colorTxtPresenter
+   * @param {CcPreviewTextColorPresenter} ccPreviewTextColorPresenter
    */
-  const init = (ccPreviewBackgroundColorPresenter, colorTxtPresenter) => {
+  const init = (ccPreviewBackgroundColorPresenter, ccPreviewTextColorPresenter) => {
     mainDiv.onclick = e => {
       const el = e.target;
 
@@ -33,8 +33,8 @@ export const MainDiv = document => {
         ccPreviewBackgroundColorPresenter.hideBackgroundColorPicker()
       }
 
-      if (!isChildOf(el, COLOR_TXT_PICKER_ID) && !isChildOf(el, COLOR_TXT_DISPLAY_ID)) {
-        colorTxtPresenter.hideTextColorPicker()
+      if (!isChildOf(el, CC_PREVIEW_TEXT_COLOR_PICKER_ID) && !isChildOf(el, CC_PREVIEW_TEXT_COLOR_DISPLAY_ID)) {
+        ccPreviewTextColorPresenter.hideTextColorPicker()
       }
     }
   }
