@@ -1,9 +1,9 @@
 import { CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID } from "../ccTagBackgroundColor/CcTagBackgroundColorDisplay.js"
 import { CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID } from "../ccTagBackgroundColor/CcTagBackgroundColorPicker.js"
 import { CcTagBackgroundColorPresenter } from "../ccTagBackgroundColor/CcTagBackgroundColorPresenter.js"
-import { CC_PREVIEW_TEXT_COLOR_DISPLAY_ID } from "../textColor/CcTagTextColorDisplay.js"
-import { CC_PREVIEW_TEXT_COLOR_PICKER_ID } from "../textColor/CcTagTextColorPicker.js"
-import { CcTagTextColorPresenter } from "../textColor/CcTagTextColorPresenter.js"
+import { CC_PREVIEW_TEXT_COLOR_DISPLAY_ID } from "../ccTagTextColor/CcTagTextColorDisplay.js"
+import { CC_PREVIEW_TEXT_COLOR_PICKER_ID } from "../ccTagTextColor/CcTagTextColorPicker.js"
+import { CcTagTextColorPresenter } from "../ccTagTextColor/CcTagTextColorPresenter.js"
 
 const MAIN_DIV_ID = 'main'
 
