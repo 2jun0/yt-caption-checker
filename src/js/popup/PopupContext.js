@@ -10,10 +10,14 @@ import { LanguagePicker } from "./langauge/LanguagePicker.js"
 import { LanguagePresenter } from "./langauge/LanguagePresenter.js"
 import { LanguageModel } from "./langauge/LanguageModel.js"
 
-import { ColorBgPresenter } from "./backgroundColor/ColorBgPresenter.js"
-import { ColorBgDisplay } from "./backgroundColor/ColorBgDisplay.js"
-import { ColorBgPicker } from "./backgroundColor/ColorBgPicker.js"
-import { ColorBgModel } from "./backgroundColor/ColorBgModel.js"
+// import { CcPreviewBackgroundColorDisplay } from "./backgroundColor/CcPreviewBackgroundColorDisplay.js"
+// import { CcPreviewBackgroundColorPicker } from "./backgroundColor/CcPreviewBackgroundColorPicker.js"
+// import { CcPreviewBackgroundColorModel } from "./backgroundColor/CcPreviewBackgroundColorModel.js"
+
+import { CcPreviewBackgroundColorPresenter } from "./CcPreviewBackgroundColor/CcPreviewBackgroundColorPresenter.js"
+import { CcPreviewBackgroundColorDisplay } from "./CcPreviewBackgroundColor/CcPreviewBackgroundColorDisplay.js"
+import { CcPreviewBackgroundColorPicker } from "./CcPreviewBackgroundColor/CcPreviewBackgroundColorPicker.js"
+import { CcPreviewBackgroundColorModel } from "./CcPreviewBackgroundColor/CcPreviewBackgroundColorModel.js"
 
 import { ColorTxtPresenter } from "./textColor/ColorTxtPresenter.js"
 import { ColorTxtDisplay } from "./textColor/ColorTxtDisplay.js"
@@ -28,7 +32,7 @@ import { langs } from "../utils/lang.js"
  * @property {function} init
  * @property {() => Storage} stoarge
  * @property {() => LanguagePresenter} languagePresenter
- * @property {() => ColorBgPresenter} colorBgPresenter
+ * @property {() => CcPreviewBackgroundColorPresenter} ccPreviewBackgroundColorPresenter
  * @property {() => ColorTxtPresenter} colorTxtPresenter
  * @property {() => CcPreviewFontSizePresenter} ccPreviewFontSizePresenter
  */
@@ -64,14 +68,14 @@ export const PopupContext = (document, iro) => {
   let _languageModel = null
 
   /** cc preview background color */
-  /** @type {ColorBgDisplay} */
-  let _colorBgDisplay = null
-  /** @type {ColorBgPicker} */
-  let _colorBgPicker = null
-  /** @type {ColorBgPresenter} */
-  let _colorBgPresenter = null
-  /** @type {ColorBgModel} */
-  let _colorBgModel = null
+  /** @type {CcPreviewBackgroundColorDisplay} */
+  let _ccPreviewBackgroundColorDisplay = null
+  /** @type {CcPreviewBackgroundColorPicker} */
+  let _ccPreviewBackgroundColorPicker = null
+  /** @type {CcPreviewBackgroundColorPresenter} */
+  let _ccPreviewBackgroundColorPresenter = null
+  /** @type {CcPreviewBackgroundColorModel} */
+  let _ccPreviewBackgroundColorModel = null
 
   /** cc preview text color */
   /** @type {ColorTxtDisplay} */
@@ -97,10 +101,10 @@ export const PopupContext = (document, iro) => {
     ccPreviewFontSizePresenter()
     ccPreviewFontSizePicker()
     ccPreviewFontSizeModel()
-    colorBgPresenter()
-    colorBgDisplay()
-    colorBgPicker()
-    colorBgModel()
+    ccPreviewBackgroundColorPresenter()
+    ccPreviewBackgroundColorDisplay()
+    ccPreviewBackgroundColorPicker()
+    ccPreviewBackgroundColorModel()
     colorTxtPresenter()
     colorTxtDisplay()
     colorTxtPicker()
@@ -123,7 +127,7 @@ export const PopupContext = (document, iro) => {
   const mainDiv = () => {
     if (!_mainDiv) {
       _mainDiv = MainDiv(document)
-      _mainDiv.init(colorBgPresenter(), colorTxtPresenter())
+      _mainDiv.init(ccPreviewBackgroundColorPresenter(), colorTxtPresenter())
     }
 
     return _mainDiv
@@ -195,40 +199,40 @@ export const PopupContext = (document, iro) => {
   }
 
   /** cc preview background color */
-  const colorBgPresenter = () => {
-    if (!_colorBgPresenter) {
-      _colorBgPresenter = ColorBgPresenter()
-      _colorBgPresenter.init(colorBgPicker(), colorBgDisplay(), ccStatusExample(), colorBgModel())
+  const ccPreviewBackgroundColorPresenter = () => {
+    if (!_ccPreviewBackgroundColorPresenter) {
+      _ccPreviewBackgroundColorPresenter = CcPreviewBackgroundColorPresenter()
+      _ccPreviewBackgroundColorPresenter.init(ccPreviewBackgroundColorPicker(), ccPreviewBackgroundColorDisplay(), ccStatusExample(), ccPreviewBackgroundColorModel())
     }
 
-    return _colorBgPresenter
+    return _ccPreviewBackgroundColorPresenter
   }
 
-  const colorBgDisplay = () => {
-    if (!_colorBgDisplay) {
-      _colorBgDisplay = ColorBgDisplay(document)
-      _colorBgDisplay.init(colorBgPresenter())
+  const ccPreviewBackgroundColorDisplay = () => {
+    if (!_ccPreviewBackgroundColorDisplay) {
+      _ccPreviewBackgroundColorDisplay = CcPreviewBackgroundColorDisplay(document)
+      _ccPreviewBackgroundColorDisplay.init(ccPreviewBackgroundColorPresenter())
     }
     
-    return _colorBgDisplay
+    return _ccPreviewBackgroundColorDisplay
   }
 
-  const colorBgPicker = () => {
-    if (!_colorBgPicker) {
-      _colorBgPicker = ColorBgPicker(iro)
-      _colorBgPicker.init(colorBgPresenter())
+  const ccPreviewBackgroundColorPicker = () => {
+    if (!_ccPreviewBackgroundColorPicker) {
+      _ccPreviewBackgroundColorPicker = CcPreviewBackgroundColorPicker(iro)
+      _ccPreviewBackgroundColorPicker.init(ccPreviewBackgroundColorPresenter())
     }
 
-    return _colorBgPicker
+    return _ccPreviewBackgroundColorPicker
   }
 
-  const colorBgModel = () => {
-    if (!_colorBgModel) {
-      _colorBgModel = ColorBgModel()
-      _colorBgModel.init(storage(), messageManager())
+  const ccPreviewBackgroundColorModel = () => {
+    if (!_ccPreviewBackgroundColorModel) {
+      _ccPreviewBackgroundColorModel = CcPreviewBackgroundColorModel()
+      _ccPreviewBackgroundColorModel.init(storage(), messageManager())
     }
 
-    return _colorBgModel
+    return _ccPreviewBackgroundColorModel
   }
 
   /** cc preview text color */
@@ -288,7 +292,7 @@ export const PopupContext = (document, iro) => {
     init,
     storage,
     languagePresenter,
-    colorBgPresenter,
+    ccPreviewBackgroundColorPresenter,
     colorTxtPresenter,
     ccPreviewFontSizePresenter
   }

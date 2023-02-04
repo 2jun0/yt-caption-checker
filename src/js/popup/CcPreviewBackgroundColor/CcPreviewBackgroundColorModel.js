@@ -2,16 +2,16 @@ import { MessageManager } from "../../utils/MessageManager.js";
 import { COLOR_BG_FIELD, Storage } from "../../utils/storage.js";
 
 /**
- * @typedef {Object} ColorBgModel
- * @property {function} init
+ * @typedef {Object} CcPreviewBackgroundColorModel
+ * @property {(stoarge: Storage, messageManager: MessageManager) => void} init
  * @property {(bgColor: any) => Promise<void>} setBackgroundColor
  */
 
 /**
  * CC Preview Background Color Model
- * @returns {ColorBgModel}
+ * @returns {CcPreviewBackgroundColorModel}
  */
-export const ColorBgModel = () => {
+export const CcPreviewBackgroundColorModel = () => {
   /** @type {Storage} */
   let _storage = null
   /** @type {MessageManager} */

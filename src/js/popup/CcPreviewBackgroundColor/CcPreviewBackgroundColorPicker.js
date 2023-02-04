@@ -1,10 +1,10 @@
-import { ColorBgPresenter } from "./ColorBgPresenter.js";
+import { CcPreviewBackgroundColorPresenter } from "./CcPreviewBackgroundColorPresenter.js";
 
-export const COLOR_BG_PICKER_ID = 'color-bg-picker'
+export const CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID = 'color-bg-picker'
 
 /**
- * @typedef {Object} ColorBgPicker
- * @property {(presenter: ColorBgPresenter) => void} init
+ * @typedef {Object} CcPreviewBackgroundColorPicker
+ * @property {(presenter: CcPreviewBackgroundColorPresenter) => void} init
  * @property {function} setColor
  * @property {function} display 
  * @property {function} hide
@@ -14,10 +14,10 @@ export const COLOR_BG_PICKER_ID = 'color-bg-picker'
 /**
  * CC Preview Background Color Picker Element
  * @param {*} iro
- * @returns {ColorBgPicker}
+ * @returns {CcPreviewBackgroundColorPicker}
  */
-export const ColorBgPicker = iro => {
-  const colorBgPicker = new iro.ColorPicker(`#${COLOR_BG_PICKER_ID}`, {
+export const CcPreviewBackgroundColorPicker = iro => {
+  const backgroundColorPicker = new iro.ColorPicker(`#${CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID}`, {
     width: 195,
     borderWidth: 1,
     borderColor: '#B0B0B0',
@@ -40,25 +40,25 @@ export const ColorBgPicker = iro => {
 
   /**
    * init function
-   * @param {ColorBgPresenter} presenter
+   * @param {CcPreviewBackgroundColorPresenter} presenter
    */
   const init = presenter => {
-    colorBgPicker.on('color:change', _color => {
+    backgroundColorPicker.on('color:change', _color => {
       const color = _color.hex8String
       presenter.setBackgroundColor(color)
     })
   }
 
   const setColor = color => {
-    colorBgPicker.color.hex8String = color
+    backgroundColorPicker.color.hex8String = color
   }
 
   const hide = () => {
-    colorBgPicker.el.style.display = 'none'
+    backgroundColorPicker.el.style.display = 'none'
   }
 
   const display = () => {
-    colorBgPicker.el.style.display = 'block'
+    backgroundColorPicker.el.style.display = 'block'
   }
 
   /**
@@ -66,7 +66,7 @@ export const ColorBgPicker = iro => {
    * @returns {boolean}
    */
   const isDisplay = () => {
-    return colorBgPicker.el.style.display == 'block'
+    return backgroundColorPicker.el.style.display == 'block'
   }
 
   return {

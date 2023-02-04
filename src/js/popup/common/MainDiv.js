@@ -1,6 +1,6 @@
-import { COLOR_BG_DISPLAY_ID } from "../backgroundColor/ColorBgDisplay.js"
-import { COLOR_BG_PICKER_ID } from "../backgroundColor/ColorBgPicker.js"
-import { ColorBgPresenter } from "../backgroundColor/ColorBgPresenter.js"
+import { CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID } from "../CcPreviewBackgroundColor/CcPreviewBackgroundColorDisplay.js"
+import { CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID } from "../CcPreviewBackgroundColor/CcPreviewBackgroundColorPicker.js"
+import { CcPreviewBackgroundColorPresenter } from "../CcPreviewBackgroundColor/CcPreviewBackgroundColorPresenter.js"
 import { COLOR_TXT_DISPLAY_ID } from "../textColor/ColorTxtDisplay.js"
 import { COLOR_TXT_PICKER_ID } from "../textColor/ColorTxtPicker.js"
 import { ColorTxtPresenter } from "../textColor/ColorTxtPresenter.js"
@@ -9,7 +9,7 @@ const MAIN_DIV_ID = 'main'
 
 /**
  * @typedef {Object} MainDiv
- * @property {(colorBgPresenter: ColorBgPresenter, colorTxtPresenter: ColorTxtPresenter) => void} init
+ * @property {(ccPreviewBackgroundColorPresenter: CcPreviewBackgroundColorPresenter, colorTxtPresenter: ColorTxtPresenter) => void} init
  */
 
 /**
@@ -22,15 +22,15 @@ export const MainDiv = document => {
 
   /**
    * init function
-   * @param {ColorBgPresenter} colorBgPresenter
+   * @param {CcPreviewBackgroundColorPresenter} ccPreviewBackgroundColorPresenter
    * @param {ColorTxtPresenter} colorTxtPresenter
    */
-  const init = (colorBgPresenter, colorTxtPresenter) => {
+  const init = (ccPreviewBackgroundColorPresenter, colorTxtPresenter) => {
     mainDiv.onclick = e => {
       const el = e.target;
 
-      if (!isChildOf(el, COLOR_BG_DISPLAY_ID) && !isChildOf(el, COLOR_BG_PICKER_ID)) {
-        colorBgPresenter.hideBackgroundColorPicker()
+      if (!isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID) && !isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID)) {
+        ccPreviewBackgroundColorPresenter.hideBackgroundColorPicker()
       }
 
       if (!isChildOf(el, COLOR_TXT_PICKER_ID) && !isChildOf(el, COLOR_TXT_DISPLAY_ID)) {

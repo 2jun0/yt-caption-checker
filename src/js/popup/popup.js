@@ -8,7 +8,7 @@ const popupContext = PopupContext(document, window.iro)
 popupContext.init()
 const storage = popupContext.storage()
 const languagePresenter = popupContext.languagePresenter()
-const colorBgPresenter = popupContext.colorBgPresenter()
+const ccPreviewBackgroundColorPresenter = popupContext.ccPreviewBackgroundColorPresenter()
 const colorTxtPresenter = popupContext.colorTxtPresenter()
 const ccPreviewFontSizePresenter = popupContext.ccPreviewFontSizePresenter()
 
@@ -23,7 +23,7 @@ storage.loadData(
   items => {
     languagePresenter.setLanguage(items[LANGUAGE_FIELD])
     languagePresenter.setCombineRegion(items[IS_COMBINED_REGION_FIELD])
-    colorBgPresenter.setBackgroundColor(items[COLOR_BG_FIELD])
+    ccPreviewBackgroundColorPresenter.setBackgroundColor(items[COLOR_BG_FIELD])
     colorTxtPresenter.setTextColor(items[COLOR_TXT_FIELD])
     ccPreviewFontSizePresenter.setFontSize(items[CC_PREVIEW_FONT_SIZE_FIELD])
   },
