@@ -1,3 +1,5 @@
+export const EXTENSION_NAME = 'yt-caption-checker'
+
 export const getYTVideoId = url => {
   return url.match(/\?v=([\w-]+)/)[1]
 }

@@ -1,21 +1,22 @@
+import { MessageManager } from './utils/MessageManager.js'
 import { getYTVideoId } from './utils/common.js'
 import { getRelatedLangCodes } from './utils/lang.js'
 import {
-  FIELD_COLOR_BG,
-  FIELD_COLOR_TXT,
-  FIELD_TAG_FONT_SIZE,
-  FIELD_COMBINE_REGION,
-  FIELD_LANG,
+  COLOR_BG_FIELD,
+  COLOR_TXT_FIELD,
+  CC_PREVIEW_FONT_SIZE_FIELD,
+  IS_COMBINED_REGION_FIELD,
+  LANGUAGE_FIELD,
   DEFAULT_VALUE,
-  loadData,
+  Storage
 } from './utils/storage.js'
 
 // tag const values
-let ccLang = DEFAULT_VALUE[FIELD_LANG]
-let ccColorBg = DEFAULT_VALUE[FIELD_COLOR_BG]
-let ccColorTxt = DEFAULT_VALUE[FIELD_COLOR_TXT]
-let ccFontSize = DEFAULT_VALUE[FIELD_TAG_FONT_SIZE]
-let ccCombineRegion = DEFAULT_VALUE[FIELD_COMBINE_REGION]
+let ccLang = DEFAULT_VALUE[LANGUAGE_FIELD]
+let ccColorBg = DEFAULT_VALUE[COLOR_BG_FIELD]
+let ccColorTxt = DEFAULT_VALUE[COLOR_TXT_FIELD]
+let ccFontSize = DEFAULT_VALUE[CC_PREVIEW_FONT_SIZE_FIELD]
+let ccCombineRegion = DEFAULT_VALUE[IS_COMBINED_REGION_FIELD]
 
 let mainObserver
 let intervalId
@@ -205,30 +206,31 @@ const initInterval = () => {
 }
 
 // option update handlers
-chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
-  if (FIELD_LANG in req) setCCLang(req[FIELD_LANG])
-  if (FIELD_COLOR_BG in req) setCCColorBg(req[FIELD_COLOR_BG])
-  if (FIELD_COLOR_TXT in req) setCCColorTxt(req[FIELD_COLOR_TXT])
-  if (FIELD_TAG_FONT_SIZE in req) setCCFontSize(req[FIELD_TAG_FONT_SIZE])
-  if (FIELD_COMBINE_REGION in req)
-    setCCCombineRegion(items[FIELD_COMBINE_REGION])
+const messageManager = MessageManager()
+const storage = Storage(chrome.storage.local)
+
+messageManager.addOnMessageListener(req => {
+  if (LANGUAGE_FIELD in req) setCCLang(req[LANGUAGE_FIELD])
+  if (COLOR_BG_FIELD in req) setCCColorBg(req[COLOR_BG_FIELD])
+  if (COLOR_TXT_FIELD in req) setCCColorTxt(req[COLOR_TXT_FIELD])
+  if (CC_PREVIEW_FONT_SIZE_FIELD in req) setCCFontSize(req[CC_PREVIEW_FONT_SIZE_FIELD])
+  if (IS_COMBINED_REGION_FIELD in req)
+    setCCCombineRegion(req[IS_COMBINED_REGION_FIELD])
 })
 
 // Load data
-loadData(
+storage.loadData(
   [
-    FIELD_LANG,
-    FIELD_COLOR_BG,
-    FIELD_COLOR_TXT,
-    FIELD_TAG_FONT_SIZE,
-    FIELD_COMBINE_REGION,
-  ],
-  items => {
-    setCCLang(items[FIELD_LANG])
-    setCCColorBg(items[FIELD_COLOR_BG])
-    setCCColorTxt(items[FIELD_COLOR_TXT])
-    setCCFontSize(items[FIELD_TAG_FONT_SIZE])
-    setCCCombineRegion(items[FIELD_COMBINE_REGION])
+    LANGUAGE_FIELD,
+    COLOR_BG_FIELD,
+    COLOR_TXT_FIELD,
+    CC_PREVIEW_FONT_SIZE_FIELD,
+    IS_COMBINED_REGION_FIELD
+  ], items => {
+    setCCLang(items[LANGUAGE_FIELD])
+    setCCColorBg(items[COLOR_BG_FIELD])
+    setCCColorTxt(items[COLOR_TXT_FIELD])
+    setCCFontSize(items[CC_PREVIEW_FONT_SIZE_FIELD])
+    setCCCombineRegion(items[IS_COMBINED_REGION_FIELD])
     initInterval()
-  },
-)
+  })

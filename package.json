@@ -1,6 +1,6 @@
 {
   "name": "yt-caption-checker",
-  "version": "1.5.5",
+  "version": "1.5.6",
   "description": "Show if there are captions for the language you want in YouTube videos.",
   "scripts": {
     "build": "npm run build:chrome && npm run build:firefox",
