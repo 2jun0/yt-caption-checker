@@ -1,0 +1,30 @@
+{
+  "appName": {
+    "message": "YouTubeキャプションチェッカー",
+    "description": "YouTubeで視聴する映像に好む言語の字幕があれば見せてくれます。"
+  },
+  "appDesc": {
+    "message": "YouTubeで視聴する映像に好む言語の字幕があれば見せてくれます。",
+    "description": "この拡張機能は、YouTube映像のサムネイルにあなたが好む言語の字幕タグを付けてくれます。 (字幕がない場合はタグをつけません。)"
+  },
+  "selectLang": {
+    "message": "言語選択",
+    "description": "言語セレクタのラベルネーム"
+  },
+  "color": {
+    "message": "カラー",
+    "description": "カラーセレクタのラベルネーム"
+  },
+  "tagSizeRange": {
+    "message": "タグサイズ",
+    "description": "タグサイズの範囲のラベルネーム"
+  },
+  "example": {
+    "message": "例示",
+    "description": "例示のラベルネーム"
+  },
+  "combineRegion": {
+    "message": "地域言語統合",
+    "description": "地域言語統合のラベルネーム"
+  }
+}
