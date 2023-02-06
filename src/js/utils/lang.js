@@ -838,9 +838,10 @@ export const langs = [
 ]
 
 export const getRelatedLangCodes = originLangCode => {
-  let relatedLangCodes = [originLangCode]
+  const langCodeWithoutRegion = originLangCode.split('-')[0]
+  const relatedLangCodes = [langCodeWithoutRegion]
   langs.forEach(lang => {
-    if (lang.code.match(new RegExp(`${originLangCode}-`))) {
+    if (lang.code.match(new RegExp(`${langCodeWithoutRegion}-`))) {
       relatedLangCodes.push(lang.code)
     }
   })

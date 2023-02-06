@@ -2,16 +2,16 @@ import { MessageManager } from "../../utils/MessageManager.js"
 import { CC_PREVIEW_FONT_SIZE_FIELD, Storage } from "../../utils/storage.js"
 
 /**
- * @typedef {Object} CcPreviewFontSizeModel
+ * @typedef {Object} CcTagFontSizeModel
  * @property {(stoarge: Storage, messageManager: MessageManager) => void} init
  * @property {(fontSize: any) => Promise<void>} setFontSize
  */
 
 /**
- * CC Preview Size Picker Model
- * @returns {CcPreviewFontSizeModel}
+ * CC Tag Size Picker Model
+ * @returns {CcTagFontSizeModel}
  */
-export const CcPreviewFontSizeModel = () => {
+export const CcTagFontSizeModel = () => {
   /** @type {Storage} */
   let _storage = null
   /** @type {MessageManager} */

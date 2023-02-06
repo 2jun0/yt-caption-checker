@@ -2,21 +2,24 @@ import { MessageManager } from "../../utils/MessageManager.js"
 import { IS_COMBINED_REGION_FIELD, LANGUAGE_FIELD, Storage } from "../../utils/storage.js"
 
 /**
- * @typedef {Object} LanguageModel
+ * @typedef {Object} CcTagLanguageModel
  * @property {(stoarge: Storage, messageManager: MessageManager) => void} init
  * @property {(lang: any) => Promise<void>} setLanguage
  * @property {(isCombinedRegion: any) => Promise<void>} setCombineRegion 
+ * @property {() => string} shownLanguage
  */
 
 /**
- * CC Preview Language Model
- * @returns {LanguageModel}
+ * CC Tag Language Model
+ * @returns {CcTagLanguageModel}
  */
-export const LanguageModel = () => {
+export const CcTagLanguageModel = () => {
   /** @type {Storage} */
   let _storage = null
   /** @type {MessageManager} */
   let _messageManager = null
+  let _language = null
+  let _isCombinedRegion = null
 
   /**
    * init function
@@ -30,17 +33,28 @@ export const LanguageModel = () => {
   
   const setLanguage = async lang => {
     await _storage.saveDataAsync(LANGUAGE_FIELD, lang)
+    _language = lang
     _messageManager.sendMessage(LANGUAGE_FIELD, lang)
   }
 
   const setCombineRegion = async isCombinedRegion => {
     await _storage.saveDataAsync(IS_COMBINED_REGION_FIELD, isCombinedRegion)
+    _isCombinedRegion = isCombinedRegion
     _messageManager.sendMessage(IS_COMBINED_REGION_FIELD, isCombinedRegion)
+  }
+
+  const shownLanguage = () => {
+    if (_isCombinedRegion) {
+      return _language.split('-')[0]
+    } else {
+      return _language
+    }
   }
 
   return {
     init,
     setLanguage,
-    setCombineRegion
+    setCombineRegion,
+    shownLanguage
   }
 }

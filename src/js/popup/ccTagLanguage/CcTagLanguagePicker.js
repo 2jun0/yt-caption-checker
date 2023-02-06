@@ -1,32 +1,31 @@
-import { LanguagePresenter } from "./LanguagePresenter.js";
+import { CcTagLanguagePresenter } from "./CcTagLanguagePresenter.js";
 
 const LANG_PICKER_ID = 'lang-picker'
 
 /**
- * @typedef {Object} LanguagePicker
- * @property {(languagePresenter: LanguagePresenter) => void} init
+ * @typedef {Object} CcTagLanguagePicker
+ * @property {(ccTagLanguagePresenter: CcTagLanguagePresenter) => void} init
  * @property {function} updateLanuageList
  * @property {function} getCurrentLanguage
- * @property {function} getCurrentLanguageWithoutRegion
  * @property {function} setCurrentLanguage
  */
 
 /**
- * Language Picker Element
+ * CC Tag Language Picker Element
  * @param {Document} document 
- * @returns {LanguagePicker}
+ * @returns {CcTagLanguagePicker}
  */
-export const LanguagePicker = document => {
+export const CcTagLanguagePicker = document => {
   const languagePicker = document.getElementById(LANG_PICKER_ID);
 
   /**
    * initialize
-   * @param {LanguagePresenter} languagePresenter 
+   * @param {CcTagLanguagePresenter} ccTagLanguagePresenter 
    * @param {*} langs
    */
-  const init = (languagePresenter, langs) => {
+  const init = (ccTagLanguagePresenter, langs) => {
     languagePicker.onchange = () => {
-      languagePresenter.setLanguage(languagePicker.value)
+      ccTagLanguagePresenter.setLanguage(languagePicker.value)
     }
 
     updateLanuageList(langs)
@@ -56,14 +55,6 @@ export const LanguagePicker = document => {
   const getCurrentLanguage = () => {
     return languagePicker.value
   }
-
-  /**
-   * get current language code without region code
-   * @returns {string} language code
-   */
-  const getCurrentLanguageWithoutRegion = () => {
-    return languagePicker.value.split('-')[0]
-  }
   
   const setCurrentLanguage = lang => {
     languagePicker.value = lang
@@ -73,7 +64,6 @@ export const LanguagePicker = document => {
     init,
     updateLanuageList,
     getCurrentLanguage,
-    getCurrentLanguageWithoutRegion,
     setCurrentLanguage
   }
 }

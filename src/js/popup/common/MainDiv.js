@@ -1,19 +1,19 @@
-import { COLOR_BG_DISPLAY_ID } from "../backgroundColor/ColorBgDisplay.js"
-import { COLOR_BG_PICKER_ID } from "../backgroundColor/ColorBgPicker.js"
-import { ColorBgPresenter } from "../backgroundColor/ColorBgPresenter.js"
-import { COLOR_TXT_DISPLAY_ID } from "../textColor/ColorTxtDisplay.js"
-import { COLOR_TXT_PICKER_ID } from "../textColor/ColorTxtPicker.js"
-import { ColorTxtPresenter } from "../textColor/ColorTxtPresenter.js"
+import { CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID } from "../ccTagBackgroundColor/CcTagBackgroundColorDisplay.js"
+import { CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID } from "../ccTagBackgroundColor/CcTagBackgroundColorPicker.js"
+import { CcTagBackgroundColorPresenter } from "../ccTagBackgroundColor/CcTagBackgroundColorPresenter.js"
+import { CC_PREVIEW_TEXT_COLOR_DISPLAY_ID } from "../ccTagTextColor/CcTagTextColorDisplay.js"
+import { CC_PREVIEW_TEXT_COLOR_PICKER_ID } from "../ccTagTextColor/CcTagTextColorPicker.js"
+import { CcTagTextColorPresenter } from "../ccTagTextColor/CcTagTextColorPresenter.js"
 
 const MAIN_DIV_ID = 'main'
 
 /**
  * @typedef {Object} MainDiv
- * @property {(colorBgPresenter: ColorBgPresenter, colorTxtPresenter: ColorTxtPresenter) => void} init
+ * @property {(ccTagBackgroundColorPresenter: CcTagBackgroundColorPresenter, ccTagTextColorPresenter: CcTagTextColorPresenter) => void} init
  */
 
 /**
- * CC Preview Background Color Display Element
+ * CC Tag Background Color Display Element
  * @param {Document} document 
  * @returns {MainDiv}
  */
@@ -22,19 +22,19 @@ export const MainDiv = document => {
 
   /**
    * init function
-   * @param {ColorBgPresenter} colorBgPresenter
-   * @param {ColorTxtPresenter} colorTxtPresenter
+   * @param {CcTagBackgroundColorPresenter} ccTagBackgroundColorPresenter
+   * @param {CcTagTextColorPresenter} ccTagTextColorPresenter
    */
-  const init = (colorBgPresenter, colorTxtPresenter) => {
+  const init = (ccTagBackgroundColorPresenter, ccTagTextColorPresenter) => {
     mainDiv.onclick = e => {
       const el = e.target;
 
-      if (!isChildOf(el, COLOR_BG_DISPLAY_ID) && !isChildOf(el, COLOR_BG_PICKER_ID)) {
-        colorBgPresenter.hideBackgroundColorPicker()
+      if (!isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID) && !isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID)) {
+        ccTagBackgroundColorPresenter.hideBackgroundColorPicker()
       }
 
-      if (!isChildOf(el, COLOR_TXT_PICKER_ID) && !isChildOf(el, COLOR_TXT_DISPLAY_ID)) {
-        colorTxtPresenter.hideTextColorPicker()
+      if (!isChildOf(el, CC_PREVIEW_TEXT_COLOR_PICKER_ID) && !isChildOf(el, CC_PREVIEW_TEXT_COLOR_DISPLAY_ID)) {
+        ccTagTextColorPresenter.hideTextColorPicker()
       }
     }
   }

@@ -5,11 +5,11 @@
   },
   "appDesc": {
     "message": "Show if there are captions for the language you want in YouTube videos.",
-    "description": "This extension add a caption tag for the language you want on the video thumbnail in the YouTube. (But if there are no caption, it doesn't add tags)"
+    "description": "This extension adds a caption tag for the language you want on the video thumbnail in the YouTube. (But if there are no caption, it doesn't add tags)"
   },
   "selectLang": {
     "message": "Select Language",
-    "description": "Label name for langauge selector"
+    "description": "Label name for language selector"
   },
   "color": {
     "message": "Color",

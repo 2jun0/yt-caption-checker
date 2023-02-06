@@ -1,10 +1,10 @@
-import { ColorTxtPresenter } from "./ColorTxtPresenter.js";
+import { CcTagTextColorPresenter } from "./CcTagTextColorPresenter.js";
 
-export const COLOR_TXT_PICKER_ID = 'color-txt-picker'
+export const CC_PREVIEW_TEXT_COLOR_PICKER_ID = 'color-txt-picker'
 
 /**
- * @typedef {Object} ColorTxtPicker
- * @property {(presenter: ColorTxtPresenter) => void} init
+ * @typedef {Object} CcTagTextColorPicker
+ * @property {(presenter: CcTagTextColorPresenter) => void} init
  * @property {function} setColor
  * @property {function} display 
  * @property {function} hide
@@ -12,12 +12,12 @@ export const COLOR_TXT_PICKER_ID = 'color-txt-picker'
  */
 
 /**
- * CC Preview Text Color Picker Element
+ * CC Tag Text Color Picker Element
  * @param {*} iro 
- * @returns {ColorTxtPicker}
+ * @returns {CcTagTextColorPicker}
  */
-export const ColorTxtPicker = iro => {
-  const colorTxtPicker = new iro.ColorPicker(`#${COLOR_TXT_PICKER_ID}`, {
+export const CcTagTextColorPicker = iro => {
+  const textColorPicker = new iro.ColorPicker(`#${CC_PREVIEW_TEXT_COLOR_PICKER_ID}`, {
     width: 195,
     borderWidth: 1,
     borderColor: '#B0B0B0',
@@ -36,25 +36,25 @@ export const ColorTxtPicker = iro => {
 
   /**
    * init function
-   * @param {ColorTxtPresenter} presenter 
+   * @param {CcTagTextColorPresenter} presenter 
    */
   const init = presenter => {
-    colorTxtPicker.on('color:change', _color => {
+    textColorPicker.on('color:change', _color => {
       const color = _color.hex8String
       presenter.setTextColor(color)
     })
   }  
 
   const setColor = color => {
-    colorTxtPicker.color.hexString = color
+    textColorPicker.color.hexString = color
   }
 
   const hide = () => {
-    colorTxtPicker.el.style.display = 'none'
+    textColorPicker.el.style.display = 'none'
   }
 
   const display = () => {
-    colorTxtPicker.el.style.display = 'block'
+    textColorPicker.el.style.display = 'block'
   }
 
   /**
@@ -62,7 +62,7 @@ export const ColorTxtPicker = iro => {
    * @returns {boolean}
    */
   const isDisplay = () => {
-    return colorTxtPicker.el.style.display == 'block'
+    return textColorPicker.el.style.display == 'block'
   }
 
   return {

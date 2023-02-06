@@ -2,7 +2,7 @@ import { getYtInfo } from './utils/yt-info.js'
 
 chrome.runtime.onMessage.addListener(({ type, value }, sender, sendRes) => {
   if (type === 'has-captions') {
-    const { videoId, langs } = value
+    const { videoId, languages } = value
 
     getYtInfo(videoId).then((info, err) => {
       if (err) console.error(err)
@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener(({ type, value }, sender, sendRes) => {
       let existsCaptions =
         captions.playerCaptionsTracklistRenderer.captionTracks.filter(
           ({ languageCode, kind }) =>
-            kind !== 'asr' && langs.includes(languageCode),
+            kind !== 'asr' && languages.includes(languageCode),
         )
 
       return sendRes(existsCaptions.length > 0)

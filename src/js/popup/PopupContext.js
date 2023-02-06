@@ -1,24 +1,25 @@
-import { CcStatusExample } from "./common/CcStatusExample.js"
+import { CcTagPreview } from "./common/CcTagPreview.js"
 import { MainDiv } from "./common/MainDiv.js"
 
-import { CcPreviewFontSizePicker } from "./common/CcPreviewFontSizePicker.js"
-import { CcPreviewFontSizePresenter } from "./common/CcPreviewFontSizePresenter.js"
-import { CcPreviewFontSizeModel } from "./common/CcPreviewFontSizeModel.js"
+import { CcTagFontSizePicker } from "./common/CcTagFontSizePicker.js"
+import { CcTagFontSizePresenter } from "./common/CcTagFontSizePresenter.js"
+import { CcTagFontSizeModel } from "./common/CcTagFontSizeModel.js"
 
-import { CombineRegionCheckBox } from "./langauge/CombineRegionCheckBox.js"
-import { LanguagePicker } from "./langauge/LanguagePicker.js"
-import { LanguagePresenter } from "./langauge/LanguagePresenter.js"
-import { LanguageModel } from "./langauge/LanguageModel.js"
+import { CcTagCombineRegionCheckBox } from "./ccTagLanguage/CcTagCombineRegionCheckBox.js"
+import { CcTagLanguagePicker } from "./ccTagLanguage/CcTagLanguagePicker.js"
+import { CcTagLanguagePresenter } from "./ccTagLanguage/CcTagLanguagePresenter.js"
+import { CcTagLanguageModel } from "./ccTagLanguage/CcTagLanguageModel.js"
 
-import { ColorBgPresenter } from "./backgroundColor/ColorBgPresenter.js"
-import { ColorBgDisplay } from "./backgroundColor/ColorBgDisplay.js"
-import { ColorBgPicker } from "./backgroundColor/ColorBgPicker.js"
-import { ColorBgModel } from "./backgroundColor/ColorBgModel.js"
+import { CcTagBackgroundColorPresenter } from "./ccTagBackgroundColor/CcTagBackgroundColorPresenter.js"
+import { CcTagBackgroundColorDisplay } from "./ccTagBackgroundColor/CcTagBackgroundColorDisplay.js"
+import { CcTagBackgroundColorPicker } from "./ccTagBackgroundColor/CcTagBackgroundColorPicker.js"
+import { CcTagBackgroundColorModel } from "./ccTagBackgroundColor/CcTagBackgroundColorModel.js"
 
-import { ColorTxtPresenter } from "./textColor/ColorTxtPresenter.js"
-import { ColorTxtDisplay } from "./textColor/ColorTxtDisplay.js"
-import { ColorTxtPicker } from "./textColor/ColorTxtPicker.js"
-import { ColorTxtModel } from "./textColor/ColorTxtModel.js"
+import { CcTagTextColorPresenter } from "./ccTagTextColor/CcTagTextColorPresenter.js"
+import { CcTagTextColorDisplay } from "./ccTagTextColor/CcTagTextColorDisplay.js"
+import { CcTagTextColorPicker } from "./ccTagTextColor/CcTagTextColorPicker.js"
+import { CcTagTextColorModel } from "./ccTagTextColor/CcTagTextColorModel.js"
+
 import { MessageManager } from "../utils/MessageManager.js"
 import { Storage } from "../utils/storage.js"
 import { langs } from "../utils/lang.js"
@@ -27,10 +28,10 @@ import { langs } from "../utils/lang.js"
  * @typedef {Object} PopupContext
  * @property {function} init
  * @property {() => Storage} stoarge
- * @property {() => LanguagePresenter} languagePresenter
- * @property {() => ColorBgPresenter} colorBgPresenter
- * @property {() => ColorTxtPresenter} colorTxtPresenter
- * @property {() => CcPreviewFontSizePresenter} ccPreviewFontSizePresenter
+ * @property {() => CcTagLanguagePresenter} ccTagLanguagePresenter
+ * @property {() => CcTagBackgroundColorPresenter} ccTagBackgroundColorPresenter
+ * @property {() => CcTagTextColorPresenter} ccTagTextColorPresenter
+ * @property {() => CcTagFontSizePresenter} ccTagFontSizePresenter
  */
 
 /**
@@ -40,48 +41,48 @@ import { langs } from "../utils/lang.js"
  */
 export const PopupContext = (document, iro) => {
   /** common */
-  /** @type {CcStatusExample} */
-  let _ccStatusExample = null
+  /** @type {CcTagPreview} */
+  let _ccTagPreview = null
   /** @type {MainDiv} */
   let _mainDiv = null
   
-  /** cc preview font size */
-  /** @type {CcPreviewFontSizePicker} */
-  let _ccPreviewFontSizePicker = null
-  /** @type {CcPreviewFontSizePresenter} */
-  let _ccPreviewFontSizePresenter = null
-  /** @type {CcPreviewFontSizeModel} */
-  let _ccPreviewFontSizeModel = null
+  /** cc tag font size */
+  /** @type {CcTagFontSizePicker} */
+  let _ccTagFontSizePicker = null
+  /** @type {CcTagFontSizePresenter} */
+  let _ccTagFontSizePresenter = null
+  /** @type {CcTagFontSizeModel} */
+  let _ccTagFontSizeModel = null
 
-  /** cc preview language */
-  /** @type {CombineRegionCheckBox} */
-  let _combineRegionCheckBox = null
-  /** @type {LanguagePicker} */
-  let _languagePicker = null
-  /** @type {LanguagePresenter} */
-  let _languagePresenter = null
-  /** @type {LanguageModel} */
-  let _languageModel = null
+  /** cc tag language */
+  /** @type {CcTagCombineRegionCheckBox} */
+  let _ccTagCombineRegionCheckBox = null
+  /** @type {CcTagLanguagePicker} */
+  let _ccTagLanguagePicker = null
+  /** @type {CcTagLanguagePresenter} */
+  let _ccTagLanguagePresenter = null
+  /** @type {CcTagLanguageModel} */
+  let _ccTagLanguageModel = null
 
-  /** cc preview background color */
-  /** @type {ColorBgDisplay} */
-  let _colorBgDisplay = null
-  /** @type {ColorBgPicker} */
-  let _colorBgPicker = null
-  /** @type {ColorBgPresenter} */
-  let _colorBgPresenter = null
-  /** @type {ColorBgModel} */
-  let _colorBgModel = null
+  /** cc tag background color */
+  /** @type {CcTagBackgroundColorDisplay} */
+  let _ccTagBackgroundColorDisplay = null
+  /** @type {CcTagBackgroundColorPicker} */
+  let _ccTagBackgroundColorPicker = null
+  /** @type {CcTagBackgroundColorPresenter} */
+  let _ccTagBackgroundColorPresenter = null
+  /** @type {CcTagBackgroundColorModel} */
+  let _ccTagBackgroundColorModel = null
 
-  /** cc preview text color */
-  /** @type {ColorTxtDisplay} */
-  let _colorTxtDisplay = null
-  /** @type {ColorTxtPicker} */
-  let _colorTxtPicker = null
-  /** @type {ColorTxtPresenter} */
-  let _colorTxtPresenter = null
-  /** @type {ColorTxtModel} */
-  let _colorTxtModel = null
+  /** cc tag text color */
+  /** @type {CcTagTextColorDisplay} */
+  let _ccTagTextColorDisplay = null
+  /** @type {CcTagTextColorPicker} */
+  let _ccTagTextColorPicker = null
+  /** @type {CcTagTextColorPresenter} */
+  let _ccTagTextColorPresenter = null
+  /** @type {CcTagTextColorModel} */
+  let _ccTagTextColorModel = null
 
   /** @type {Storage} */
   let _storage = null
@@ -92,180 +93,180 @@ export const PopupContext = (document, iro) => {
     storage()
     messageManager()
 
-    ccStatusExample()
+    ccTagPreview()
     mainDiv()
-    ccPreviewFontSizePresenter()
-    ccPreviewFontSizePicker()
-    ccPreviewFontSizeModel()
-    colorBgPresenter()
-    colorBgDisplay()
-    colorBgPicker()
-    colorBgModel()
-    colorTxtPresenter()
-    colorTxtDisplay()
-    colorTxtPicker()
-    colorTxtModel()
-    languagePresenter()
-    combineRegionCheckBox()
-    languagePicker()
-    languageModel()
+    ccTagFontSizePresenter()
+    ccTagFontSizePicker()
+    ccTagFontSizeModel()
+    ccTagBackgroundColorPresenter()
+    ccTagBackgroundColorDisplay()
+    ccTagBackgroundColorPicker()
+    ccTagBackgroundColorModel()
+    ccTagTextColorPresenter()
+    ccTagTextColorDisplay()
+    ccTagTextColorPicker()
+    ccTagTextColorModel()
+    ccTagLanguagePresenter()
+    ccTagCombineRegionCheckBox()
+    ccTagLanguagePicker()
+    ccTagLanguageModel()
   }
 
   /** common */
-  const ccStatusExample = () => {
-    if (!_ccStatusExample) {
-      _ccStatusExample = CcStatusExample(document)
+  const ccTagPreview = () => {
+    if (!_ccTagPreview) {
+      _ccTagPreview = CcTagPreview(document)
     }
     
-    return _ccStatusExample
+    return _ccTagPreview
   }
 
   const mainDiv = () => {
     if (!_mainDiv) {
       _mainDiv = MainDiv(document)
-      _mainDiv.init(colorBgPresenter(), colorTxtPresenter())
+      _mainDiv.init(ccTagBackgroundColorPresenter(), ccTagTextColorPresenter())
     }
 
     return _mainDiv
   }
 
-  /** cc preview font size */
-  const ccPreviewFontSizePresenter = () => {
-    if (!_ccPreviewFontSizePresenter) {
-      _ccPreviewFontSizePresenter = CcPreviewFontSizePresenter()
-      _ccPreviewFontSizePresenter.init(ccPreviewFontSizePicker(), ccStatusExample(), ccPreviewFontSizeModel())
+  /** cc tag font size */
+  const ccTagFontSizePresenter = () => {
+    if (!_ccTagFontSizePresenter) {
+      _ccTagFontSizePresenter = CcTagFontSizePresenter()
+      _ccTagFontSizePresenter.init(ccTagFontSizePicker(), ccTagPreview(), ccTagFontSizeModel())
     }
 
-    return _ccPreviewFontSizePresenter
+    return _ccTagFontSizePresenter
   }
 
-  const ccPreviewFontSizePicker = () => {
-    if (!_ccPreviewFontSizePicker) {
-      _ccPreviewFontSizePicker = CcPreviewFontSizePicker(document)
-      _ccPreviewFontSizePicker.init(ccPreviewFontSizePresenter())
+  const ccTagFontSizePicker = () => {
+    if (!_ccTagFontSizePicker) {
+      _ccTagFontSizePicker = CcTagFontSizePicker(document)
+      _ccTagFontSizePicker.init(ccTagFontSizePresenter())
     }
 
-    return _ccPreviewFontSizePicker
+    return _ccTagFontSizePicker
   }
 
-  const ccPreviewFontSizeModel = () => {
-    if (!_ccPreviewFontSizeModel) {
-      _ccPreviewFontSizeModel = CcPreviewFontSizeModel()
-      _ccPreviewFontSizeModel.init(storage(), messageManager())
+  const ccTagFontSizeModel = () => {
+    if (!_ccTagFontSizeModel) {
+      _ccTagFontSizeModel = CcTagFontSizeModel()
+      _ccTagFontSizeModel.init(storage(), messageManager())
     }
 
-    return _ccPreviewFontSizeModel
+    return _ccTagFontSizeModel
   }
 
-  /** cc preview language */
-  const languagePresenter = () => {
-    if (!_languagePresenter) {
-      _languagePresenter = LanguagePresenter()
-      _languagePresenter.init(languagePicker(), combineRegionCheckBox(), ccStatusExample(), languageModel())
+  /** cc tag language */
+  const ccTagLanguagePresenter = () => {
+    if (!_ccTagLanguagePresenter) {
+      _ccTagLanguagePresenter = CcTagLanguagePresenter()
+      _ccTagLanguagePresenter.init(ccTagLanguagePicker(), ccTagCombineRegionCheckBox(), ccTagPreview(), ccTagLanguageModel())
     }
 
-    return _languagePresenter
+    return _ccTagLanguagePresenter
   }
 
-  const combineRegionCheckBox = () => {
-    if (!_combineRegionCheckBox) {
-      _combineRegionCheckBox = CombineRegionCheckBox(document)
-      _combineRegionCheckBox.init(languagePresenter())
+  const ccTagCombineRegionCheckBox = () => {
+    if (!_ccTagCombineRegionCheckBox) {
+      _ccTagCombineRegionCheckBox = CcTagCombineRegionCheckBox(document)
+      _ccTagCombineRegionCheckBox.init(ccTagLanguagePresenter())
     }
 
-    return _combineRegionCheckBox
+    return _ccTagCombineRegionCheckBox
   }
 
-  const languagePicker = () => {
-    if (!_languagePicker) {
-      _languagePicker = LanguagePicker(document)
-      _languagePicker.init(languagePresenter(), langs)
+  const ccTagLanguagePicker = () => {
+    if (!_ccTagLanguagePicker) {
+      _ccTagLanguagePicker = CcTagLanguagePicker(document)
+      _ccTagLanguagePicker.init(ccTagLanguagePresenter(), langs)
     }
 
-    return _languagePicker
+    return _ccTagLanguagePicker
   }
 
-  const languageModel = () => {
-    if (!_languageModel) {
-      _languageModel = LanguageModel()
-      _languageModel.init(storage(), messageManager())
+  const ccTagLanguageModel = () => {
+    if (!_ccTagLanguageModel) {
+      _ccTagLanguageModel = CcTagLanguageModel()
+      _ccTagLanguageModel.init(storage(), messageManager())
     }
 
-    return _languageModel
+    return _ccTagLanguageModel
   }
 
-  /** cc preview background color */
-  const colorBgPresenter = () => {
-    if (!_colorBgPresenter) {
-      _colorBgPresenter = ColorBgPresenter()
-      _colorBgPresenter.init(colorBgPicker(), colorBgDisplay(), ccStatusExample(), colorBgModel())
+  /** cc tag background color */
+  const ccTagBackgroundColorPresenter = () => {
+    if (!_ccTagBackgroundColorPresenter) {
+      _ccTagBackgroundColorPresenter = CcTagBackgroundColorPresenter()
+      _ccTagBackgroundColorPresenter.init(ccTagBackgroundColorPicker(), ccTagBackgroundColorDisplay(), ccTagPreview(), ccTagBackgroundColorModel())
     }
 
-    return _colorBgPresenter
+    return _ccTagBackgroundColorPresenter
   }
 
-  const colorBgDisplay = () => {
-    if (!_colorBgDisplay) {
-      _colorBgDisplay = ColorBgDisplay(document)
-      _colorBgDisplay.init(colorBgPresenter())
+  const ccTagBackgroundColorDisplay = () => {
+    if (!_ccTagBackgroundColorDisplay) {
+      _ccTagBackgroundColorDisplay = CcTagBackgroundColorDisplay(document)
+      _ccTagBackgroundColorDisplay.init(ccTagBackgroundColorPresenter())
     }
     
-    return _colorBgDisplay
+    return _ccTagBackgroundColorDisplay
   }
 
-  const colorBgPicker = () => {
-    if (!_colorBgPicker) {
-      _colorBgPicker = ColorBgPicker(iro)
-      _colorBgPicker.init(colorBgPresenter())
+  const ccTagBackgroundColorPicker = () => {
+    if (!_ccTagBackgroundColorPicker) {
+      _ccTagBackgroundColorPicker = CcTagBackgroundColorPicker(iro)
+      _ccTagBackgroundColorPicker.init(ccTagBackgroundColorPresenter())
     }
 
-    return _colorBgPicker
+    return _ccTagBackgroundColorPicker
   }
 
-  const colorBgModel = () => {
-    if (!_colorBgModel) {
-      _colorBgModel = ColorBgModel()
-      _colorBgModel.init(storage(), messageManager())
+  const ccTagBackgroundColorModel = () => {
+    if (!_ccTagBackgroundColorModel) {
+      _ccTagBackgroundColorModel = CcTagBackgroundColorModel()
+      _ccTagBackgroundColorModel.init(storage(), messageManager())
     }
 
-    return _colorBgModel
+    return _ccTagBackgroundColorModel
   }
 
-  /** cc preview text color */
-  const colorTxtPresenter = () => {
-    if (!_colorTxtPresenter) {
-      _colorTxtPresenter = ColorTxtPresenter()
-      _colorTxtPresenter.init(colorTxtPicker(), colorTxtDisplay(), ccStatusExample(), colorTxtModel())
+  /** cc tag text color */
+  const ccTagTextColorPresenter = () => {
+    if (!_ccTagTextColorPresenter) {
+      _ccTagTextColorPresenter = CcTagTextColorPresenter()
+      _ccTagTextColorPresenter.init(ccTagTextColorPicker(), ccTagTextColorDisplay(), ccTagPreview(), ccTagTextColorModel())
     }
 
-    return _colorTxtPresenter
+    return _ccTagTextColorPresenter
   }
 
-  const colorTxtDisplay = () => {
-    if (!_colorTxtDisplay) {
-      _colorTxtDisplay = ColorTxtDisplay(document)
-      _colorTxtDisplay.init(colorTxtPresenter())
+  const ccTagTextColorDisplay = () => {
+    if (!_ccTagTextColorDisplay) {
+      _ccTagTextColorDisplay = CcTagTextColorDisplay(document)
+      _ccTagTextColorDisplay.init(ccTagTextColorPresenter())
     }
     
-    return _colorTxtDisplay
+    return _ccTagTextColorDisplay
   }
 
-  const colorTxtPicker = () => {
-    if (!_colorTxtPicker) {
-      _colorTxtPicker = ColorTxtPicker(iro)
-      _colorTxtPicker.init(colorTxtPresenter())
+  const ccTagTextColorPicker = () => {
+    if (!_ccTagTextColorPicker) {
+      _ccTagTextColorPicker = CcTagTextColorPicker(iro)
+      _ccTagTextColorPicker.init(ccTagTextColorPresenter())
     }
 
-    return _colorTxtPicker
+    return _ccTagTextColorPicker
   }
 
-  const colorTxtModel = () => {
-    if (!_colorTxtModel) {
-      _colorTxtModel = ColorTxtModel()
-      _colorTxtModel.init(storage(), messageManager())
+  const ccTagTextColorModel = () => {
+    if (!_ccTagTextColorModel) {
+      _ccTagTextColorModel = CcTagTextColorModel()
+      _ccTagTextColorModel.init(storage(), messageManager())
     }
 
-    return _colorTxtModel
+    return _ccTagTextColorModel
   }
 
   const storage = () => {
@@ -287,9 +288,9 @@ export const PopupContext = (document, iro) => {
   return {
     init,
     storage,
-    languagePresenter,
-    colorBgPresenter,
-    colorTxtPresenter,
-    ccPreviewFontSizePresenter
+    ccTagLanguagePresenter,
+    ccTagBackgroundColorPresenter,
+    ccTagTextColorPresenter,
+    ccTagFontSizePresenter
   }
 }
