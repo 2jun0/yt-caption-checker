@@ -41,8 +41,8 @@ export const CcTagLanguagePresenter = () => {
 
   const setLanguage = async lang => {
     await _ccTagLanguageModel.setLanguage(lang)
-    _ccTagLanguagePicker.setCurrentLanguage(lang)
-    _ccTagPreview.setLanguage(lang)
+    _ccTagLanguagePicker.setCurrentLanguage(_ccTagLanguageModel.shownLanguage())
+    _ccTagPreview.setLanguage(_ccTagLanguageModel.shownLanguage())
   }
 
   const setCombineRegion = async isCombinedRegion => {
@@ -50,16 +50,14 @@ export const CcTagLanguagePresenter = () => {
     _ccTagCombineRegionCheckBox.setCombineRegion(isCombinedRegion)
 
     if (isCombinedRegion) {
-      const lang = _ccTagLanguagePicker.getCurrentLanguageWithoutRegion()
-
-      _ccTagLanguagePicker.setCurrentLanguage(lang)
-      _ccTagPreview.setLanguage(lang)
-
       _ccTagLanguagePicker.updateLanuageList(langs.filter(
         lang => !lang.code.includes('-')))
     } else {
       _ccTagLanguagePicker.updateLanuageList(langs)
     }
+
+    _ccTagLanguagePicker.setCurrentLanguage(_ccTagLanguageModel.shownLanguage())
+    _ccTagPreview.setLanguage(_ccTagLanguageModel.shownLanguage())
   }
 
   return {

@@ -7,7 +7,6 @@ const LANG_PICKER_ID = 'lang-picker'
  * @property {(ccTagLanguagePresenter: CcTagLanguagePresenter) => void} init
  * @property {function} updateLanuageList
  * @property {function} getCurrentLanguage
- * @property {function} getCurrentLanguageWithoutRegion
  * @property {function} setCurrentLanguage
  */
 
@@ -56,14 +55,6 @@ export const CcTagLanguagePicker = document => {
   const getCurrentLanguage = () => {
     return languagePicker.value
   }
-
-  /**
-   * get current language code without region code
-   * @returns {string} language code
-   */
-  const getCurrentLanguageWithoutRegion = () => {
-    return languagePicker.value.split('-')[0]
-  }
   
   const setCurrentLanguage = lang => {
     languagePicker.value = lang
@@ -73,7 +64,6 @@ export const CcTagLanguagePicker = document => {
     init,
     updateLanuageList,
     getCurrentLanguage,
-    getCurrentLanguageWithoutRegion,
     setCurrentLanguage
   }
 }
