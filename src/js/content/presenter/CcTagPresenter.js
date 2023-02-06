@@ -123,7 +123,7 @@ export const CcTagPresenter = (ccTagFactory, ccTagFinder, ytThumbnailViewManager
     return ccTagFactory.createCcTagView(ccTagModel.backgroundColor(),
       ccTagModel.textColor(),
       ccTagModel.fontSize(),
-      ccTagModel.language())
+      ccTagModel.shownLanguage())
   }
 
   return {

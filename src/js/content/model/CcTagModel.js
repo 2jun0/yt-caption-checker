@@ -11,8 +11,7 @@ import { getRelatedLangCodes } from "../../utils/lang.js"
  * @property {function} backgroundColor
  * @property {function} textColor
  * @property {function} fontSize
- * @property {function} language
- * @property {function} isCombinedRegion
+ * @property {() => string} shownLanguage
  * @property {() => string[]} relatedLanguages
  * @property {(videoUrl: string, languages: string[]) => Promise<void>} hasCaptions
  */
@@ -42,13 +41,18 @@ export const CcTagModel = (__backgroundColor, __textColor, __fontSize, __languag
   const backgroundColor = () => _backgroundColor
   const textColor = () => _textColor
   const fontSize = () => _fontSize
-  const language = () => _language
-  const isCombinedRegion = () => _isCombinedRegion
   const relatedLanguages = () => {
     if (_isCombinedRegion) {
       return getRelatedLangCodes(_language)
     } else {
       return [_language]
+    }
+  }
+  const shownLanguage = () => {
+    if (_isCombinedRegion) {
+      return _language.split('-')[0]
+    } else {
+      return _language
     }
   }
 
@@ -77,8 +81,7 @@ export const CcTagModel = (__backgroundColor, __textColor, __fontSize, __languag
     backgroundColor,
     textColor,
     fontSize,
-    language,
-    isCombinedRegion,
+    shownLanguage,
     relatedLanguages,
 
     hasCaptions
