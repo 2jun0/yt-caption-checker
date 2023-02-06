@@ -70,16 +70,23 @@ const waitOverlayLoadedAsnyc = async e => {
     return overlays
   }
 
-  return new Promise(resolve => {
-    let intervalId = setInterval(() => {
-      if (overlays.childElementCount > 0) {
-        clearInterval(intervalId)
-        resolve(overlays)
-      }
-    }, 100)
+  let timer = null
 
-    setTimeout(() => {
-      clearInterval(intervalId)
+  return new Promise(resolve => {
+    const observer = new MutationObserver(() => {
+      if (overlays.childElementCount > 0) {
+        observer.disconnect()
+        clearTimeout(timer)
+        return resolve(overlays)
+      }
+    })
+    observer.observe(e, {
+      childList: true,
+      subtree: true
+    })
+
+    timer = setTimeout(() => {
+      observer.disconnect()
       resolve(null)
     }, 5000)
   })
