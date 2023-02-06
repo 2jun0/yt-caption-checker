@@ -9,7 +9,7 @@
   },
   "selectLang": {
     "message": "Select Language",
-    "description": "Label name for langauge selector"
+    "description": "Label name for language selector"
   },
   "color": {
     "message": "Color",
