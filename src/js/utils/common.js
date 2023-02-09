@@ -1,7 +1,12 @@
 export const EXTENSION_NAME = 'yt-caption-checker'
 
 export const getYTVideoId = url => {
-  return url.match(/\?v=([\w-]+)/)[1]
+  const matched = url.match(/\?v=([\w-]+)/)
+  if (!matched) {
+    throw new Error(`can't find video id of url: ${url}`)
+  }
+
+  return matched[1]
 }
 
 export const localize = () => {
