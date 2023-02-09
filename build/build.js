@@ -1,7 +1,11 @@
-const fs = require('fs/promises')
-const path = require('path')
+import fs from 'fs/promises'
+import path from 'path'
+import { fileURLToPath } from 'url';
+import pack from '../package.json' assert { type: 'json' }
 
 const browser = process.argv[2]
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const outputDir = path.resolve(__dirname, `../dist/${browser}`)
 const srcDir = path.resolve(__dirname, '../src')
@@ -21,8 +25,6 @@ const copyDir = async (src, dest) => {
 }
 
 const updateManifest = async () => {
-  const version = require('../package.json').version
-
   let manifest = JSON.parse(
     await fs.readFile(
       path.resolve(__dirname, `../manifest/${browser}.json`),
@@ -30,9 +32,9 @@ const updateManifest = async () => {
     ),
   )
 
-  console.log(manifest.version, '==>', version)
+  console.log(manifest.version, '==>', pack.version)
 
-  manifest.version = version
+  manifest.version = pack.version
 
   await fs.writeFile(
     path.resolve(__dirname, `../manifest/${browser}.json`),
