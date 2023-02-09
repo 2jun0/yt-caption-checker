@@ -5,3 +5,5 @@ dist
 *.zip
 *.crx
 *.pem
+
+.DS_store
