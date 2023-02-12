@@ -18,9 +18,14 @@ const copyDir = async (src, dest) => {
     let srcPath = path.join(src, entry.name)
     let destPath = path.join(dest, entry.name)
 
-    entry.isDirectory()
-      ? await copyDir(srcPath, destPath)
-      : await fs.copyFile(srcPath, destPath)
+    if (entry.isDirectory()) {
+      await copyDir(srcPath, destPath)
+      continue
+    }
+
+    if (!entry.name.endsWith('.test.js')) {
+      await fs.copyFile(srcPath, destPath)
+    }
   }
 }
 
