@@ -13,7 +13,7 @@ import { CcTagFinder } from './presenter/CcTagFinder.js'
 import { CcTagPresenter } from './presenter/CcTagPresenter.js'
 import { ContentMessageListener } from './presenter/ContentMessageListener.js'
 import { YtThumbnailViewManager } from './presenter/YtThumbnailViewManager.js'
-import { YtObserver } from './view/YtObserver.js'
+import { YtMutationHandler } from './view/YtMutationHandler.js'
 
 /**
  * @typedef {Object} ContentContext
@@ -31,8 +31,8 @@ export const ContentContext = document => {
   let _ccTagModel = null
 
   /** view */
-  /** @type {YtObserver} */
-  let _ytObserver = null
+  /** @type {YtMutationHandler} */
+  let _ytMutationHandler = null
 
   /** presenter */
   /** @type {CcTagFactory} */
@@ -46,14 +46,19 @@ export const ContentContext = document => {
   /** @type {YtThumbnailViewManager} */
   let _ytThumbnailViewManager = null
 
+  /** others */
+  /** @type {MutationObserver} */
+  let _mutationObserver = null
+
   const init = () => {
     ccTagModel()
-    ytObserver()
     ccTagFactory()
     ccTagFinder()
     ccTagPresenter()
     contentMessageListener()
     ytThumbnailViewManager()
+
+    mutationObserver()
   }
 
   /** model */
@@ -72,13 +77,12 @@ export const ContentContext = document => {
   }
 
   /** view */
-  const ytObserver = () => {
-    if (!_ytObserver) {
-      _ytObserver = YtObserver(document, ccTagPresenter())
-      _ytObserver.init()
+  const ytMutationHandler = () => {
+    if (!_ytMutationHandler) {
+      _ytMutationHandler = YtMutationHandler(ccTagPresenter())
     }
 
-    return _ytObserver
+    return _ytMutationHandler
   }
 
   /** presenter */
@@ -131,6 +135,18 @@ export const ContentContext = document => {
   /** common */
   const messageManager = () => {
     return MessageManager()
+  }
+
+  const mutationObserver = () => {
+    if (!_mutationObserver) {
+      _mutationObserver = new MutationObserver(ytMutationHandler())
+      _mutationObserver.observe(document.body, {
+        subtree: true,
+        attributeFilter: ['href'],
+      })
+    }
+
+    return _mutationObserver
   }
 
   return {
