@@ -19,6 +19,7 @@ describe("YtMutationHandler", () => {
     const thumbnailEl = {
       tagName: "A",
       id: "thumbnail",
+      href: 'https://www.youtube.com/watch?v=123456',
       parentElement: {
         tagName: "NON-YTD-PLAYLIST-THUMBNAIL",
       },
@@ -36,12 +37,14 @@ describe("YtMutationHandler", () => {
     const nonThumbnailEls = [{
       tagName: "DIV",
       id: "thumbnail",
+      href: 'https://www.youtube.com/watch?v=123456',
       parentElement: {
         tagName: "NON-YTD-PLAYLIST-THUMBNAIL",
       },
     },{
       tagName: "A",
       id: "video",
+      href: 'https://www.youtube.com/watch?v=123456',
       parentElement: {
         tagName: "NON-YTD-PLAYLIST-THUMBNAIL",
       },
@@ -59,6 +62,7 @@ describe("YtMutationHandler", () => {
     const thumbnailElInPlaylist = {
       tagName: "A",
       id: "thumbnail",
+      href: 'https://www.youtube.com/watch?v=123456',
       parentElement: {
         tagName: "YTD-PLAYLIST-THUMBNAIL",
       },
