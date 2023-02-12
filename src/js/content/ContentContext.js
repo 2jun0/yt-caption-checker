@@ -47,6 +47,8 @@ export const ContentContext = document => {
   let _ytThumbnailViewManager = null
 
   /** others */
+  /** @type {MessageManager} */
+  let _messageManager = null
   /** @type {MutationObserver} */
   let _mutationObserver = null
 
@@ -55,9 +57,8 @@ export const ContentContext = document => {
     ccTagFactory()
     ccTagFinder()
     ccTagPresenter()
-    contentMessageListener()
     ytThumbnailViewManager()
-
+    messageManager()
     mutationObserver()
   }
 
@@ -118,7 +119,6 @@ export const ContentContext = document => {
   const contentMessageListener = () => {
     if (!_contentMessageListener) {
       _contentMessageListener = ContentMessageListener(ccTagPresenter())
-      messageManager().addOnMessageListener(_contentMessageListener)
     }
 
     return _contentMessageListener
@@ -134,7 +134,12 @@ export const ContentContext = document => {
 
   /** common */
   const messageManager = () => {
-    return MessageManager()
+    if(!_messageManager) {
+      _messageManager = MessageManager()
+      _messageManager.addOnMessageListener(contentMessageListener())
+    }
+
+    return _messageManager
   }
 
   const mutationObserver = () => {
