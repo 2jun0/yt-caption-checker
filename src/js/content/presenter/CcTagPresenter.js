@@ -1,8 +1,8 @@
-import { CcTagFactory } from "./CcTagFactory.js"
-import { CcTagFinder } from "./CcTagFinder.js"
-import { CcTagModel } from "../model/CcTagModel.js"
-import { YtThumbnailViewManager } from "./YtThumbnailViewManager.js"
-import { YtThumbnailView } from "../view/YtThumbnailView.js"
+import { CcTagFactory } from './CcTagFactory.js'
+import { CcTagFinder } from './CcTagFinder.js'
+import { CcTagModel } from '../model/CcTagModel.js'
+import { YtThumbnailViewManager } from './YtThumbnailViewManager.js'
+import { YtThumbnailView } from '../view/YtThumbnailView.js'
 
 /**
  * @typedef {Object} CcTagPresenter
@@ -22,14 +22,18 @@ import { YtThumbnailView } from "../view/YtThumbnailView.js"
  * @param {CcTagModel} ccTagModel
  * @returns {CcTagPresenter}
  */
-export const CcTagPresenter = (ccTagFactory, ccTagFinder, ytThumbnailViewManager, ccTagModel) => {
-
+export const CcTagPresenter = (
+  ccTagFactory,
+  ccTagFinder,
+  ytThumbnailViewManager,
+  ccTagModel,
+) => {
   /**
    * on thumbnail added
-   * @param {YtThumbnailView} ytThumbnailView 
+   * @param {YtThumbnailView} ytThumbnailView
    */
   const onThumbnailAdded = async ytThumbnailView => {
-    if (!await ytThumbnailView.hasCcTag()) {
+    if (!(await ytThumbnailView.hasCcTag())) {
       checkCaptionsAndCreateCcTag(ytThumbnailView)
     }
   }
@@ -47,7 +51,7 @@ export const CcTagPresenter = (ccTagFactory, ccTagFinder, ytThumbnailViewManager
 
   /**
    * on text color updated
-   * @param {string} textColor 
+   * @param {string} textColor
    */
   const onTextColorUpdated = textColor => {
     ccTagModel.setTextColor(textColor)
@@ -69,34 +73,36 @@ export const CcTagPresenter = (ccTagFactory, ccTagFinder, ytThumbnailViewManager
 
   /**
    * on language updated
-   * @param {string} language 
+   * @param {string} language
    */
   const onLanguageUpdated = language => {
     ccTagModel.setLanguage(language)
     // remove previous all CC Tags
     removeAllCcTag()
     // check if it has captions and create cc tags
-    ytThumbnailViewManager.findAllThumbnailView()
+    ytThumbnailViewManager
+      .findAllThumbnailView()
       .forEach(checkCaptionsAndCreateCcTag)
   }
 
   /**
    * on is combined region updated
-   * @param {boolean} isCombinedRegion 
+   * @param {boolean} isCombinedRegion
    */
   const onIsCombinedRegionUpdated = isCombinedRegion => {
     ccTagModel.setIsCombinedRegion(isCombinedRegion)
     // remove previous all CC Tags
     removeAllCcTag()
     // check if it has captions and create cc tags
-    ytThumbnailViewManager.findAllThumbnailView()
+    ytThumbnailViewManager
+      .findAllThumbnailView()
       .forEach(checkCaptionsAndCreateCcTag)
   }
 
   /**
    * check if video has captions
    * and create cc tag
-   * @param {YtThumbnailView} ytThumbnailView 
+   * @param {YtThumbnailView} ytThumbnailView
    */
   const checkCaptionsAndCreateCcTag = async ytThumbnailView => {
     const videoUrl = ytThumbnailView.getVideoUrl()
@@ -120,10 +126,12 @@ export const CcTagPresenter = (ccTagFactory, ccTagFinder, ytThumbnailViewManager
   }
 
   const createCcTag = () => {
-    return ccTagFactory.createCcTagView(ccTagModel.backgroundColor(),
+    return ccTagFactory.createCcTagView(
+      ccTagModel.backgroundColor(),
       ccTagModel.textColor(),
       ccTagModel.fontSize(),
-      ccTagModel.shownLanguage())
+      ccTagModel.shownLanguage(),
+    )
   }
 
   return {
@@ -132,6 +140,6 @@ export const CcTagPresenter = (ccTagFactory, ccTagFinder, ytThumbnailViewManager
     onTextColorUpdated,
     onFontSizeUpdated,
     onLanguageUpdated,
-    onIsCombinedRegionUpdated
+    onIsCombinedRegionUpdated,
   }
 }

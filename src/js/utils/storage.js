@@ -1,4 +1,4 @@
-import { EXTENSION_NAME } from "./common.js"
+import { EXTENSION_NAME } from './common.js'
 
 export const COLOR_BG_FIELD = `${EXTENSION_NAME}_color-bg`
 export const COLOR_TXT_FIELD = `${EXTENSION_NAME}_color-txt`
@@ -25,12 +25,12 @@ export const DEFAULT_VALUE = {
  */
 
 /**
- * @example 
+ * @example
  * s = Storage(chrome.storage.local)
  * @param {any} localStorage
  * @returns {Storage}
  */
-export const Storage = (localStorage) => {
+export const Storage = localStorage => {
   const loadDataAsync = async fields => {
     return new Promise(resolve => {
       loadData(fields, items => {
@@ -46,15 +46,13 @@ export const Storage = (localStorage) => {
   }
 
   const loadData = (fields, callback) => {
-    if (!Array.isArray(fields)) 
-      fields = [fields]
-  
+    if (!Array.isArray(fields)) fields = [fields]
+
     localStorage.get(fields, items => {
       fields.forEach(field => {
-        if (!items.hasOwnProperty(field)) 
-          items[field] = DEFAULT_VALUE[field]
+        if (!items.hasOwnProperty(field)) items[field] = DEFAULT_VALUE[field]
       })
-  
+
       callback(items)
     })
   }
@@ -67,7 +65,7 @@ export const Storage = (localStorage) => {
     loadDataAsync,
     loadData,
     saveDataAsync,
-    saveData
+    saveData,
   }
 }
 

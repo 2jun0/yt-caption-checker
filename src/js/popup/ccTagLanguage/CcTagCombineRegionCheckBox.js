@@ -1,4 +1,4 @@
-import { CcTagLanguagePresenter } from "./CcTagLanguagePresenter.js";
+import { CcTagLanguagePresenter } from './CcTagLanguagePresenter.js'
 
 const COMBINE_REGION_CHECK_BOX_ID = 'combine-region-checkbox'
 
@@ -11,12 +11,14 @@ const COMBINE_REGION_CHECK_BOX_ID = 'combine-region-checkbox'
 
 /**
  * CC Tag Combine Region Checkbox Element
- * @param {Document} document 
+ * @param {Document} document
  * @returns {CcTagCombineRegionCheckBox}
  */
 export const CcTagCombineRegionCheckBox = document => {
-  const combineRegionCheckBox = document.getElementById(COMBINE_REGION_CHECK_BOX_ID)
-  
+  const combineRegionCheckBox = document.getElementById(
+    COMBINE_REGION_CHECK_BOX_ID,
+  )
+
   /**
    * init function
    * @param {CcTagLanguagePresenter} presenter
@@ -25,7 +27,7 @@ export const CcTagCombineRegionCheckBox = document => {
     combineRegionCheckBox.onchange = () => {
       presenter.setCombineRegion(combineRegionCheckBox.checked)
     }
-  }  
+  }
 
   const setCombineRegion = isCombinedRegion => {
     combineRegionCheckBox.checked = isCombinedRegion
@@ -38,6 +40,6 @@ export const CcTagCombineRegionCheckBox = document => {
   return {
     init,
     setCombineRegion,
-    isChecked
+    isChecked,
   }
 }

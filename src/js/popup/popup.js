@@ -1,5 +1,11 @@
 import { localize } from '../utils/common.js'
-import { CC_PREVIEW_FONT_SIZE_FIELD, COLOR_BG_FIELD, COLOR_TXT_FIELD, IS_COMBINED_REGION_FIELD, LANGUAGE_FIELD } from '../utils/storage.js'
+import {
+  CC_PREVIEW_FONT_SIZE_FIELD,
+  COLOR_BG_FIELD,
+  COLOR_TXT_FIELD,
+  IS_COMBINED_REGION_FIELD,
+  LANGUAGE_FIELD,
+} from '../utils/storage.js'
 import { PopupContext } from './popupContext.js'
 
 localize()
@@ -8,7 +14,8 @@ const popupContext = PopupContext(document, window.iro)
 popupContext.init()
 const storage = popupContext.storage()
 const ccTagLanguagePresenter = popupContext.ccTagLanguagePresenter()
-const ccTagBackgroundColorPresenter = popupContext.ccTagBackgroundColorPresenter()
+const ccTagBackgroundColorPresenter =
+  popupContext.ccTagBackgroundColorPresenter()
 const ccTagTextColorPresenter = popupContext.ccTagTextColorPresenter()
 const ccTagFontSizePresenter = popupContext.ccTagFontSizePresenter()
 
@@ -28,4 +35,3 @@ storage.loadData(
     ccTagFontSizePresenter.setFontSize(items[CC_PREVIEW_FONT_SIZE_FIELD])
   },
 )
-

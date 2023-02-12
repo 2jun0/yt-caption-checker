@@ -1,7 +1,7 @@
-import { CcTagPreview } from "../common/CcTagPreview.js";
-import { CcTagBackgroundColorDisplay } from "./CcTagBackgroundColorDisplay.js";
-import { CcTagBackgroundColorModel } from "./CcTagBackgroundColorModel.js";
-import { CcTagBackgroundColorPicker } from "./CcTagBackgroundColorPicker.js";
+import { CcTagPreview } from '../common/CcTagPreview.js'
+import { CcTagBackgroundColorDisplay } from './CcTagBackgroundColorDisplay.js'
+import { CcTagBackgroundColorModel } from './CcTagBackgroundColorModel.js'
+import { CcTagBackgroundColorPicker } from './CcTagBackgroundColorPicker.js'
 
 /**
  * @typedef {Object} CcTagBackgroundColorPresenter
@@ -17,22 +17,27 @@ import { CcTagBackgroundColorPicker } from "./CcTagBackgroundColorPicker.js";
  */
 export const CcTagBackgroundColorPresenter = () => {
   /** @type {CcTagBackgroundColorPicker} */
-  let _backgroundColorPicker = null;
+  let _backgroundColorPicker = null
   /** @type {CcTagBackgroundColorDisplay} */
-  let _backgroundColorDisplay = null;
+  let _backgroundColorDisplay = null
   /** @type {CcTagPreview} */
-  let _ccTagPreview = null;
+  let _ccTagPreview = null
   /** @type {CcTagBackgroundColorModel} */
-  let _model = null;
+  let _model = null
 
   /**
    * initialize
-   * @param {CcTagBackgroundColorPicker} backgroundColorPicker 
-   * @param {CcTagBackgroundColorDisplay} backgroundColorDisplay 
+   * @param {CcTagBackgroundColorPicker} backgroundColorPicker
+   * @param {CcTagBackgroundColorDisplay} backgroundColorDisplay
    * @param {CcTagPreview} ccTagPreview
-   * @param {CcTagBackgroundColorModel} model 
+   * @param {CcTagBackgroundColorModel} model
    */
-  const init = (backgroundColorPicker, backgroundColorDisplay, ccTagPreview, model) => {
+  const init = (
+    backgroundColorPicker,
+    backgroundColorDisplay,
+    ccTagPreview,
+    model,
+  ) => {
     _backgroundColorPicker = backgroundColorPicker
     _backgroundColorDisplay = backgroundColorDisplay
     _ccTagPreview = ccTagPreview
@@ -63,6 +68,6 @@ export const CcTagBackgroundColorPresenter = () => {
     init,
     toggleBackgroundColorPicker,
     hideBackgroundColorPicker,
-    setBackgroundColor
+    setBackgroundColor,
   }
 }

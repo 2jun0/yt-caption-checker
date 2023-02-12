@@ -11,14 +11,19 @@ describe('CcTagFactory', () => {
     document = {
       createElement: jest.fn().mockImplementation(tag => ({
         appendChild: jest.fn(),
-        style: {}
-      }))
+        style: {},
+      })),
     }
     ccTagFactory = CcTagFactory(document)
   })
 
   it('should create a CcTagView', () => {
-    const ccTagView = ccTagFactory.createCcTagView('#00000000', '#000000', '1.2rem', 'en')
+    const ccTagView = ccTagFactory.createCcTagView(
+      '#00000000',
+      '#000000',
+      '1.2rem',
+      'en',
+    )
     expect(ccTagView).toBeDefined()
   })
 })

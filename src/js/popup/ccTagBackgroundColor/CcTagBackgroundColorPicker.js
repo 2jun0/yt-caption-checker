@@ -1,4 +1,4 @@
-import { CcTagBackgroundColorPresenter } from "./CcTagBackgroundColorPresenter.js";
+import { CcTagBackgroundColorPresenter } from './CcTagBackgroundColorPresenter.js'
 
 export const CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID = 'color-bg-picker'
 
@@ -6,7 +6,7 @@ export const CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID = 'color-bg-picker'
  * @typedef {Object} CcTagBackgroundColorPicker
  * @property {(presenter: CcTagBackgroundColorPresenter) => void} init
  * @property {function} setColor
- * @property {function} display 
+ * @property {function} display
  * @property {function} hide
  * @property {function} isDisplay
  */
@@ -17,26 +17,29 @@ export const CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID = 'color-bg-picker'
  * @returns {CcTagBackgroundColorPicker}
  */
 export const CcTagBackgroundColorPicker = iro => {
-  const backgroundColorPicker = new iro.ColorPicker(`#${CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID}`, {
-    width: 195,
-    borderWidth: 1,
-    borderColor: '#B0B0B0',
-    margin: 5,
-    layout: [
-      {
-        component: iro.ui.Box,
-        options: { boxHeight: 100 },
-      },
-      {
-        component: iro.ui.Slider,
-        options: { sliderType: 'hue' },
-      },
-      {
-        component: iro.ui.Slider,
-        options: { sliderType: 'alpha' },
-      },
-    ],
-  });
+  const backgroundColorPicker = new iro.ColorPicker(
+    `#${CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID}`,
+    {
+      width: 195,
+      borderWidth: 1,
+      borderColor: '#B0B0B0',
+      margin: 5,
+      layout: [
+        {
+          component: iro.ui.Box,
+          options: { boxHeight: 100 },
+        },
+        {
+          component: iro.ui.Slider,
+          options: { sliderType: 'hue' },
+        },
+        {
+          component: iro.ui.Slider,
+          options: { sliderType: 'alpha' },
+        },
+      ],
+    },
+  )
 
   /**
    * init function
@@ -74,6 +77,6 @@ export const CcTagBackgroundColorPicker = iro => {
     setColor,
     hide,
     display,
-    isDisplay
+    isDisplay,
   }
-};
+}

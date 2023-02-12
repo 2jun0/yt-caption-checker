@@ -1,4 +1,4 @@
-import { CC_TAG_ID, CcTagView } from "../view/CcTagView.js"
+import { CC_TAG_ID, CcTagView } from '../view/CcTagView.js'
 
 /**
  * @typedef {Object} CcTagFinder
@@ -11,7 +11,6 @@ import { CC_TAG_ID, CcTagView } from "../view/CcTagView.js"
  * @returns {CcTagFinder}
  */
 export const CcTagFinder = document => {
-
   /**
    * find all CC Tag View
    * @returns {CcTagView[]}
@@ -32,6 +31,6 @@ export const CcTagFinder = document => {
   }
 
   return {
-    findAllCcTagViews
+    findAllCcTagViews,
   }
 }

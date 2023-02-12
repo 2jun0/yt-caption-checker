@@ -1,4 +1,4 @@
-import { CC_TAG_ID, CcTagView } from "./CcTagView.js"
+import { CC_TAG_ID, CcTagView } from './CcTagView.js'
 
 /**
  * @typedef {Object} YtThumbnailView
@@ -17,12 +17,12 @@ export const YtThumbnailView = thumbnailEl => {
 
   /**
    * insert cc tag in YouTube thumbnail
-   * @param {CcTagView} ccTagView 
+   * @param {CcTagView} ccTagView
    */
   const insertCcTag = async ccTagView => {
     const overlays = await getOverlays()
     // time out
-    if (!overlays || await hasCcTag()) return
+    if (!overlays || (await hasCcTag())) return
 
     overlays.insertBefore(ccTagView.ccTagElement(), overlays.lastChild)
   }
@@ -54,13 +54,13 @@ export const YtThumbnailView = thumbnailEl => {
   return {
     insertCcTag,
     hasCcTag,
-    getVideoUrl
+    getVideoUrl,
   }
 }
 
 /**
  * get loaded overlays
- * @param {HTMLElement} e 
+ * @param {HTMLElement} e
  * @returns {Promise<HTMLElement>}
  */
 const waitOverlayLoadedAsnyc = async e => {
@@ -82,7 +82,7 @@ const waitOverlayLoadedAsnyc = async e => {
     })
     observer.observe(e, {
       childList: true,
-      subtree: true
+      subtree: true,
     })
 
     timer = setTimeout(() => {

@@ -16,7 +16,6 @@ export const CC_TAG_ID = 'cc-status'
  * @param {HTMLSpanElement} ccTagSpan
  */
 export const CcTagView = (ccTagDiv, ccTagSpan) => {
-
   const setBackgroundColor = bgColor => {
     ccTagDiv.style.backgroundColor = bgColor
   }
@@ -48,6 +47,6 @@ export const CcTagView = (ccTagDiv, ccTagSpan) => {
     setFontSize,
     setLanguage,
     remove,
-    ccTagElement
+    ccTagElement,
   }
 }

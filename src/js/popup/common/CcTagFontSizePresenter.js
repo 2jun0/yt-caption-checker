@@ -1,6 +1,6 @@
-import { CcTagFontSizeModel } from "./CcTagFontSizeModel.js"
-import { CcTagFontSizePicker } from "./CcTagFontSizePicker.js"
-import { CcTagPreview } from "./CcTagPreview.js"
+import { CcTagFontSizeModel } from './CcTagFontSizeModel.js'
+import { CcTagFontSizePicker } from './CcTagFontSizePicker.js'
+import { CcTagPreview } from './CcTagPreview.js'
 
 /**
  * @typedef {Object} CcTagFontSizePresenter
@@ -22,7 +22,7 @@ export const CcTagFontSizePresenter = () => {
 
   /**
    * init function
-   * @param {CcTagFontSizePicker} ccTagFontSizePicker 
+   * @param {CcTagFontSizePicker} ccTagFontSizePicker
    * @param {CcTagPreview} ccTagPreview
    * @param {CcTagFontSizeModel} ccTagFontSizeModel
    */
@@ -40,6 +40,6 @@ export const CcTagFontSizePresenter = () => {
 
   return {
     init,
-    setFontSize
+    setFontSize,
   }
 }

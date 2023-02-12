@@ -1,4 +1,4 @@
-import { CcTagTextColorPresenter } from "./CcTagTextColorPresenter.js"
+import { CcTagTextColorPresenter } from './CcTagTextColorPresenter.js'
 
 export const CC_PREVIEW_TEXT_COLOR_DISPLAY_ID = 'color-txt-display'
 
@@ -10,15 +10,17 @@ export const CC_PREVIEW_TEXT_COLOR_DISPLAY_ID = 'color-txt-display'
 
 /**
  * CC Tag Text Color Display Element
- * @param {Document} document 
+ * @param {Document} document
  * @returns {CcTagTextColorDisplay}
  */
 export const CcTagTextColorDisplay = document => {
-  const textColorDisplay = document.getElementById(CC_PREVIEW_TEXT_COLOR_DISPLAY_ID);
-  
+  const textColorDisplay = document.getElementById(
+    CC_PREVIEW_TEXT_COLOR_DISPLAY_ID,
+  )
+
   /**
    * init function
-   * @param {CcTagTextColorPresenter} presenter 
+   * @param {CcTagTextColorPresenter} presenter
    */
   const init = presenter => {
     textColorDisplay.onclick = () => {
@@ -27,11 +29,11 @@ export const CcTagTextColorDisplay = document => {
   }
 
   const setColor = color => {
-    textColorDisplay.style.background = color;
+    textColorDisplay.style.background = color
   }
 
   return {
     init,
-    setColor
+    setColor,
   }
 }

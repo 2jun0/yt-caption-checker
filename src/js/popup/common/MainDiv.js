@@ -1,9 +1,9 @@
-import { CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID } from "../ccTagBackgroundColor/CcTagBackgroundColorDisplay.js"
-import { CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID } from "../ccTagBackgroundColor/CcTagBackgroundColorPicker.js"
-import { CcTagBackgroundColorPresenter } from "../ccTagBackgroundColor/CcTagBackgroundColorPresenter.js"
-import { CC_PREVIEW_TEXT_COLOR_DISPLAY_ID } from "../ccTagTextColor/CcTagTextColorDisplay.js"
-import { CC_PREVIEW_TEXT_COLOR_PICKER_ID } from "../ccTagTextColor/CcTagTextColorPicker.js"
-import { CcTagTextColorPresenter } from "../ccTagTextColor/CcTagTextColorPresenter.js"
+import { CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID } from '../ccTagBackgroundColor/CcTagBackgroundColorDisplay.js'
+import { CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID } from '../ccTagBackgroundColor/CcTagBackgroundColorPicker.js'
+import { CcTagBackgroundColorPresenter } from '../ccTagBackgroundColor/CcTagBackgroundColorPresenter.js'
+import { CC_PREVIEW_TEXT_COLOR_DISPLAY_ID } from '../ccTagTextColor/CcTagTextColorDisplay.js'
+import { CC_PREVIEW_TEXT_COLOR_PICKER_ID } from '../ccTagTextColor/CcTagTextColorPicker.js'
+import { CcTagTextColorPresenter } from '../ccTagTextColor/CcTagTextColorPresenter.js'
 
 const MAIN_DIV_ID = 'main'
 
@@ -14,7 +14,7 @@ const MAIN_DIV_ID = 'main'
 
 /**
  * CC Tag Background Color Display Element
- * @param {Document} document 
+ * @param {Document} document
  * @returns {MainDiv}
  */
 export const MainDiv = document => {
@@ -27,13 +27,19 @@ export const MainDiv = document => {
    */
   const init = (ccTagBackgroundColorPresenter, ccTagTextColorPresenter) => {
     mainDiv.onclick = e => {
-      const el = e.target;
+      const el = e.target
 
-      if (!isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID) && !isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID)) {
+      if (
+        !isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID) &&
+        !isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID)
+      ) {
         ccTagBackgroundColorPresenter.hideBackgroundColorPicker()
       }
 
-      if (!isChildOf(el, CC_PREVIEW_TEXT_COLOR_PICKER_ID) && !isChildOf(el, CC_PREVIEW_TEXT_COLOR_DISPLAY_ID)) {
+      if (
+        !isChildOf(el, CC_PREVIEW_TEXT_COLOR_PICKER_ID) &&
+        !isChildOf(el, CC_PREVIEW_TEXT_COLOR_DISPLAY_ID)
+      ) {
         ccTagTextColorPresenter.hideTextColorPicker()
       }
     }
@@ -41,8 +47,8 @@ export const MainDiv = document => {
 
   /**
    * get is child of parent that have parentId
-   * @param {HTMLElement} el 
-   * @param {*} parentId 
+   * @param {HTMLElement} el
+   * @param {*} parentId
    */
   const isChildOf = (el, parentId) => {
     let currEl = el
@@ -58,6 +64,6 @@ export const MainDiv = document => {
   }
 
   return {
-    init
+    init,
   }
 }

@@ -1,28 +1,28 @@
-import { CcTagPreview } from "./common/CcTagPreview.js"
-import { MainDiv } from "./common/MainDiv.js"
+import { CcTagPreview } from './common/CcTagPreview.js'
+import { MainDiv } from './common/MainDiv.js'
 
-import { CcTagFontSizePicker } from "./common/CcTagFontSizePicker.js"
-import { CcTagFontSizePresenter } from "./common/CcTagFontSizePresenter.js"
-import { CcTagFontSizeModel } from "./common/CcTagFontSizeModel.js"
+import { CcTagFontSizePicker } from './common/CcTagFontSizePicker.js'
+import { CcTagFontSizePresenter } from './common/CcTagFontSizePresenter.js'
+import { CcTagFontSizeModel } from './common/CcTagFontSizeModel.js'
 
-import { CcTagCombineRegionCheckBox } from "./ccTagLanguage/CcTagCombineRegionCheckBox.js"
-import { CcTagLanguagePicker } from "./ccTagLanguage/CcTagLanguagePicker.js"
-import { CcTagLanguagePresenter } from "./ccTagLanguage/CcTagLanguagePresenter.js"
-import { CcTagLanguageModel } from "./ccTagLanguage/CcTagLanguageModel.js"
+import { CcTagCombineRegionCheckBox } from './ccTagLanguage/CcTagCombineRegionCheckBox.js'
+import { CcTagLanguagePicker } from './ccTagLanguage/CcTagLanguagePicker.js'
+import { CcTagLanguagePresenter } from './ccTagLanguage/CcTagLanguagePresenter.js'
+import { CcTagLanguageModel } from './ccTagLanguage/CcTagLanguageModel.js'
 
-import { CcTagBackgroundColorPresenter } from "./ccTagBackgroundColor/CcTagBackgroundColorPresenter.js"
-import { CcTagBackgroundColorDisplay } from "./ccTagBackgroundColor/CcTagBackgroundColorDisplay.js"
-import { CcTagBackgroundColorPicker } from "./ccTagBackgroundColor/CcTagBackgroundColorPicker.js"
-import { CcTagBackgroundColorModel } from "./ccTagBackgroundColor/CcTagBackgroundColorModel.js"
+import { CcTagBackgroundColorPresenter } from './ccTagBackgroundColor/CcTagBackgroundColorPresenter.js'
+import { CcTagBackgroundColorDisplay } from './ccTagBackgroundColor/CcTagBackgroundColorDisplay.js'
+import { CcTagBackgroundColorPicker } from './ccTagBackgroundColor/CcTagBackgroundColorPicker.js'
+import { CcTagBackgroundColorModel } from './ccTagBackgroundColor/CcTagBackgroundColorModel.js'
 
-import { CcTagTextColorPresenter } from "./ccTagTextColor/CcTagTextColorPresenter.js"
-import { CcTagTextColorDisplay } from "./ccTagTextColor/CcTagTextColorDisplay.js"
-import { CcTagTextColorPicker } from "./ccTagTextColor/CcTagTextColorPicker.js"
-import { CcTagTextColorModel } from "./ccTagTextColor/CcTagTextColorModel.js"
+import { CcTagTextColorPresenter } from './ccTagTextColor/CcTagTextColorPresenter.js'
+import { CcTagTextColorDisplay } from './ccTagTextColor/CcTagTextColorDisplay.js'
+import { CcTagTextColorPicker } from './ccTagTextColor/CcTagTextColorPicker.js'
+import { CcTagTextColorModel } from './ccTagTextColor/CcTagTextColorModel.js'
 
-import { MessageManager } from "../utils/MessageManager.js"
-import { Storage } from "../utils/storage.js"
-import { langs } from "../utils/lang.js"
+import { MessageManager } from '../utils/MessageManager.js'
+import { Storage } from '../utils/storage.js'
+import { langs } from '../utils/lang.js'
 
 /**
  * @typedef {Object} PopupContext
@@ -36,8 +36,8 @@ import { langs } from "../utils/lang.js"
 
 /**
  * Popup Object Factory
- * @param {Document} document 
- * @param {*} iro 
+ * @param {Document} document
+ * @param {*} iro
  */
 export const PopupContext = (document, iro) => {
   /** common */
@@ -45,7 +45,7 @@ export const PopupContext = (document, iro) => {
   let _ccTagPreview = null
   /** @type {MainDiv} */
   let _mainDiv = null
-  
+
   /** cc tag font size */
   /** @type {CcTagFontSizePicker} */
   let _ccTagFontSizePicker = null
@@ -117,7 +117,7 @@ export const PopupContext = (document, iro) => {
     if (!_ccTagPreview) {
       _ccTagPreview = CcTagPreview(document)
     }
-    
+
     return _ccTagPreview
   }
 
@@ -134,7 +134,11 @@ export const PopupContext = (document, iro) => {
   const ccTagFontSizePresenter = () => {
     if (!_ccTagFontSizePresenter) {
       _ccTagFontSizePresenter = CcTagFontSizePresenter()
-      _ccTagFontSizePresenter.init(ccTagFontSizePicker(), ccTagPreview(), ccTagFontSizeModel())
+      _ccTagFontSizePresenter.init(
+        ccTagFontSizePicker(),
+        ccTagPreview(),
+        ccTagFontSizeModel(),
+      )
     }
 
     return _ccTagFontSizePresenter
@@ -162,7 +166,12 @@ export const PopupContext = (document, iro) => {
   const ccTagLanguagePresenter = () => {
     if (!_ccTagLanguagePresenter) {
       _ccTagLanguagePresenter = CcTagLanguagePresenter()
-      _ccTagLanguagePresenter.init(ccTagLanguagePicker(), ccTagCombineRegionCheckBox(), ccTagPreview(), ccTagLanguageModel())
+      _ccTagLanguagePresenter.init(
+        ccTagLanguagePicker(),
+        ccTagCombineRegionCheckBox(),
+        ccTagPreview(),
+        ccTagLanguageModel(),
+      )
     }
 
     return _ccTagLanguagePresenter
@@ -199,7 +208,12 @@ export const PopupContext = (document, iro) => {
   const ccTagBackgroundColorPresenter = () => {
     if (!_ccTagBackgroundColorPresenter) {
       _ccTagBackgroundColorPresenter = CcTagBackgroundColorPresenter()
-      _ccTagBackgroundColorPresenter.init(ccTagBackgroundColorPicker(), ccTagBackgroundColorDisplay(), ccTagPreview(), ccTagBackgroundColorModel())
+      _ccTagBackgroundColorPresenter.init(
+        ccTagBackgroundColorPicker(),
+        ccTagBackgroundColorDisplay(),
+        ccTagPreview(),
+        ccTagBackgroundColorModel(),
+      )
     }
 
     return _ccTagBackgroundColorPresenter
@@ -210,7 +224,7 @@ export const PopupContext = (document, iro) => {
       _ccTagBackgroundColorDisplay = CcTagBackgroundColorDisplay(document)
       _ccTagBackgroundColorDisplay.init(ccTagBackgroundColorPresenter())
     }
-    
+
     return _ccTagBackgroundColorDisplay
   }
 
@@ -236,7 +250,12 @@ export const PopupContext = (document, iro) => {
   const ccTagTextColorPresenter = () => {
     if (!_ccTagTextColorPresenter) {
       _ccTagTextColorPresenter = CcTagTextColorPresenter()
-      _ccTagTextColorPresenter.init(ccTagTextColorPicker(), ccTagTextColorDisplay(), ccTagPreview(), ccTagTextColorModel())
+      _ccTagTextColorPresenter.init(
+        ccTagTextColorPicker(),
+        ccTagTextColorDisplay(),
+        ccTagPreview(),
+        ccTagTextColorModel(),
+      )
     }
 
     return _ccTagTextColorPresenter
@@ -247,7 +266,7 @@ export const PopupContext = (document, iro) => {
       _ccTagTextColorDisplay = CcTagTextColorDisplay(document)
       _ccTagTextColorDisplay.init(ccTagTextColorPresenter())
     }
-    
+
     return _ccTagTextColorDisplay
   }
 
@@ -291,6 +310,6 @@ export const PopupContext = (document, iro) => {
     ccTagLanguagePresenter,
     ccTagBackgroundColorPresenter,
     ccTagTextColorPresenter,
-    ccTagFontSizePresenter
+    ccTagFontSizePresenter,
   }
 }

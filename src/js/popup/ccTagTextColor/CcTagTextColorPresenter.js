@@ -1,7 +1,7 @@
-import { CcTagPreview } from "../common/CcTagPreview.js"
-import { CcTagTextColorDisplay } from "./CcTagTextColorDisplay.js"
-import { CcTagTextColorModel } from "./CcTagTextColorModel.js"
-import { CcTagTextColorPicker } from "./CcTagTextColorPicker.js"
+import { CcTagPreview } from '../common/CcTagPreview.js'
+import { CcTagTextColorDisplay } from './CcTagTextColorDisplay.js'
+import { CcTagTextColorModel } from './CcTagTextColorModel.js'
+import { CcTagTextColorPicker } from './CcTagTextColorPicker.js'
 
 /**
  * @typedef {Object} CcTagTextColorPresenter
@@ -17,22 +17,27 @@ import { CcTagTextColorPicker } from "./CcTagTextColorPicker.js"
  */
 export const CcTagTextColorPresenter = () => {
   /** @type {CcTagTextColorPicker} */
-  let _ccTagTextColorPicker = null;
+  let _ccTagTextColorPicker = null
   /** @type {CcTagTextColorDisplay} */
-  let _ccTagTextColorDisplay = null;
+  let _ccTagTextColorDisplay = null
   /** @type {CcTagPreview} */
-  let _ccTagPreview = null;
+  let _ccTagPreview = null
   /** @type {CcTagTextColorModel} */
-  let _model = null;
+  let _model = null
 
   /**
    * initiaize
-   * @param {CcTagTextColorPicker} ccTagTextColorPicker 
-   * @param {CcTagTextColorDisplay} ccTagTextColorDisplay 
+   * @param {CcTagTextColorPicker} ccTagTextColorPicker
+   * @param {CcTagTextColorDisplay} ccTagTextColorDisplay
    * @param {CcTagPreview} ccTagPreview
-   * @param {CcTagTextColorModel} model 
+   * @param {CcTagTextColorModel} model
    */
-  const init = (ccTagTextColorPicker, ccTagTextColorDisplay, ccTagPreview, model) => {
+  const init = (
+    ccTagTextColorPicker,
+    ccTagTextColorDisplay,
+    ccTagPreview,
+    model,
+  ) => {
     _ccTagTextColorPicker = ccTagTextColorPicker
     _ccTagTextColorDisplay = ccTagTextColorDisplay
     _ccTagPreview = ccTagPreview
@@ -63,6 +68,6 @@ export const CcTagTextColorPresenter = () => {
     init,
     toggleTextColorPicker,
     hideTextColorPicker,
-    setTextColor
+    setTextColor,
   }
 }

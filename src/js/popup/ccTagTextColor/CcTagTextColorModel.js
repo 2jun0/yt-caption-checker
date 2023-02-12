@@ -1,5 +1,5 @@
-import { MessageManager } from "../../utils/MessageManager.js"
-import { COLOR_TXT_FIELD, Storage } from "../../utils/storage.js"
+import { MessageManager } from '../../utils/MessageManager.js'
+import { COLOR_TXT_FIELD, Storage } from '../../utils/storage.js'
 
 /**
  * @typedef {Object} CcTagTextColorModel
@@ -19,14 +19,14 @@ export const CcTagTextColorModel = () => {
 
   /**
    * init function
-   * @param {Storage} stoarge 
-   * @param {MessageManager} messageManager 
+   * @param {Storage} stoarge
+   * @param {MessageManager} messageManager
    */
   const init = (stoarge, messageManager) => {
     _storage = stoarge
     _messageManager = messageManager
   }
-  
+
   const setTextColor = async txtColor => {
     await _storage.saveDataAsync(COLOR_TXT_FIELD, txtColor)
     _messageManager.sendMessage(COLOR_TXT_FIELD, txtColor)
@@ -34,6 +34,6 @@ export const CcTagTextColorModel = () => {
 
   return {
     init,
-    setTextColor
+    setTextColor,
   }
 }

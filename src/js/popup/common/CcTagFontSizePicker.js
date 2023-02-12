@@ -1,4 +1,4 @@
-import { CcTagFontSizePresenter } from "./CcTagFontSizePresenter.js"
+import { CcTagFontSizePresenter } from './CcTagFontSizePresenter.js'
 
 const CC_PREVIEW_FONT_SIZE_PICKER_ID = 'tag-size-range'
 const FONT_SIZES = [
@@ -19,11 +19,13 @@ const FONT_SIZES = [
 
 /**
  * CC Tag Size Picker Element
- * @param {Document} document 
+ * @param {Document} document
  * @returns {CcTagFontSizePicker}
  */
 export const CcTagFontSizePicker = document => {
-  const ccTagFontSizePicker = document.getElementById(CC_PREVIEW_FONT_SIZE_PICKER_ID)
+  const ccTagFontSizePicker = document.getElementById(
+    CC_PREVIEW_FONT_SIZE_PICKER_ID,
+  )
 
   /**
    * init function
@@ -45,6 +47,6 @@ export const CcTagFontSizePicker = document => {
 
   return {
     init,
-    setFontSize
+    setFontSize,
   }
 }

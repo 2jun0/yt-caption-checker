@@ -1,4 +1,4 @@
-import { YtThumbnailView } from "../view/YtThumbnailView.js"
+import { YtThumbnailView } from '../view/YtThumbnailView.js'
 
 /**
  * @typedef {Object} YtThumbnailViewManager
@@ -11,15 +11,13 @@ import { YtThumbnailView } from "../view/YtThumbnailView.js"
  * @returns {YtThumbnailViewManager}
  */
 export const YtThumbnailViewManager = document => {
-  
   /**
    * find all thumbnail view
    * it need to be initialized
    * @returns {YtThumbnailView[]}
    */
   const findAllThumbnailView = () => {
-    return findAllThumbnail()
-      .map(thumbnailEl => YtThumbnailView(thumbnailEl))
+    return findAllThumbnail().map(thumbnailEl => YtThumbnailView(thumbnailEl))
   }
 
   /**
@@ -31,6 +29,6 @@ export const YtThumbnailViewManager = document => {
   }
 
   return {
-    findAllThumbnailView
+    findAllThumbnailView,
   }
 }

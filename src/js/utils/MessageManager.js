@@ -13,7 +13,7 @@ export const MessageManager = () => {
     const tabs = await chrome.tabs.query({
       active: true,
     })
-  
+
     tabs.forEach(tab => {
       chrome.tabs.sendMessage(tab.id, { [key]: value }).catch(e => {})
     })
@@ -21,7 +21,7 @@ export const MessageManager = () => {
 
   /**
    * add onMessage Listener
-   * @param {(req: any) => void} listener 
+   * @param {(req: any) => void} listener
    */
   const addOnMessageListener = listener => {
     chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
@@ -31,6 +31,6 @@ export const MessageManager = () => {
 
   return {
     sendMessage,
-    addOnMessageListener
+    addOnMessageListener,
   }
 }

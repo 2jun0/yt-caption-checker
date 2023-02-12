@@ -10,11 +10,11 @@ const CC_TAG_PREVIEW_ID = 'cc-status-example'
 
 /**
  * CC Tag Previce Element
- * @param {Document} document 
+ * @param {Document} document
  * @returns {CcTagPreview}
  */
 export const CcTagPreview = document => {
-  const ccTagPreview = document.getElementById(CC_TAG_PREVIEW_ID);
+  const ccTagPreview = document.getElementById(CC_TAG_PREVIEW_ID)
 
   /**
    * @param {string} lang
@@ -24,21 +24,21 @@ export const CcTagPreview = document => {
   }
 
   const setTxtColor = txtColor => {
-    ccTagPreview.style.color = txtColor;
+    ccTagPreview.style.color = txtColor
   }
 
   const setBackgroundColor = bgColor => {
-    ccTagPreview.style.background = bgColor;
+    ccTagPreview.style.background = bgColor
   }
 
   const setFontSize = fontSize => {
-    ccTagPreview.style.fontSize = `calc(${fontSize} - 0.4rem)` 
+    ccTagPreview.style.fontSize = `calc(${fontSize} - 0.4rem)`
   }
 
   return {
     setLanguage,
     setTxtColor,
     setBackgroundColor,
-    setFontSize
+    setFontSize,
   }
-};
+}

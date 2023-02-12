@@ -1,12 +1,19 @@
-import { MessageManager } from "../utils/MessageManager.js"
-import { CC_PREVIEW_FONT_SIZE_FIELD, COLOR_BG_FIELD, COLOR_TXT_FIELD, DEFAULT_VALUE, IS_COMBINED_REGION_FIELD, LANGUAGE_FIELD } from "../utils/storage.js"
-import { CcTagModel } from "./model/CcTagModel.js"
-import { CcTagFactory } from "./presenter/CcTagFactory.js"
-import { CcTagFinder } from "./presenter/CcTagFinder.js"
-import { CcTagPresenter } from "./presenter/CcTagPresenter.js"
-import { ContentMessageListener } from "./presenter/ContentMessageListener.js"
-import { YtThumbnailViewManager } from "./presenter/YtThumbnailViewManager.js"
-import { YtObserver } from "./view/YtObserver.js"
+import { MessageManager } from '../utils/MessageManager.js'
+import {
+  CC_PREVIEW_FONT_SIZE_FIELD,
+  COLOR_BG_FIELD,
+  COLOR_TXT_FIELD,
+  DEFAULT_VALUE,
+  IS_COMBINED_REGION_FIELD,
+  LANGUAGE_FIELD,
+} from '../utils/storage.js'
+import { CcTagModel } from './model/CcTagModel.js'
+import { CcTagFactory } from './presenter/CcTagFactory.js'
+import { CcTagFinder } from './presenter/CcTagFinder.js'
+import { CcTagPresenter } from './presenter/CcTagPresenter.js'
+import { ContentMessageListener } from './presenter/ContentMessageListener.js'
+import { YtThumbnailViewManager } from './presenter/YtThumbnailViewManager.js'
+import { YtObserver } from './view/YtObserver.js'
 
 /**
  * @typedef {Object} ContentContext
@@ -18,7 +25,7 @@ import { YtObserver } from "./view/YtObserver.js"
  * Content Script Context
  * @returns {ContentContext}
  */
-export const ContentContext = (document) => {
+export const ContentContext = document => {
   /** model */
   /** @type {CcTagModel} */
   let _ccTagModel = null
@@ -52,11 +59,13 @@ export const ContentContext = (document) => {
   /** model */
   const ccTagModel = () => {
     if (!_ccTagModel) {
-      _ccTagModel = CcTagModel(DEFAULT_VALUE[COLOR_BG_FIELD],
+      _ccTagModel = CcTagModel(
+        DEFAULT_VALUE[COLOR_BG_FIELD],
         DEFAULT_VALUE[COLOR_TXT_FIELD],
         DEFAULT_VALUE[CC_PREVIEW_FONT_SIZE_FIELD],
         DEFAULT_VALUE[LANGUAGE_FIELD],
-        DEFAULT_VALUE[IS_COMBINED_REGION_FIELD])
+        DEFAULT_VALUE[IS_COMBINED_REGION_FIELD],
+      )
     }
 
     return _ccTagModel
@@ -91,7 +100,12 @@ export const ContentContext = (document) => {
 
   const ccTagPresenter = () => {
     if (!_ccTagPresenter) {
-      _ccTagPresenter = CcTagPresenter(ccTagFactory(), ccTagFinder(), ytThumbnailViewManager(), ccTagModel())
+      _ccTagPresenter = CcTagPresenter(
+        ccTagFactory(),
+        ccTagFinder(),
+        ytThumbnailViewManager(),
+        ccTagModel(),
+      )
     }
 
     return _ccTagPresenter
@@ -121,6 +135,6 @@ export const ContentContext = (document) => {
 
   return {
     init,
-    ccTagPresenter
+    ccTagPresenter,
   }
 }

@@ -1,5 +1,5 @@
-import { MessageManager } from "../../utils/MessageManager.js";
-import { COLOR_BG_FIELD, Storage } from "../../utils/storage.js";
+import { MessageManager } from '../../utils/MessageManager.js'
+import { COLOR_BG_FIELD, Storage } from '../../utils/storage.js'
 
 /**
  * @typedef {Object} CcTagBackgroundColorModel
@@ -19,14 +19,14 @@ export const CcTagBackgroundColorModel = () => {
 
   /**
    * init function
-   * @param {Storage} stoarge 
-   * @param {MessageManager} messageManager 
+   * @param {Storage} stoarge
+   * @param {MessageManager} messageManager
    */
   const init = (stoarge, messageManager) => {
     _storage = stoarge
     _messageManager = messageManager
   }
-  
+
   const setBackgroundColor = async bgColor => {
     await _storage.saveDataAsync(COLOR_BG_FIELD, bgColor)
     _messageManager.sendMessage(COLOR_BG_FIELD, bgColor)
@@ -34,6 +34,6 @@ export const CcTagBackgroundColorModel = () => {
 
   return {
     init,
-    setBackgroundColor
+    setBackgroundColor,
   }
 }

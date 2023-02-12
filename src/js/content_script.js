@@ -5,7 +5,7 @@ import {
   CC_PREVIEW_FONT_SIZE_FIELD,
   IS_COMBINED_REGION_FIELD,
   LANGUAGE_FIELD,
-  Storage
+  Storage,
 } from './utils/storage.js'
 
 const contentContext = ContentContext(document)
@@ -22,11 +22,13 @@ storage.loadData(
     COLOR_BG_FIELD,
     COLOR_TXT_FIELD,
     CC_PREVIEW_FONT_SIZE_FIELD,
-    IS_COMBINED_REGION_FIELD
-  ], items => {
+    IS_COMBINED_REGION_FIELD,
+  ],
+  items => {
     ccTagPresenter.onBackgroundColorUpdated(items[COLOR_BG_FIELD])
     ccTagPresenter.onTextColorUpdated(items[COLOR_TXT_FIELD])
     ccTagPresenter.onFontSizeUpdated(items[CC_PREVIEW_FONT_SIZE_FIELD])
     ccTagPresenter.onLanguageUpdated(items[LANGUAGE_FIELD])
     ccTagPresenter.onIsCombinedRegionUpdated(items[IS_COMBINED_REGION_FIELD])
-  })
+  },
+)

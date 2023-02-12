@@ -9,10 +9,9 @@ describe('CcTagFinder', () => {
 
   beforeEach(() => {
     document = {
-      querySelectorAll: jest.fn().mockReturnValue([
-        { firstChild: {} },
-        { firstChild: {} }
-      ])
+      querySelectorAll: jest
+        .fn()
+        .mockReturnValue([{ firstChild: {} }, { firstChild: {} }]),
     }
     ccTagFinder = CcTagFinder(document)
   })

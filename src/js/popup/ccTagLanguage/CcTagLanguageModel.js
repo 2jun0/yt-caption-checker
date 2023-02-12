@@ -1,11 +1,15 @@
-import { MessageManager } from "../../utils/MessageManager.js"
-import { IS_COMBINED_REGION_FIELD, LANGUAGE_FIELD, Storage } from "../../utils/storage.js"
+import { MessageManager } from '../../utils/MessageManager.js'
+import {
+  IS_COMBINED_REGION_FIELD,
+  LANGUAGE_FIELD,
+  Storage,
+} from '../../utils/storage.js'
 
 /**
  * @typedef {Object} CcTagLanguageModel
  * @property {(stoarge: Storage, messageManager: MessageManager) => void} init
  * @property {(lang: any) => Promise<void>} setLanguage
- * @property {(isCombinedRegion: any) => Promise<void>} setCombineRegion 
+ * @property {(isCombinedRegion: any) => Promise<void>} setCombineRegion
  * @property {() => string} shownLanguage
  */
 
@@ -23,14 +27,14 @@ export const CcTagLanguageModel = () => {
 
   /**
    * init function
-   * @param {Storage} stoarge 
-   * @param {MessageManager} messageManager 
+   * @param {Storage} stoarge
+   * @param {MessageManager} messageManager
    */
   const init = (stoarge, messageManager) => {
     _storage = stoarge
     _messageManager = messageManager
   }
-  
+
   const setLanguage = async lang => {
     await _storage.saveDataAsync(LANGUAGE_FIELD, lang)
     _language = lang
@@ -55,6 +59,6 @@ export const CcTagLanguageModel = () => {
     init,
     setLanguage,
     setCombineRegion,
-    shownLanguage
+    shownLanguage,
   }
 }

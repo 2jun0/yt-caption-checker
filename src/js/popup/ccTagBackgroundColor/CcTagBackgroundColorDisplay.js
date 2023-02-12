@@ -1,4 +1,4 @@
-import { CcTagBackgroundColorPresenter } from "./CcTagBackgroundColorPresenter.js";
+import { CcTagBackgroundColorPresenter } from './CcTagBackgroundColorPresenter.js'
 
 export const CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID = 'color-bg-display'
 
@@ -10,11 +10,13 @@ export const CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID = 'color-bg-display'
 
 /**
  * CC Tag Background Color Display Element
- * @param {Document} document 
+ * @param {Document} document
  * @returns {CcTagBackgroundColorDisplay}
  */
 export const CcTagBackgroundColorDisplay = document => {
-  const backgroundColorDisplay = document.getElementById(CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID);
+  const backgroundColorDisplay = document.getElementById(
+    CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID,
+  )
 
   /**
    * init function
@@ -27,11 +29,11 @@ export const CcTagBackgroundColorDisplay = document => {
   }
 
   const setColor = color => {
-    backgroundColorDisplay.style.background = color;
+    backgroundColorDisplay.style.background = color
   }
 
   return {
     init,
-    setColor
+    setColor,
   }
 }

@@ -1,5 +1,5 @@
-import { CcTagPresenter } from "../presenter/CcTagPresenter.js"
-import { YtThumbnailView } from "./YtThumbnailView.js"
+import { CcTagPresenter } from '../presenter/CcTagPresenter.js'
+import { YtThumbnailView } from './YtThumbnailView.js'
 
 /**
  * @typedef {Object} YtObserver
@@ -33,7 +33,7 @@ export const YtObserver = (document, ccTagPresenter) => {
     const observer = new MutationObserver(handleMutations)
     observer.observe(document.body, {
       subtree: true,
-      attributeFilter: ['href']
+      attributeFilter: ['href'],
     })
 
     return observer
@@ -51,14 +51,14 @@ export const YtObserver = (document, ccTagPresenter) => {
   }
 
   return {
-    init
+    init,
   }
 }
 
 /**
  * wait for dom
- * @param {Document} document 
- * @returns 
+ * @param {Document} document
+ * @returns
  */
 const waitForDOM = async document => {
   if (document.body) {
@@ -66,7 +66,7 @@ const waitForDOM = async document => {
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       resolve()
     })
   })
@@ -74,14 +74,14 @@ const waitForDOM = async document => {
 
 /**
  * is htmlelement thumbnail
- * @param {HTMLElement} el 
+ * @param {HTMLElement} el
  * @returns {boolean}
  */
 const isThumbnail = el => el.tagName == 'A' && el.id == 'thumbnail'
 
 /**
  * is in playlist
- * @param {HTMLElement} el 
+ * @param {HTMLElement} el
  * @returns {boolean}
  */
 const isInPlayList = el => el.parentElement.tagName == 'YTD-PLAYLIST-THUMBNAIL'

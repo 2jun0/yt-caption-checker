@@ -14,12 +14,8 @@
   },
   "web_accessible_resources": [
     {
-      "resources": [
-        "*.js"
-      ],
-      "matches": [
-        "<all_urls>"
-      ]
+      "resources": ["*.js"],
+      "matches": ["<all_urls>"]
     }
   ],
   "background": {
@@ -33,24 +29,14 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "*://*.youtube.com/*"
-      ],
-      "js": [
-        "js/content_script_loader.js"
-      ],
-      "css": [
-        "css/content_script.css"
-      ],
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["js/content_script_loader.js"],
+      "css": ["css/content_script.css"],
       "run_at": "document_end",
       "all_frames": false
     }
   ],
-  "permissions": [
-    "storage"
-  ],
-  "host_permissions": [
-    "*://*.youtube.com/*"
-  ],
+  "permissions": ["storage"],
+  "host_permissions": ["*://*.youtube.com/*"],
   "minimum_chrome_version": "92"
 }

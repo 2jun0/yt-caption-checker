@@ -1,8 +1,8 @@
-import { langs } from "../../utils/lang.js"
-import { CcTagPreview } from "../common/CcTagPreview.js"
-import { CcTagCombineRegionCheckBox } from "./CcTagCombineRegionCheckBox.js"
-import { CcTagLanguageModel } from "./CcTagLanguageModel.js"
-import { CcTagLanguagePicker } from "./CcTagLanguagePicker.js"
+import { langs } from '../../utils/lang.js'
+import { CcTagPreview } from '../common/CcTagPreview.js'
+import { CcTagCombineRegionCheckBox } from './CcTagCombineRegionCheckBox.js'
+import { CcTagLanguageModel } from './CcTagLanguageModel.js'
+import { CcTagLanguagePicker } from './CcTagLanguagePicker.js'
 
 /**
  * @typedef {Object} CcTagLanguagePresenter
@@ -27,12 +27,17 @@ export const CcTagLanguagePresenter = () => {
 
   /**
    * initialize
-   * @param {CcTagLanguagePicker} ccTagLanguagePicker 
-   * @param {CcTagCombineRegionCheckBox} ccTagCombineRegionCheckBox 
+   * @param {CcTagLanguagePicker} ccTagLanguagePicker
+   * @param {CcTagCombineRegionCheckBox} ccTagCombineRegionCheckBox
    * @param {CcTagPreview} ccTagPreview
    * @param {CcTagLanguageModel} model
    */
-  const init = (ccTagLanguagePicker, ccTagCombineRegionCheckBox, ccTagPreview, model) => {
+  const init = (
+    ccTagLanguagePicker,
+    ccTagCombineRegionCheckBox,
+    ccTagPreview,
+    model,
+  ) => {
     _ccTagLanguagePicker = ccTagLanguagePicker
     _ccTagCombineRegionCheckBox = ccTagCombineRegionCheckBox
     _ccTagPreview = ccTagPreview
@@ -50,8 +55,9 @@ export const CcTagLanguagePresenter = () => {
     _ccTagCombineRegionCheckBox.setCombineRegion(isCombinedRegion)
 
     if (isCombinedRegion) {
-      _ccTagLanguagePicker.updateLanuageList(langs.filter(
-        lang => !lang.code.includes('-')))
+      _ccTagLanguagePicker.updateLanuageList(
+        langs.filter(lang => !lang.code.includes('-')),
+      )
     } else {
       _ccTagLanguagePicker.updateLanuageList(langs)
     }
@@ -63,6 +69,6 @@ export const CcTagLanguagePresenter = () => {
   return {
     init,
     setLanguage,
-    setCombineRegion
+    setCombineRegion,
   }
 }

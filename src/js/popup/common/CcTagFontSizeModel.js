@@ -1,5 +1,5 @@
-import { MessageManager } from "../../utils/MessageManager.js"
-import { CC_PREVIEW_FONT_SIZE_FIELD, Storage } from "../../utils/storage.js"
+import { MessageManager } from '../../utils/MessageManager.js'
+import { CC_PREVIEW_FONT_SIZE_FIELD, Storage } from '../../utils/storage.js'
 
 /**
  * @typedef {Object} CcTagFontSizeModel
@@ -19,8 +19,8 @@ export const CcTagFontSizeModel = () => {
 
   /**
    * init function
-   * @param {Storage} stoarge 
-   * @param {MessageManager} messageManager 
+   * @param {Storage} stoarge
+   * @param {MessageManager} messageManager
    */
   const init = (stoarge, messageManager) => {
     _storage = stoarge
@@ -34,6 +34,6 @@ export const CcTagFontSizeModel = () => {
 
   return {
     init,
-    setFontSize
+    setFontSize,
   }
 }

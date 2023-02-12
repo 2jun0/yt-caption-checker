@@ -1,11 +1,11 @@
 import fs from 'fs/promises'
 import path from 'path'
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'url'
 import pack from '../package.json' assert { type: 'json' }
 
 const browser = process.argv[2]
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const outputDir = path.resolve(__dirname, `../dist/${browser}`)
 const srcDir = path.resolve(__dirname, '../src')

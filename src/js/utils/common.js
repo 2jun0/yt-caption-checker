@@ -5,7 +5,9 @@ export const EXTENSION_NAME = 'yt-caption-checker'
 export const getYTVideoId = url => {
   const matched = url.match(/\?v=([\w-]+)/)
   if (!matched) {
-    throw new InvalidYouTubeVideoUrlError(`can't find video id of url: '${url}'`)
+    throw new InvalidYouTubeVideoUrlError(
+      `can't find video id of url: '${url}'`,
+    )
   }
 
   return matched[1]

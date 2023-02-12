@@ -1,5 +1,5 @@
-import { getYTVideoId } from "../../utils/common.js"
-import { getRelatedLangCodes } from "../../utils/lang.js"
+import { getYTVideoId } from '../../utils/common.js'
+import { getRelatedLangCodes } from '../../utils/lang.js'
 
 /**
  * @typedef {Object} CcTagModel
@@ -25,18 +25,26 @@ import { getRelatedLangCodes } from "../../utils/lang.js"
  * @param {boolean} __isCombinedRegion
  * @returns {CcTagModel}
  */
-export const CcTagModel = (__backgroundColor, __textColor, __fontSize, __language, __isCombinedRegion) => {
+export const CcTagModel = (
+  __backgroundColor,
+  __textColor,
+  __fontSize,
+  __language,
+  __isCombinedRegion,
+) => {
   let _backgroundColor = __backgroundColor
   let _textColor = __textColor
   let _fontSize = __fontSize
   let _language = __language
   let _isCombinedRegion = __isCombinedRegion
-  
-  const setBackgroundColor = backgroundColor => _backgroundColor = backgroundColor
-  const setTextColor = textColor => _textColor = textColor
-  const setFontSize = fontSize => _fontSize = fontSize
-  const setLanguage = language => _language = language
-  const setIsCombinedRegion = isCombinedRegion => _isCombinedRegion = isCombinedRegion
+
+  const setBackgroundColor = backgroundColor =>
+    (_backgroundColor = backgroundColor)
+  const setTextColor = textColor => (_textColor = textColor)
+  const setFontSize = fontSize => (_fontSize = fontSize)
+  const setLanguage = language => (_language = language)
+  const setIsCombinedRegion = isCombinedRegion =>
+    (_isCombinedRegion = isCombinedRegion)
 
   const backgroundColor = () => _backgroundColor
   const textColor = () => _textColor
@@ -57,9 +65,9 @@ export const CcTagModel = (__backgroundColor, __textColor, __fontSize, __languag
   }
 
   /**
-   * check 
+   * check
    * @param {string} videoUrl
-   * @param {string[]} languages 
+   * @param {string[]} languages
    */
   const hasCaptions = async (videoUrl, languages) => {
     // URL example : /watch?v=[video_id]
@@ -84,6 +92,6 @@ export const CcTagModel = (__backgroundColor, __textColor, __fontSize, __languag
     shownLanguage,
     relatedLanguages,
 
-    hasCaptions
+    hasCaptions,
   }
 }
