@@ -1,3 +1,4 @@
+import { InvalidYouTubeThumnailElementError } from '../../utils/errors.js'
 import { CC_TAG_ID, CcTagView } from './CcTagView.js'
 
 /**
@@ -14,6 +15,10 @@ import { CC_TAG_ID, CcTagView } from './CcTagView.js'
  */
 export const YtThumbnailView = thumbnailEl => {
   let _overlays = null
+
+  validateThumbnailElementTagName(thumbnailEl)
+  validateThumbnailElementId(thumbnailEl)
+  validateThumbnailElementHref(thumbnailEl)
 
   /**
    * insert cc tag in YouTube thumbnail
@@ -90,4 +95,22 @@ const waitOverlayLoadedAsnyc = async e => {
       resolve(null)
     }, 5000)
   })
+}
+
+const validateThumbnailElementTagName = el => {
+  if (el.tagName != 'A') {
+    throw new InvalidYouTubeThumnailElementError(`tag name of thumbnail element is not 'A' (it is ${el.tagName})`)
+  }
+}
+
+const validateThumbnailElementId = el => {
+  if (el.id != 'thumbnail') {
+    throw new InvalidYouTubeThumnailElementError(`id of thumbnail element is not 'thumbnail' (it is ${el.id})`)
+  }
+}
+
+const validateThumbnailElementHref = el => {
+  if (!el.href) {
+    throw new InvalidYouTubeThumnailElementError(`thumbnail element hasn't href property`)
+  }
 }
