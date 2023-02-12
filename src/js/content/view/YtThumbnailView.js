@@ -9,6 +9,19 @@ import { CC_TAG_ID, CcTagView } from './CcTagView.js'
  */
 
 /**
+ * Check If Element is ThumbnailElement
+ * @param {HTMLElement} el
+ */
+export const isThumbnailElement = el => {
+  return (
+    el.tagName == 'A' &&
+    el.id == 'thumbnail' &&
+    el.href &&
+    el.href.match(/\?v=([\w-]+)/)
+  )
+}
+
+/**
  * YouTube Thumbnail View
  * @param {HTMLElement} thumbnailEl
  * @returns {YtThumbnailView}

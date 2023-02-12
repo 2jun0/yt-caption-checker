@@ -84,4 +84,24 @@ describe('YtMutationHandler', () => {
 
     expect(ccTagPresenter.onThumbnailAdded).not.toHaveBeenCalled()
   })
+
+  it("should not call the `onThumbnailAdded` method of `CcTagPresenter` if the mutation target doesn't have varified url", async () => {
+    const thumbnailElInPlaylist = {
+      tagName: 'A',
+      id: 'thumbnail',
+      href: 'https://www.youtube.com/shorts/123456',
+      parentElement: {
+        tagName: 'non-YTD-PLAYLIST-THUMBNAIL',
+      },
+    }
+    const mutations = [
+      {
+        target: thumbnailElInPlaylist,
+      },
+    ]
+
+    YtMutationHandler(ccTagPresenter)(mutations)
+
+    expect(ccTagPresenter.onThumbnailAdded).not.toHaveBeenCalled()
+  })
 })

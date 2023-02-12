@@ -1,4 +1,4 @@
-import { YtThumbnailView } from '../view/YtThumbnailView.js'
+import { YtThumbnailView, isThumbnailElement } from '../view/YtThumbnailView.js'
 
 /**
  * @typedef {Object} YtThumbnailViewManager
@@ -25,7 +25,9 @@ export const YtThumbnailViewManager = document => {
    * @returns {HTMLElement[]}
    */
   const findAllThumbnail = () => {
-    return Array.from(document.querySelectorAll('a#thumbnail'))
+    return Array.from(document.querySelectorAll('a#thumbnail')).filter(
+      isThumbnailElement,
+    )
   }
 
   return {

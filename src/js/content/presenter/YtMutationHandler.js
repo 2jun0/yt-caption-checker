@@ -1,5 +1,5 @@
 import { CcTagPresenter } from './CcTagPresenter.js'
-import { YtThumbnailView } from '../view/YtThumbnailView.js'
+import { YtThumbnailView, isThumbnailElement } from '../view/YtThumbnailView.js'
 
 /**
  * @typedef {Object} YtMutationHandler
@@ -21,20 +21,13 @@ export const YtMutationHandler = ccTagPresenter => {
     mutations.forEach(async mutation => {
       const targetEl = mutation.target
 
-      if (isThumbnail(targetEl) && !isInPlayList(targetEl)) {
+      if (isThumbnailElement(targetEl) && !isInPlayList(targetEl)) {
         const ytThumbnailView = YtThumbnailView(targetEl)
         ccTagPresenter.onThumbnailAdded(ytThumbnailView)
       }
     })
   }
 }
-
-/**
- * is htmlelement thumbnail
- * @param {HTMLElement} el
- * @returns {boolean}
- */
-const isThumbnail = el => el.tagName == 'A' && el.id == 'thumbnail'
 
 /**
  * is in playlist
