@@ -4,7 +4,7 @@ import { CcTagModel } from "./model/CcTagModel.js"
 import { CcTagFactory } from "./presenter/CcTagFactory.js"
 import { CcTagFinder } from "./presenter/CcTagFinder.js"
 import { CcTagPresenter } from "./presenter/CcTagPresenter.js"
-import { ContentMessageManager } from "./presenter/ContentMessageManager.js"
+import { ContentMessageListener } from "./presenter/ContentMessageListener.js"
 import { YtThumbnailViewManager } from "./presenter/YtThumbnailViewManager.js"
 import { YtObserver } from "./view/YtObserver.js"
 
@@ -34,8 +34,8 @@ export const ContentContext = (document) => {
   let _ccTagFinder = null
   /** @type {CcTagPresenter} */
   let _ccTagPresenter = null
-  /** @type {ContentMessageManager} */
-  let _contentMessageManager = null
+  /** @type {ContentMessageListener} */
+  let _contentMessageListener = null
   /** @type {YtThumbnailViewManager} */
   let _ytThumbnailViewManager = null
 
@@ -45,7 +45,7 @@ export const ContentContext = (document) => {
     ccTagFactory()
     ccTagFinder()
     ccTagPresenter()
-    contentMessageManager()
+    contentMessageListener()
     ytThumbnailViewManager()
   }
 
@@ -97,12 +97,13 @@ export const ContentContext = (document) => {
     return _ccTagPresenter
   }
 
-  const contentMessageManager = () => {
-    if (!_contentMessageManager) {
-      _contentMessageManager = ContentMessageManager(messageManager(), ccTagPresenter())
+  const contentMessageListener = () => {
+    if (!_contentMessageListener) {
+      _contentMessageListener = ContentMessageListener(ccTagPresenter())
+      messageManager().addOnMessageListener(_contentMessageListener)
     }
 
-    return _contentMessageManager
+    return _contentMessageListener
   }
 
   const ytThumbnailViewManager = () => {
