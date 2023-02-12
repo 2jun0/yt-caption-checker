@@ -9,12 +9,14 @@ describe('YtThumbnailViewManager', () => {
 
   beforeEach(() => {
     const thumbnailEl = {
-      tagName: "A",
-      id: "thumbnail",
+      tagName: 'A',
+      id: 'thumbnail',
       href: 'https://www.youtube.com/watch?v=123456',
     }
     document = {
-      querySelectorAll: jest.fn().mockReturnValue([thumbnailEl, thumbnailEl, thumbnailEl]),
+      querySelectorAll: jest
+        .fn()
+        .mockReturnValue([thumbnailEl, thumbnailEl, thumbnailEl]),
     }
     ytThumbnailViewManager = YtThumbnailViewManager(document)
   })

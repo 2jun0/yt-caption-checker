@@ -99,18 +99,24 @@ const waitOverlayLoadedAsnyc = async e => {
 
 const validateThumbnailElementTagName = el => {
   if (el.tagName != 'A') {
-    throw new InvalidYouTubeThumnailElementError(`tag name of thumbnail element is not 'A' (it is ${el.tagName})`)
+    throw new InvalidYouTubeThumnailElementError(
+      `tag name of thumbnail element is not 'A' (it is ${el.tagName})`,
+    )
   }
 }
 
 const validateThumbnailElementId = el => {
   if (el.id != 'thumbnail') {
-    throw new InvalidYouTubeThumnailElementError(`id of thumbnail element is not 'thumbnail' (it is ${el.id})`)
+    throw new InvalidYouTubeThumnailElementError(
+      `id of thumbnail element is not 'thumbnail' (it is ${el.id})`,
+    )
   }
 }
 
 const validateThumbnailElementHref = el => {
   if (!el.href) {
-    throw new InvalidYouTubeThumnailElementError(`thumbnail element hasn't href property`)
+    throw new InvalidYouTubeThumnailElementError(
+      `thumbnail element hasn't href property`,
+    )
   }
 }

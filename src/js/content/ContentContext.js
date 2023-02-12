@@ -134,7 +134,7 @@ export const ContentContext = document => {
 
   /** common */
   const messageManager = () => {
-    if(!_messageManager) {
+    if (!_messageManager) {
       _messageManager = MessageManager()
       _messageManager.addOnMessageListener(contentMessageListener())
     }
