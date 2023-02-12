@@ -1,5 +1,5 @@
-import { CcTagPresenter } from '../presenter/CcTagPresenter.js'
-import { YtThumbnailView } from './YtThumbnailView.js'
+import { CcTagPresenter } from './CcTagPresenter.js'
+import { YtThumbnailView } from '../view/YtThumbnailView.js'
 
 /**
  * @typedef {Object} YtMutationHandler

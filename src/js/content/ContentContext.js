@@ -13,7 +13,7 @@ import { CcTagFinder } from './presenter/CcTagFinder.js'
 import { CcTagPresenter } from './presenter/CcTagPresenter.js'
 import { ContentMessageListener } from './presenter/ContentMessageListener.js'
 import { YtThumbnailViewManager } from './presenter/YtThumbnailViewManager.js'
-import { YtMutationHandler } from './view/YtMutationHandler.js'
+import { YtMutationHandler } from './presenter/YtMutationHandler.js'
 
 /**
  * @typedef {Object} ContentContext
