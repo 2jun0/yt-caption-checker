@@ -1,6 +1,9 @@
-const fs = require('fs')
-const { resolve } = require('path')
-const pkg = require('../package.json')
+import fs from 'fs'
+import { resolve, dirname } from 'path'
+import { fileURLToPath } from 'url'
+import pkg from '../package.json' assert { type: 'json' }
+import archiver from 'archiver'
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const browser = process.argv[2]
 
@@ -15,7 +18,7 @@ if (hasDir) {
   console.log(`zip: "${entryDir}"`)
   try {
     const output = fs.createWriteStream(outputDir)
-    const archive = require('archiver')('zip', {
+    const archive = archiver('zip', {
       zlib: { level: 9 },
     })
 
