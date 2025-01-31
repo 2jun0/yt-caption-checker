@@ -27,7 +27,7 @@ export class YtMutationHandler {
       const targetEl = mutation.target
 
       if (isThumbnailElement(targetEl) && !this._isInPlayList(targetEl)) {
-        const ytThumbnailView = YtThumbnailView(targetEl)
+        const ytThumbnailView = new YtThumbnailView(targetEl)
         this.ccTagPresenter.onThumbnailAdded(ytThumbnailView)
       }
     })

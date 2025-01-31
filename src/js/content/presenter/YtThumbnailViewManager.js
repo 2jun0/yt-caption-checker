@@ -13,8 +13,8 @@ export class YtThumbnailViewManager {
    * @returns {YtThumbnailView[]}
    */
   findAllThumbnailView() {
-    return this.findAllThumbnail().map(thumbnailEl =>
-      YtThumbnailView(thumbnailEl),
+    return this.findAllThumbnail().map(
+      thumbnailEl => new YtThumbnailView(thumbnailEl),
     )
   }
 

@@ -10,7 +10,7 @@ describe('YtThumbnailView', () => {
         id: 'thumbnail',
         href: 'https://www.youtube.com/watch?v=123456',
       }
-      expect(() => YtThumbnailView(nonThumbnailEl)).toThrowError(
+      expect(() => new YtThumbnailView(nonThumbnailEl)).toThrowError(
         InvalidYouTubeThumnailElementError,
       )
     })
@@ -21,7 +21,7 @@ describe('YtThumbnailView', () => {
         id: 'non-thumbnail',
         href: 'https://www.youtube.com/watch?v=123456',
       }
-      expect(() => YtThumbnailView(nonThumbnailEl)).toThrowError(
+      expect(() => new YtThumbnailView(nonThumbnailEl)).toThrowError(
         InvalidYouTubeThumnailElementError,
       )
     })
@@ -31,7 +31,7 @@ describe('YtThumbnailView', () => {
         tagName: 'A',
         id: 'thumbnail',
       }
-      expect(() => YtThumbnailView(nonThumbnailEl)).toThrowError(
+      expect(() => new YtThumbnailView(nonThumbnailEl)).toThrowError(
         InvalidYouTubeThumnailElementError,
       )
     })
@@ -43,7 +43,7 @@ describe('YtThumbnailView', () => {
       id: 'thumbnail',
       href: 'https://www.youtube.com/watch?v=123456',
     }
-    const ytThumbnailView = YtThumbnailView(thumbnailEl)
+    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
     expect(ytThumbnailView.getVideoUrl()).toBe(
       'https://www.youtube.com/watch?v=123456',
@@ -65,7 +65,7 @@ describe('YtThumbnailView', () => {
     const ccTagView = {
       ccTagElement: () => {},
     }
-    const ytThumbnailView = YtThumbnailView(thumbnailEl)
+    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
     await ytThumbnailView.insertCcTag(ccTagView)
     expect(overlays.insertBefore).toBeCalled()
@@ -83,7 +83,7 @@ describe('YtThumbnailView', () => {
       href: 'https://www.youtube.com/watch?v=123456',
       querySelector: () => overlays,
     }
-    const ytThumbnailView = YtThumbnailView(thumbnailEl)
+    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
     expect(await ytThumbnailView.hasCcTag()).toBe(true)
   })
@@ -100,7 +100,7 @@ describe('YtThumbnailView', () => {
       href: 'https://www.youtube.com/watch?v=123456',
       querySelector: () => overlays,
     }
-    const ytThumbnailView = YtThumbnailView(thumbnailEl)
+    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
     expect(await ytThumbnailView.hasCcTag()).toBe(false)
   })

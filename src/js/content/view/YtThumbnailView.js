@@ -2,13 +2,6 @@ import { InvalidYouTubeThumnailElementError } from '../../utils/errors.js'
 import { CC_TAG_ID, CcTagView } from './CcTagView.js'
 
 /**
- * @typedef {Object} YtThumbnailView
- * @property {(ccTagView: CcTagView) => Promise<void>} insertCcTag
- * @property {() => Promise<boolean>} hasCcTag
- * @property {() => string} getVideoUrl
- */
-
-/**
  * Check If Element is ThumbnailElement
  * @param {HTMLElement} el
  */
@@ -21,115 +14,115 @@ export const isThumbnailElement = el => {
   )
 }
 
-/**
- * YouTube Thumbnail View
- * @param {HTMLElement} thumbnailEl
- * @returns {YtThumbnailView}
- */
-export const YtThumbnailView = thumbnailEl => {
-  let _overlays = null
+export class YtThumbnailView {
+  /**
+   * @param {HTMLElement} thumbnailEl
+   */
+  constructor(thumbnailEl) {
+    this.thumbnailEl = thumbnailEl
+    this._overlays = null
 
-  validateThumbnailElementTagName(thumbnailEl)
-  validateThumbnailElementId(thumbnailEl)
-  validateThumbnailElementHref(thumbnailEl)
+    this._validateThumbnailElementTagName()
+    this._validateThumbnailElementId()
+    this._validateThumbnailElementHref()
+  }
 
   /**
-   * insert cc tag in YouTube thumbnail
+   * Insert CC tag in YouTube thumbnail
    * @param {CcTagView} ccTagView
+   * @returns {Promise<void>}
    */
-  const insertCcTag = async ccTagView => {
-    const overlays = await getOverlays()
-    // time out
-    if (!overlays || (await hasCcTag())) return
+  async insertCcTag(ccTagView) {
+    const overlays = await this._getOverlays()
+    if (!overlays || (await this.hasCcTag())) return
 
     overlays.insertBefore(ccTagView.ccTagElement(), overlays.lastChild)
   }
 
-  const hasCcTag = async () => {
-    const overlays = await getOverlays()
-    // time out
+  /**
+   * Check if CC tag exists
+   * @returns {Promise<boolean>}
+   */
+  async hasCcTag() {
+    const overlays = await this._getOverlays()
     if (!overlays) return false
 
     return !!overlays.querySelector(`#${CC_TAG_ID}`)
   }
 
-  const getVideoUrl = () => {
-    return thumbnailEl.href
+  /**
+   * Get video URL
+   * @returns {string}
+   */
+  getVideoUrl() {
+    return this.thumbnailEl.href
   }
 
   /**
-   * get overlays
+   * Get overlays
    * @returns {Promise<HTMLElement>}
    */
-  const getOverlays = async () => {
-    if (!_overlays) {
-      _overlays = await waitOverlayLoadedAsnyc(thumbnailEl)
+  async _getOverlays() {
+    if (!this._overlays) {
+      this._overlays = await this._waitOverlayLoadedAsync()
+    }
+    return this._overlays
+  }
+
+  /**
+   * Wait for overlay to load
+   * @returns {Promise<HTMLElement>}
+   */
+  async _waitOverlayLoadedAsync() {
+    const overlays = this.thumbnailEl.querySelector('#overlays')
+
+    if (overlays.childElementCount > 0) {
+      return overlays
     }
 
-    return _overlays
-  }
+    let timer = null
 
-  return {
-    insertCcTag,
-    hasCcTag,
-    getVideoUrl,
-  }
-}
+    return new Promise(resolve => {
+      const observer = new MutationObserver(() => {
+        if (overlays.childElementCount > 0) {
+          observer.disconnect()
+          clearTimeout(timer)
+          resolve(overlays)
+        }
+      })
+      observer.observe(this.thumbnailEl, {
+        childList: true,
+        subtree: true,
+      })
 
-/**
- * get loaded overlays
- * @param {HTMLElement} e
- * @returns {Promise<HTMLElement>}
- */
-const waitOverlayLoadedAsnyc = async e => {
-  const overlays = e.querySelector('#overlays')
-
-  if (overlays.childElementCount > 0) {
-    return overlays
-  }
-
-  let timer = null
-
-  return new Promise(resolve => {
-    const observer = new MutationObserver(() => {
-      if (overlays.childElementCount > 0) {
+      timer = setTimeout(() => {
         observer.disconnect()
-        clearTimeout(timer)
-        return resolve(overlays)
-      }
+        resolve(null)
+      }, 5000)
     })
-    observer.observe(e, {
-      childList: true,
-      subtree: true,
-    })
-
-    timer = setTimeout(() => {
-      observer.disconnect()
-      resolve(null)
-    }, 5000)
-  })
-}
-
-const validateThumbnailElementTagName = el => {
-  if (el.tagName != 'A') {
-    throw new InvalidYouTubeThumnailElementError(
-      `tag name of thumbnail element is not 'A' (it is ${el.tagName})`,
-    )
   }
-}
 
-const validateThumbnailElementId = el => {
-  if (el.id != 'thumbnail') {
-    throw new InvalidYouTubeThumnailElementError(
-      `id of thumbnail element is not 'thumbnail' (it is ${el.id})`,
-    )
+  _validateThumbnailElementTagName() {
+    if (this.thumbnailEl.tagName !== 'A') {
+      throw new InvalidYouTubeThumnailElementError(
+        `tag name of thumbnail element is not 'A' (it is ${this.thumbnailEl.tagName})`,
+      )
+    }
   }
-}
 
-const validateThumbnailElementHref = el => {
-  if (!el.href) {
-    throw new InvalidYouTubeThumnailElementError(
-      `thumbnail element hasn't href property`,
-    )
+  _validateThumbnailElementId() {
+    if (this.thumbnailEl.id !== 'thumbnail') {
+      throw new InvalidYouTubeThumnailElementError(
+        `id of thumbnail element is not 'thumbnail' (it is ${this.thumbnailEl.id})`,
+      )
+    }
+  }
+
+  _validateThumbnailElementHref() {
+    if (!this.thumbnailEl.href) {
+      throw new InvalidYouTubeThumnailElementError(
+        `thumbnail element hasn't href property`,
+      )
+    }
   }
 }
