@@ -102,7 +102,7 @@ export class CcTagPresenter {
       return
     }
 
-    const languages = this.ccTagModel.relatedLanguages()
+    const languages = this.ccTagModel.relatedLanguages
 
     if (await this.ccTagModel.hasCaptions(videoUrl, languages)) {
       ytThumbnailView.insertCcTag(this.createCcTag())
