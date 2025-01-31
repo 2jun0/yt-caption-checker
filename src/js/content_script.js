@@ -13,7 +13,7 @@ const ccTagPresenter = contentContext.ccTagPresenter()
 contentContext.init()
 
 // option update handlers
-const storage = Storage(chrome.storage.local)
+const storage = new Storage(chrome.storage.local)
 
 // Load data
 storage.loadData(

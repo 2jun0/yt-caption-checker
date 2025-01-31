@@ -59,7 +59,7 @@ export class ContentContext {
   /** model */
   ccTagModel() {
     if (!this._ccTagModel) {
-      this._ccTagModel = CcTagModel(
+      this._ccTagModel = new CcTagModel(
         DEFAULT_VALUE[COLOR_BG_FIELD],
         DEFAULT_VALUE[COLOR_TXT_FIELD],
         DEFAULT_VALUE[CC_PREVIEW_FONT_SIZE_FIELD],
@@ -124,7 +124,7 @@ export class ContentContext {
   /** common */
   messageManager() {
     if (!this._messageManager) {
-      this._messageManager = MessageManager()
+      this._messageManager = new MessageManager()
       this._messageManager.addOnMessageListener(this.contentMessageListener())
     }
     return this._messageManager
