@@ -40,11 +40,11 @@ export class CcTagLanguagePresenter {
     this._ccTagCombineRegionCheckBox.setCombineRegion(isCombinedRegion)
 
     if (isCombinedRegion) {
-      this._ccTagLanguagePicker.updateLanuageList(
+      this._ccTagLanguagePicker.updateLanguageList(
         langs.filter(lang => !lang.code.includes('-')),
       )
     } else {
-      this._ccTagLanguagePicker.updateLanuageList(langs)
+      this._ccTagLanguagePicker.updateLanguageList(langs)
     }
 
     this._ccTagLanguagePicker.setCurrentLanguage(
