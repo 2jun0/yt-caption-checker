@@ -97,7 +97,7 @@ export const ContentContext = document => {
 
   const ccTagFinder = () => {
     if (!_ccTagFinder) {
-      _ccTagFinder = CcTagFinder(document)
+      _ccTagFinder = new CcTagFinder(document)
     }
 
     return _ccTagFinder

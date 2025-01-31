@@ -1,36 +1,29 @@
 import { CC_TAG_ID, CcTagView } from '../view/CcTagView.js'
 
-/**
- * @typedef {Object} CcTagFinder
- * @property {() => CcTagView[]} findAllCcTagViews
- */
-
-/**
- * CC Tag Finder
- * @param {Document} document
- * @returns {CcTagFinder}
- */
-export const CcTagFinder = document => {
+export class CcTagFinder {
   /**
-   * find all CC Tag View
+   * @param {Document} document
+   */
+  constructor(document) {
+    this.document = document
+  }
+
+  /**
+   * Find all CC Tag Views
    * @returns {CcTagView[]}
    */
-  const findAllCcTagViews = () => {
-    return findAllCcTags().map(ccTagDiv => {
+  findAllCcTagViews() {
+    return this.findAllCcTags().map(ccTagDiv => {
       const ccTagSpan = ccTagDiv.firstChild
       return CcTagView(ccTagDiv, ccTagSpan)
     })
   }
 
   /**
-   * find all CC Tag
+   * Find all CC Tag elements
    * @returns {HTMLElement[]}
    */
-  const findAllCcTags = () => {
-    return Array.from(document.querySelectorAll(`#${CC_TAG_ID}`))
-  }
-
-  return {
-    findAllCcTagViews,
+  findAllCcTags() {
+    return Array.from(this.document.querySelectorAll(`#${CC_TAG_ID}`))
   }
 }

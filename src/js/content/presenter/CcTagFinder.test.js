@@ -13,7 +13,7 @@ describe('CcTagFinder', () => {
         .fn()
         .mockReturnValue([{ firstChild: {} }, { firstChild: {} }]),
     }
-    ccTagFinder = CcTagFinder(document)
+    ccTagFinder = new CcTagFinder(document)
   })
 
   it('should return an array of `CcTagView` objects', () => {
