@@ -12,7 +12,7 @@ describe('YtMutationHandler', () => {
     ccTagPresenter = {
       onThumbnailAdded: jest.fn(),
     }
-    ytMutationHandler = YtMutationHandler(ccTagPresenter)
+    ytMutationHandler = new YtMutationHandler(ccTagPresenter)
   })
 
   it('should call the `onThumbnailAdded` method of `CcTagPresenter` with a `YtThumbnailView` object if the mutation target is a thumbnail', async () => {
@@ -30,7 +30,7 @@ describe('YtMutationHandler', () => {
       },
     ]
 
-    ytMutationHandler(mutations)
+    ytMutationHandler.handleMutations(mutations)
 
     expect(ccTagPresenter.onThumbnailAdded).toBeCalled()
   })
@@ -60,7 +60,7 @@ describe('YtMutationHandler', () => {
       }
     })
 
-    ytMutationHandler(mutations)
+    ytMutationHandler.handleMutations(mutations)
 
     expect(ccTagPresenter.onThumbnailAdded).not.toHaveBeenCalled()
   })
@@ -80,7 +80,7 @@ describe('YtMutationHandler', () => {
       },
     ]
 
-    YtMutationHandler(ccTagPresenter)(mutations)
+    new YtMutationHandler(ccTagPresenter).handleMutations(mutations)
 
     expect(ccTagPresenter.onThumbnailAdded).not.toHaveBeenCalled()
   })
@@ -100,7 +100,7 @@ describe('YtMutationHandler', () => {
       },
     ]
 
-    YtMutationHandler(ccTagPresenter)(mutations)
+    new YtMutationHandler(ccTagPresenter).handleMutations(mutations)
 
     expect(ccTagPresenter.onThumbnailAdded).not.toHaveBeenCalled()
   })

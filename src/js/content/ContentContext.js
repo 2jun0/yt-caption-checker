@@ -80,7 +80,7 @@ export const ContentContext = document => {
   /** view */
   const ytMutationHandler = () => {
     if (!_ytMutationHandler) {
-      _ytMutationHandler = YtMutationHandler(ccTagPresenter())
+      _ytMutationHandler = new YtMutationHandler(ccTagPresenter())
     }
 
     return _ytMutationHandler
@@ -144,7 +144,10 @@ export const ContentContext = document => {
 
   const mutationObserver = () => {
     if (!_mutationObserver) {
-      _mutationObserver = new MutationObserver(ytMutationHandler())
+      let ytHandler = ytMutationHandler()
+      _mutationObserver = new MutationObserver(
+        ytHandler.handleMutations.bind(ytHandler),
+      )
       _mutationObserver.observe(document.body, {
         subtree: true,
         attributeFilter: ['href'],
