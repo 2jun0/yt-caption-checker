@@ -1,52 +1,41 @@
 export const CC_TAG_ID = 'cc-status'
 
-/**
- * @typedef {Object} CcTagView
- * @property {(bgColor: any) => void} setBackgroundColor
- * @property {(txtColor: any) => void} setTextColor
- * @property {(fontSize: any) => void} setFontSize
- * @property {(lang: any) => void} setLanguage
- * @property {function} remove
- * @property {() => HTMLDivElement} ccTagElement
- */
-
-/**
- * CC Tag View
- * @param {HTMLDivElement} ccTagDiv
- * @param {HTMLSpanElement} ccTagSpan
- */
-export const CcTagView = (ccTagDiv, ccTagSpan) => {
-  const setBackgroundColor = bgColor => {
-    ccTagDiv.style.backgroundColor = bgColor
+export class CcTagView {
+  /**
+   * @param {HTMLDivElement} ccTagDiv
+   * @param {HTMLSpanElement} ccTagSpan
+   */
+  constructor(ccTagDiv, ccTagSpan) {
+    this.ccTagDiv = ccTagDiv
+    this.ccTagSpan = ccTagSpan
   }
 
-  const setTextColor = txtColor => {
-    ccTagDiv.style.color = txtColor
+  setBackgroundColor(bgColor) {
+    this.ccTagDiv.style.backgroundColor = bgColor
   }
 
-  const setFontSize = fontSize => {
-    ccTagDiv.style.fontSize = fontSize
+  setTextColor(txtColor) {
+    this.ccTagDiv.style.color = txtColor
   }
 
-  const setLanguage = lang => {
-    ccTagSpan.textContent = lang
+  setFontSize(fontSize) {
+    this.ccTagDiv.style.fontSize = fontSize
   }
 
-  const remove = () => {
-    ccTagSpan.remove()
-    ccTagDiv.remove()
+  setLanguage(lang) {
+    this.ccTagSpan.textContent = lang
   }
 
-  const ccTagElement = () => {
-    return ccTagDiv
+  remove() {
+    this.ccTagSpan.remove()
+    this.ccTagDiv.remove()
   }
 
-  return {
-    setBackgroundColor,
-    setTextColor,
-    setFontSize,
-    setLanguage,
-    remove,
-    ccTagElement,
+  /**
+   * Get the ccTag element
+   * @returns {HTMLDivElement}
+   */
+  ccTagElement() {
+    return this.ccTagDiv
   }
 }

@@ -15,7 +15,7 @@ export class CcTagFinder {
   findAllCcTagViews() {
     return this.findAllCcTags().map(ccTagDiv => {
       const ccTagSpan = ccTagDiv.firstChild
-      return CcTagView(ccTagDiv, ccTagSpan)
+      return new CcTagView(ccTagDiv, ccTagSpan)
     })
   }
 

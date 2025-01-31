@@ -21,7 +21,7 @@ export class CcTagFactory {
     const ccTagSpan = this.createCcTagSpan(language)
     ccTagDiv.appendChild(ccTagSpan)
 
-    return CcTagView(ccTagDiv, ccTagSpan)
+    return new CcTagView(ccTagDiv, ccTagSpan)
   }
 
   /**

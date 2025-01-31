@@ -22,7 +22,7 @@ describe('CcTagView', () => {
       textContent: null,
       remove: jest.fn(),
     }
-    ccTagView = CcTagView(ccTagDiv, ccTagSpan)
+    ccTagView = new CcTagView(ccTagDiv, ccTagSpan)
   })
 
   it('should set the background color of the ccTagDiv element', () => {
