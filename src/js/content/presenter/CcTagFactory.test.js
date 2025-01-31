@@ -14,7 +14,7 @@ describe('CcTagFactory', () => {
         style: {},
       })),
     }
-    ccTagFactory = CcTagFactory(document)
+    ccTagFactory = new CcTagFactory(document)
   })
 
   it('should create a CcTagView', () => {

@@ -89,7 +89,7 @@ export const ContentContext = document => {
   /** presenter */
   const ccTagFactory = () => {
     if (!_ccTagFactory) {
-      _ccTagFactory = CcTagFactory(document)
+      _ccTagFactory = new CcTagFactory(document)
     }
 
     return _ccTagFactory
