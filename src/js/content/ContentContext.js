@@ -15,57 +15,51 @@ import { ContentMessageListener } from './presenter/ContentMessageListener.js'
 import { YtThumbnailViewManager } from './presenter/YtThumbnailViewManager.js'
 import { YtMutationHandler } from './presenter/YtMutationHandler.js'
 
-/**
- * @typedef {Object} ContentContext
- * @property {function} init
- * @property {() => CcTagPresenter} ccTagPresenter
- */
-
-/**
- * Content Script Context
- * @returns {ContentContext}
- */
-export const ContentContext = document => {
+export class ContentContext {
   /** model */
   /** @type {CcTagModel} */
-  let _ccTagModel = null
+  _ccTagModel = null
 
   /** view */
   /** @type {YtMutationHandler} */
-  let _ytMutationHandler = null
+  _ytMutationHandler = null
 
   /** presenter */
   /** @type {CcTagFactory} */
-  let _ccTagFactory = null
+  _ccTagFactory = null
   /** @type {CcTagFinder} */
-  let _ccTagFinder = null
+  _ccTagFinder = null
   /** @type {CcTagPresenter} */
-  let _ccTagPresenter = null
+  _ccTagPresenter = null
   /** @type {ContentMessageListener} */
-  let _contentMessageListener = null
+  _contentMessageListener = null
   /** @type {YtThumbnailViewManager} */
-  let _ytThumbnailViewManager = null
+  _ytThumbnailViewManager = null
 
   /** others */
   /** @type {MessageManager} */
-  let _messageManager = null
+  _messageManager = null
   /** @type {MutationObserver} */
-  let _mutationObserver = null
+  _mutationObserver = null
 
-  const init = () => {
-    ccTagModel()
-    ccTagFactory()
-    ccTagFinder()
-    ccTagPresenter()
-    ytThumbnailViewManager()
-    messageManager()
-    mutationObserver()
+  constructor(document) {
+    this.document = document
+  }
+
+  init() {
+    this.ccTagModel()
+    this.ccTagFactory()
+    this.ccTagFinder()
+    this.ccTagPresenter()
+    this.ytThumbnailViewManager()
+    this.messageManager()
+    this.mutationObserver()
   }
 
   /** model */
-  const ccTagModel = () => {
-    if (!_ccTagModel) {
-      _ccTagModel = CcTagModel(
+  ccTagModel() {
+    if (!this._ccTagModel) {
+      this._ccTagModel = CcTagModel(
         DEFAULT_VALUE[COLOR_BG_FIELD],
         DEFAULT_VALUE[COLOR_TXT_FIELD],
         DEFAULT_VALUE[CC_PREVIEW_FONT_SIZE_FIELD],
@@ -73,92 +67,80 @@ export const ContentContext = document => {
         DEFAULT_VALUE[IS_COMBINED_REGION_FIELD],
       )
     }
-
-    return _ccTagModel
+    return this._ccTagModel
   }
 
   /** view */
-  const ytMutationHandler = () => {
-    if (!_ytMutationHandler) {
-      _ytMutationHandler = new YtMutationHandler(ccTagPresenter())
+  ytMutationHandler() {
+    if (!this._ytMutationHandler) {
+      this._ytMutationHandler = new YtMutationHandler(this.ccTagPresenter())
     }
-
-    return _ytMutationHandler
+    return this._ytMutationHandler
   }
 
   /** presenter */
-  const ccTagFactory = () => {
-    if (!_ccTagFactory) {
-      _ccTagFactory = new CcTagFactory(document)
+  ccTagFactory() {
+    if (!this._ccTagFactory) {
+      this._ccTagFactory = new CcTagFactory(this.document)
     }
-
-    return _ccTagFactory
+    return this._ccTagFactory
   }
 
-  const ccTagFinder = () => {
-    if (!_ccTagFinder) {
-      _ccTagFinder = new CcTagFinder(document)
+  ccTagFinder() {
+    if (!this._ccTagFinder) {
+      this._ccTagFinder = new CcTagFinder(this.document)
     }
-
-    return _ccTagFinder
+    return this._ccTagFinder
   }
 
-  const ccTagPresenter = () => {
-    if (!_ccTagPresenter) {
-      _ccTagPresenter = new CcTagPresenter(
-        ccTagFactory(),
-        ccTagFinder(),
-        ytThumbnailViewManager(),
-        ccTagModel(),
+  ccTagPresenter() {
+    if (!this._ccTagPresenter) {
+      this._ccTagPresenter = new CcTagPresenter(
+        this.ccTagFactory(),
+        this.ccTagFinder(),
+        this.ytThumbnailViewManager(),
+        this.ccTagModel(),
       )
     }
-
-    return _ccTagPresenter
+    return this._ccTagPresenter
   }
 
-  const contentMessageListener = () => {
-    if (!_contentMessageListener) {
-      _contentMessageListener = new ContentMessageListener(ccTagPresenter())
+  contentMessageListener() {
+    if (!this._contentMessageListener) {
+      this._contentMessageListener = new ContentMessageListener(
+        this.ccTagPresenter(),
+      )
     }
-
-    return _contentMessageListener
+    return this._contentMessageListener
   }
 
-  const ytThumbnailViewManager = () => {
-    if (!_ytThumbnailViewManager) {
-      _ytThumbnailViewManager = new YtThumbnailViewManager(document)
+  ytThumbnailViewManager() {
+    if (!this._ytThumbnailViewManager) {
+      this._ytThumbnailViewManager = new YtThumbnailViewManager(this.document)
     }
-
-    return _ytThumbnailViewManager
+    return this._ytThumbnailViewManager
   }
 
   /** common */
-  const messageManager = () => {
-    if (!_messageManager) {
-      _messageManager = MessageManager()
-      _messageManager.addOnMessageListener(contentMessageListener())
+  messageManager() {
+    if (!this._messageManager) {
+      this._messageManager = MessageManager()
+      this._messageManager.addOnMessageListener(this.contentMessageListener())
     }
-
-    return _messageManager
+    return this._messageManager
   }
 
-  const mutationObserver = () => {
-    if (!_mutationObserver) {
-      let ytHandler = ytMutationHandler()
-      _mutationObserver = new MutationObserver(
+  mutationObserver() {
+    if (!this._mutationObserver) {
+      let ytHandler = this.ytMutationHandler()
+      this._mutationObserver = new MutationObserver(
         ytHandler.handleMutations.bind(ytHandler),
       )
-      _mutationObserver.observe(document.body, {
+      this._mutationObserver.observe(this.document.body, {
         subtree: true,
         attributeFilter: ['href'],
       })
     }
-
-    return _mutationObserver
-  }
-
-  return {
-    init,
-    ccTagPresenter,
+    return this._mutationObserver
   }
 }
