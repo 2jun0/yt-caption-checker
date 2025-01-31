@@ -2,44 +2,35 @@ import { CcTagLanguagePresenter } from './CcTagLanguagePresenter.js'
 
 const COMBINE_REGION_CHECK_BOX_ID = 'combine-region-checkbox'
 
-/**
- * @typedef {Object} CcTagCombineRegionCheckBox
- * @property {(presenter: CcTagLanguagePresenter) => void} init
- * @property {function} setCombineRegion
- * @property {function} isChecked
- */
-
-/**
- * CC Tag Combine Region Checkbox Element
- * @param {Document} document
- * @returns {CcTagCombineRegionCheckBox}
- */
-export const CcTagCombineRegionCheckBox = document => {
-  const combineRegionCheckBox = document.getElementById(
-    COMBINE_REGION_CHECK_BOX_ID,
-  )
+export class CcTagCombineRegionCheckBox {
+  /** @type {HTMLInputElement} */
+  _combineRegionCheckBox = null
 
   /**
-   * init function
+   * Constructor
+   * @param {Document} document
+   */
+  constructor(document) {
+    this._combineRegionCheckBox = document.getElementById(
+      COMBINE_REGION_CHECK_BOX_ID,
+    )
+  }
+
+  /**
+   * init class
    * @param {CcTagLanguagePresenter} presenter
    */
-  const init = presenter => {
-    combineRegionCheckBox.onchange = () => {
-      presenter.setCombineRegion(combineRegionCheckBox.checked)
+  init(presenter) {
+    this._combineRegionCheckBox.onchange = () => {
+      presenter.setCombineRegion(this._combineRegionCheckBox.checked)
     }
   }
 
-  const setCombineRegion = isCombinedRegion => {
-    combineRegionCheckBox.checked = isCombinedRegion
+  setCombineRegion(isCombinedRegion) {
+    this._combineRegionCheckBox.checked = isCombinedRegion
   }
 
-  const isChecked = () => {
-    return combineRegionCheckBox.checked
-  }
-
-  return {
-    init,
-    setCombineRegion,
-    isChecked,
+  isChecked() {
+    return this._combineRegionCheckBox.checked
   }
 }

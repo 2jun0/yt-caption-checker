@@ -5,60 +5,44 @@ import {
   Storage,
 } from '../../utils/storage.js'
 
-/**
- * @typedef {Object} CcTagLanguageModel
- * @property {(stoarge: Storage, messageManager: MessageManager) => void} init
- * @property {(lang: any) => Promise<void>} setLanguage
- * @property {(isCombinedRegion: any) => Promise<void>} setCombineRegion
- * @property {() => string} shownLanguage
- */
-
-/**
- * CC Tag Language Model
- * @returns {CcTagLanguageModel}
- */
-export const CcTagLanguageModel = () => {
+export class CcTagLanguageModel {
   /** @type {Storage} */
-  let _storage = null
+  _storage = null
   /** @type {MessageManager} */
-  let _messageManager = null
-  let _language = null
-  let _isCombinedRegion = null
+  _messageManager = null
+  _language = null
+  _isCombinedRegion = null
 
   /**
-   * init function
-   * @param {Storage} stoarge
+   * Constructor
+   * @param {Storage} storage
    * @param {MessageManager} messageManager
    */
-  const init = (stoarge, messageManager) => {
-    _storage = stoarge
-    _messageManager = messageManager
+  constructor(storage, messageManager) {
+    this._storage = storage
+    this._messageManager = messageManager
   }
 
-  const setLanguage = async lang => {
-    await _storage.saveDataAsync(LANGUAGE_FIELD, lang)
-    _language = lang
-    _messageManager.sendMessage(LANGUAGE_FIELD, lang)
+  async setLanguage(lang) {
+    await this._storage.saveDataAsync(LANGUAGE_FIELD, lang)
+    this._language = lang
+    this._messageManager.sendMessage(LANGUAGE_FIELD, lang)
   }
 
-  const setCombineRegion = async isCombinedRegion => {
-    await _storage.saveDataAsync(IS_COMBINED_REGION_FIELD, isCombinedRegion)
-    _isCombinedRegion = isCombinedRegion
-    _messageManager.sendMessage(IS_COMBINED_REGION_FIELD, isCombinedRegion)
+  async setCombineRegion(isCombinedRegion) {
+    await this._storage.saveDataAsync(
+      IS_COMBINED_REGION_FIELD,
+      isCombinedRegion,
+    )
+    this._isCombinedRegion = isCombinedRegion
+    this._messageManager.sendMessage(IS_COMBINED_REGION_FIELD, isCombinedRegion)
   }
 
-  const shownLanguage = () => {
-    if (_isCombinedRegion) {
-      return _language.split('-')[0]
+  shownLanguage() {
+    if (this._isCombinedRegion) {
+      return this._language.split('-')[0]
     } else {
-      return _language
+      return this._language
     }
-  }
-
-  return {
-    init,
-    setLanguage,
-    setCombineRegion,
-    shownLanguage,
   }
 }

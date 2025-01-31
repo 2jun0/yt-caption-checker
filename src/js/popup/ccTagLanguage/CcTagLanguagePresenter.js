@@ -4,71 +4,57 @@ import { CcTagCombineRegionCheckBox } from './CcTagCombineRegionCheckBox.js'
 import { CcTagLanguageModel } from './CcTagLanguageModel.js'
 import { CcTagLanguagePicker } from './CcTagLanguagePicker.js'
 
-/**
- * @typedef {Object} CcTagLanguagePresenter
- * @property {(ccTagLanguagePicker: CcTagLanguagePicker, ccTagCombineRegionCheckBox: CcTagCombineRegionCheckBox, ccTagPreview: CcTagPreview, model: CcTagLanguageModel) => void} init
- * @property {(lang: any) => Promise<void>} setLanguage
- * @property {(isCombinedRegion: any) => Promise<void>} setCombineRegion
- */
-
-/**
- * CC Tag Language Picker Presenter
- * @returns {CcTagLanguagePresenter}
- */
-export const CcTagLanguagePresenter = () => {
+export class CcTagLanguagePresenter {
   /** @type {CcTagLanguagePicker} */
-  let _ccTagLanguagePicker = null
+  _ccTagLanguagePicker = null
   /** @type {CcTagCombineRegionCheckBox} */
-  let _ccTagCombineRegionCheckBox = null
+  _ccTagCombineRegionCheckBox = null
   /** @type {CcTagPreview} */
-  let _ccTagPreview = null
+  _ccTagPreview = null
   /** @type {CcTagLanguageModel} */
-  let _ccTagLanguageModel = null
+  _ccTagLanguageModel = null
 
   /**
-   * initialize
+   * Constructor
    * @param {CcTagLanguagePicker} ccTagLanguagePicker
    * @param {CcTagCombineRegionCheckBox} ccTagCombineRegionCheckBox
    * @param {CcTagPreview} ccTagPreview
    * @param {CcTagLanguageModel} model
    */
-  const init = (
+  constructor(
     ccTagLanguagePicker,
     ccTagCombineRegionCheckBox,
     ccTagPreview,
     model,
-  ) => {
-    _ccTagLanguagePicker = ccTagLanguagePicker
-    _ccTagCombineRegionCheckBox = ccTagCombineRegionCheckBox
-    _ccTagPreview = ccTagPreview
-    _ccTagLanguageModel = model
+  ) {
+    this._ccTagLanguagePicker = ccTagLanguagePicker
+    this._ccTagCombineRegionCheckBox = ccTagCombineRegionCheckBox
+    this._ccTagPreview = ccTagPreview
+    this._ccTagLanguageModel = model
+  }
+  async setLanguage(lang) {
+    await this._ccTagLanguageModel.setLanguage(lang)
+    this._ccTagLanguagePicker.setCurrentLanguage(
+      this._ccTagLanguageModel.shownLanguage(),
+    )
+    this._ccTagPreview.setLanguage(this._ccTagLanguageModel.shownLanguage())
   }
 
-  const setLanguage = async lang => {
-    await _ccTagLanguageModel.setLanguage(lang)
-    _ccTagLanguagePicker.setCurrentLanguage(_ccTagLanguageModel.shownLanguage())
-    _ccTagPreview.setLanguage(_ccTagLanguageModel.shownLanguage())
-  }
-
-  const setCombineRegion = async isCombinedRegion => {
-    await _ccTagLanguageModel.setCombineRegion(isCombinedRegion)
-    _ccTagCombineRegionCheckBox.setCombineRegion(isCombinedRegion)
+  async setCombineRegion(isCombinedRegion) {
+    await this._ccTagLanguageModel.setCombineRegion(isCombinedRegion)
+    this._ccTagCombineRegionCheckBox.setCombineRegion(isCombinedRegion)
 
     if (isCombinedRegion) {
-      _ccTagLanguagePicker.updateLanuageList(
+      this._ccTagLanguagePicker.updateLanuageList(
         langs.filter(lang => !lang.code.includes('-')),
       )
     } else {
-      _ccTagLanguagePicker.updateLanuageList(langs)
+      this._ccTagLanguagePicker.updateLanuageList(langs)
     }
 
-    _ccTagLanguagePicker.setCurrentLanguage(_ccTagLanguageModel.shownLanguage())
-    _ccTagPreview.setLanguage(_ccTagLanguageModel.shownLanguage())
-  }
-
-  return {
-    init,
-    setLanguage,
-    setCombineRegion,
+    this._ccTagLanguagePicker.setCurrentLanguage(
+      this._ccTagLanguageModel.shownLanguage(),
+    )
+    this._ccTagPreview.setLanguage(this._ccTagLanguageModel.shownLanguage())
   }
 }
