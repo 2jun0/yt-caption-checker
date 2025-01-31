@@ -3,7 +3,7 @@ import {
   IS_COMBINED_REGION_FIELD,
   LANGUAGE_FIELD,
   Storage,
-} from '../../utils/storage.js'
+} from '../../utils/Storage.js'
 
 export class CcTagLanguageModel {
   /** @type {Storage} */

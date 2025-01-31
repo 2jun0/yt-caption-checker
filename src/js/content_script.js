@@ -6,7 +6,7 @@ import {
   IS_COMBINED_REGION_FIELD,
   LANGUAGE_FIELD,
   Storage,
-} from './utils/storage.js'
+} from './utils/Storage.js'
 
 const contentContext = ContentContext(document)
 const ccTagPresenter = contentContext.ccTagPresenter()

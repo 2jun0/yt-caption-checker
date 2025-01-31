@@ -2,44 +2,29 @@ import { CcTagFontSizeModel } from './CcTagFontSizeModel.js'
 import { CcTagFontSizePicker } from './CcTagFontSizePicker.js'
 import { CcTagPreview } from './CcTagPreview.js'
 
-/**
- * @typedef {Object} CcTagFontSizePresenter
- * @property {(ccTagFontSizePicker: CcTagFontSizePicker, ccTagPreview: CcTagPreview, ccTagFontSizeModel: CcTagFontSizeModel) => void} init
- * @property {(fontSize: any) => Promise<void>} setFontSize
- */
-
-/**
- * CC Tag Size Picker Presenter
- * @returns {CcTagFontSizePresenter}
- */
-export const CcTagFontSizePresenter = () => {
+export class CcTagFontSizePresenter {
   /** @type {CcTagFontSizePicker} */
-  let _ccTagFontSizePicker = null
+  _ccTagFontSizePicker = null
   /** @type {CcTagPreview} */
-  let _ccTagPreview = null
+  _ccTagPreview = null
   /** @type {CcTagFontSizeModel} */
-  let _ccTagFontSizeModel = null
+  _ccTagFontSizeModel = null
 
   /**
-   * init function
+   * Initialize
    * @param {CcTagFontSizePicker} ccTagFontSizePicker
    * @param {CcTagPreview} ccTagPreview
    * @param {CcTagFontSizeModel} ccTagFontSizeModel
    */
-  const init = (ccTagFontSizePicker, ccTagPreview, ccTagFontSizeModel) => {
-    _ccTagFontSizePicker = ccTagFontSizePicker
-    _ccTagPreview = ccTagPreview
-    _ccTagFontSizeModel = ccTagFontSizeModel
+  init(ccTagFontSizePicker, ccTagPreview, ccTagFontSizeModel) {
+    this._ccTagFontSizePicker = ccTagFontSizePicker
+    this._ccTagPreview = ccTagPreview
+    this._ccTagFontSizeModel = ccTagFontSizeModel
   }
 
-  const setFontSize = async fontSize => {
-    await _ccTagFontSizeModel.setFontSize(fontSize)
-    _ccTagFontSizePicker.setFontSize(fontSize)
-    _ccTagPreview.setFontSize(fontSize)
-  }
-
-  return {
-    init,
-    setFontSize,
+  async setFontSize(fontSize) {
+    await this._ccTagFontSizeModel.setFontSize(fontSize)
+    this._ccTagFontSizePicker.setFontSize(fontSize)
+    this._ccTagPreview.setFontSize(fontSize)
   }
 }

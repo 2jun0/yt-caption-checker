@@ -1,5 +1,5 @@
 import { MessageManager } from '../../utils/MessageManager.js'
-import { COLOR_BG_FIELD, Storage } from '../../utils/storage.js'
+import { COLOR_BG_FIELD, Storage } from '../../utils/Storage.js'
 
 export class CcTagBackgroundColorModel {
   constructor() {

@@ -4,7 +4,7 @@ import {
   COLOR_TXT_FIELD,
   IS_COMBINED_REGION_FIELD,
   LANGUAGE_FIELD,
-} from '../../utils/storage.js'
+} from '../../utils/Storage.js'
 import { CcTagPresenter } from './CcTagPresenter.js'
 import { ContentMessageListener } from './ContentMessageListener.js'
 import { jest } from '@jest/globals'

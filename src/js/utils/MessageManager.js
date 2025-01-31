@@ -1,15 +1,11 @@
-/**
- * @typedef {Object} MessageManager
- * @property {(key: any, value: any) => Promise<void>} sendMessage
- * @property {(listener: (req: any) => void) => void} addOnMessageListener
- */
-
-/**
- * Message Manager
- * @returns {MessageManager}
- */
-export const MessageManager = () => {
-  const sendMessage = async (key, value) => {
+export class MessageManager {
+  /**
+   * Send a message to the active tab.
+   * @param {any} key
+   * @param {any} value
+   * @returns {Promise<void>}
+   */
+  async sendMessage(key, value) {
     const tabs = await chrome.tabs.query({
       active: true,
     })
@@ -20,17 +16,12 @@ export const MessageManager = () => {
   }
 
   /**
-   * add onMessage Listener
+   * Add a listener for incoming messages.
    * @param {(req: any) => void} listener
    */
-  const addOnMessageListener = listener => {
+  addOnMessageListener(listener) {
     chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
       listener.handleMessage(req)
     })
-  }
-
-  return {
-    sendMessage,
-    addOnMessageListener,
   }
 }

@@ -7,38 +7,37 @@ import { CcTagTextColorPresenter } from '../ccTagTextColor/CcTagTextColorPresent
 
 const MAIN_DIV_ID = 'main'
 
-/**
- * @typedef {Object} MainDiv
- * @property {(ccTagBackgroundColorPresenter: CcTagBackgroundColorPresenter, ccTagTextColorPresenter: CcTagTextColorPresenter) => void} init
- */
-
-/**
- * CC Tag Background Color Display Element
- * @param {Document} document
- * @returns {MainDiv}
- */
-export const MainDiv = document => {
-  const mainDiv = document.getElementById(MAIN_DIV_ID)
+export class MainDiv {
+  /** @type {HTMLElement} */
+  _mainDiv = null
 
   /**
-   * init function
+   * Constructor
+   * @param {Document} document
+   */
+  constructor(document) {
+    this._mainDiv = document.getElementById(MAIN_DIV_ID)
+  }
+
+  /**
+   * Init function
    * @param {CcTagBackgroundColorPresenter} ccTagBackgroundColorPresenter
    * @param {CcTagTextColorPresenter} ccTagTextColorPresenter
    */
-  const init = (ccTagBackgroundColorPresenter, ccTagTextColorPresenter) => {
-    mainDiv.onclick = e => {
+  init(ccTagBackgroundColorPresenter, ccTagTextColorPresenter) {
+    this._mainDiv.onclick = e => {
       const el = e.target
 
       if (
-        !isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID) &&
-        !isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID)
+        !this.isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_DISPLAY_ID) &&
+        !this.isChildOf(el, CC_PREVIEW_BACKGROUND_COLOR_PICKER_ID)
       ) {
         ccTagBackgroundColorPresenter.hideBackgroundColorPicker()
       }
 
       if (
-        !isChildOf(el, CC_PREVIEW_TEXT_COLOR_PICKER_ID) &&
-        !isChildOf(el, CC_PREVIEW_TEXT_COLOR_DISPLAY_ID)
+        !this.isChildOf(el, CC_PREVIEW_TEXT_COLOR_PICKER_ID) &&
+        !this.isChildOf(el, CC_PREVIEW_TEXT_COLOR_DISPLAY_ID)
       ) {
         ccTagTextColorPresenter.hideTextColorPicker()
       }
@@ -46,24 +45,19 @@ export const MainDiv = document => {
   }
 
   /**
-   * get is child of parent that have parentId
+   * Check if element is a child of a parent with a specific ID
    * @param {HTMLElement} el
-   * @param {*} parentId
+   * @param {string} parentId
+   * @returns {boolean}
    */
-  const isChildOf = (el, parentId) => {
+  isChildOf(el, parentId) {
     let currEl = el
     while (currEl) {
-      if (currEl.id == parentId) {
+      if (currEl.id === parentId) {
         return true
       }
-
       currEl = currEl.parentElement
     }
-
     return false
-  }
-
-  return {
-    init,
   }
 }

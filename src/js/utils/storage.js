@@ -16,39 +16,29 @@ export const DEFAULT_VALUE = {
   [LANGUAGE_FIELD]: 'en',
 }
 
-/**
- * @typedef {Object} Storage
- * @property {(fields: any, callback: any) => void} loadData
- * @property {(fields: any) => Promise<any>} loadDataAsync
- * @property {(field: any, value: any, callback?: null) => void} saveData
- * @property {(field: any, value: any) => Promise<any>} saveDataAsync
- */
+export class Storage {
+  constructor(localStorage) {
+    this.localStorage = localStorage
+  }
 
-/**
- * @example
- * s = Storage(chrome.storage.local)
- * @param {any} localStorage
- * @returns {Storage}
- */
-export const Storage = localStorage => {
-  const loadDataAsync = async fields => {
+  async loadDataAsync(fields) {
     return new Promise(resolve => {
-      loadData(fields, items => {
+      this.loadData(fields, items => {
         resolve(items)
       })
     })
   }
 
-  const saveDataAsync = async (field, value) => {
+  async saveDataAsync(field, value) {
     return new Promise(resolve => {
-      saveData(field, value, resolve)
+      this.saveData(field, value, resolve)
     })
   }
 
-  const loadData = (fields, callback) => {
+  loadData(fields, callback) {
     if (!Array.isArray(fields)) fields = [fields]
 
-    localStorage.get(fields, items => {
+    this.localStorage.get(fields, items => {
       fields.forEach(field => {
         if (!items.hasOwnProperty(field)) items[field] = DEFAULT_VALUE[field]
       })
@@ -57,44 +47,7 @@ export const Storage = localStorage => {
     })
   }
 
-  const saveData = (field, value, callback = null) => {
-    localStorage.set({ [field]: value }, callback)
+  saveData(field, value, callback = null) {
+    this.localStorage.set({ [field]: value }, callback)
   }
-
-  return {
-    loadDataAsync,
-    loadData,
-    saveDataAsync,
-    saveData,
-  }
-}
-
-export const loadData = (fields, callback) => {
-  if (!Array.isArray(fields)) fields = [fields]
-
-  chrome.storage.local.get(fields, items => {
-    fields.forEach(field => {
-      if (!items.hasOwnProperty(field)) items[field] = DEFAULT_VALUE[field]
-    })
-
-    callback(items)
-  })
-}
-
-export const loadDataAsync = async fields => {
-  return new Promise(resolve => {
-    loadData(fields, items => {
-      resolve(items)
-    })
-  })
-}
-
-export const saveData = (field, value, callback = null) => {
-  chrome.storage.local.set({ [field]: value }, callback)
-}
-
-export async function saveDataAsync(field, value) {
-  return new Promise(resolve => {
-    saveData(field, value, resolve)
-  })
 }

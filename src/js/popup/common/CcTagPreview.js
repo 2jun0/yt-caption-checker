@@ -1,44 +1,30 @@
 const CC_TAG_PREVIEW_ID = 'cc-status-example'
 
-/**
- * @typedef {Object} CcTagPreview
- * @property {function} setLanguage
- * @property {function} setTxtColor
- * @property {function} setBackgroundColor
- * @property {function} setFontSize
- */
-
-/**
- * CC Tag Previce Element
- * @param {Document} document
- * @returns {CcTagPreview}
- */
-export const CcTagPreview = document => {
-  const ccTagPreview = document.getElementById(CC_TAG_PREVIEW_ID)
+export class CcTagPreview {
+  /** @type {HTMLElement} */
+  _ccTagPreview = null
 
   /**
-   * @param {string} lang
+   * Constructor
+   * @param {Document} document
    */
-  const setLanguage = lang => {
-    ccTagPreview.textContent = lang.toUpperCase() + ' CC'
+  constructor(document) {
+    this._ccTagPreview = document.getElementById(CC_TAG_PREVIEW_ID)
   }
 
-  const setTxtColor = txtColor => {
-    ccTagPreview.style.color = txtColor
+  setLanguage(lang) {
+    this._ccTagPreview.textContent = lang.toUpperCase() + ' CC'
   }
 
-  const setBackgroundColor = bgColor => {
-    ccTagPreview.style.background = bgColor
+  setTxtColor(txtColor) {
+    this._ccTagPreview.style.color = txtColor
   }
 
-  const setFontSize = fontSize => {
-    ccTagPreview.style.fontSize = `calc(${fontSize} - 0.4rem)`
+  setBackgroundColor(bgColor) {
+    this._ccTagPreview.style.background = bgColor
   }
 
-  return {
-    setLanguage,
-    setTxtColor,
-    setBackgroundColor,
-    setFontSize,
+  setFontSize(fontSize) {
+    this._ccTagPreview.style.fontSize = `calc(${fontSize} - 0.4rem)`
   }
 }

@@ -11,42 +11,28 @@ const FONT_SIZES = [
   '1.6rem',
 ]
 
-/**
- * @typedef {Object} CcTagFontSizePicker
- * @property {(presenter: CcTagFontSizePresenter) => void} init
- * @property {function} setFontSize
- */
-
-/**
- * CC Tag Size Picker Element
- * @param {Document} document
- * @returns {CcTagFontSizePicker}
- */
-export const CcTagFontSizePicker = document => {
-  const ccTagFontSizePicker = document.getElementById(
-    CC_PREVIEW_FONT_SIZE_PICKER_ID,
-  )
+export class CcTagFontSizePicker {
+  constructor(document) {
+    this.ccTagFontSizePicker = document.getElementById(
+      CC_PREVIEW_FONT_SIZE_PICKER_ID,
+    )
+  }
 
   /**
-   * init function
+   * Initialize
    * @param {CcTagFontSizePresenter} presenter
    */
-  const init = presenter => {
-    ccTagFontSizePicker.min = 0
-    ccTagFontSizePicker.max = FONT_SIZES.length - 1
-    ccTagFontSizePicker.value = 3
-    ccTagFontSizePicker.oninput = () => {
-      const currentFontSize = FONT_SIZES[ccTagFontSizePicker.value]
+  init(presenter) {
+    this.ccTagFontSizePicker.min = 0
+    this.ccTagFontSizePicker.max = FONT_SIZES.length - 1
+    this.ccTagFontSizePicker.value = 3
+    this.ccTagFontSizePicker.oninput = () => {
+      const currentFontSize = FONT_SIZES[this.ccTagFontSizePicker.value]
       presenter.setFontSize(currentFontSize)
     }
   }
 
-  const setFontSize = fontSize => {
-    ccTagFontSizePicker.value = FONT_SIZES.indexOf(fontSize)
-  }
-
-  return {
-    init,
-    setFontSize,
+  setFontSize(fontSize) {
+    this.ccTagFontSizePicker.value = FONT_SIZES.indexOf(fontSize)
   }
 }

@@ -5,7 +5,7 @@ import {
   COLOR_TXT_FIELD,
   IS_COMBINED_REGION_FIELD,
   LANGUAGE_FIELD,
-} from '../utils/storage.js'
+} from '../utils/Storage.js'
 import { PopupContext } from './popupContext.js'
 
 localize()

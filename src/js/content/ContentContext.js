@@ -6,7 +6,7 @@ import {
   DEFAULT_VALUE,
   IS_COMBINED_REGION_FIELD,
   LANGUAGE_FIELD,
-} from '../utils/storage.js'
+} from '../utils/Storage.js'
 import { CcTagModel } from './model/CcTagModel.js'
 import { CcTagFactory } from './presenter/CcTagFactory.js'
 import { CcTagFinder } from './presenter/CcTagFinder.js'
