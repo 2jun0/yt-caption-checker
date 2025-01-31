@@ -127,10 +127,10 @@ export const CcTagPresenter = (
 
   const createCcTag = () => {
     return ccTagFactory.createCcTagView(
-      ccTagModel.backgroundColor(),
-      ccTagModel.textColor(),
-      ccTagModel.fontSize(),
-      ccTagModel.shownLanguage(),
+      ccTagModel.backgroundColor,
+      ccTagModel.textColor,
+      ccTagModel.fontSize,
+      ccTagModel.shownLanguage,
     )
   }
 

@@ -10,7 +10,7 @@ describe('CcTagModel', () => {
   const defaultCombinedRegion = true
 
   beforeEach(() => {
-    ccTagModel = CcTagModel(
+    ccTagModel = new CcTagModel(
       defaultBackgroundColor,
       defaultTextColor,
       defaultFontSize,
@@ -20,23 +20,23 @@ describe('CcTagModel', () => {
   })
 
   it('should have the correct backgroundColor', () => {
-    expect(ccTagModel.backgroundColor()).toBe(defaultBackgroundColor)
+    expect(ccTagModel.backgroundColor).toBe(defaultBackgroundColor)
   })
 
   it('should have the correct textColor', () => {
-    expect(ccTagModel.textColor()).toBe(defaultTextColor)
+    expect(ccTagModel.textColor).toBe(defaultTextColor)
   })
 
   it('should have the correct fontSize', () => {
-    expect(ccTagModel.fontSize()).toBe(defaultFontSize)
+    expect(ccTagModel.fontSize).toBe(defaultFontSize)
   })
 
   it('should have the correct shownLanguage', () => {
-    expect(ccTagModel.shownLanguage()).toBe(defaultLanguage)
+    expect(ccTagModel.shownLanguage).toBe(defaultLanguage)
   })
 
   it('should have the correct related languages', () => {
-    expect(ccTagModel.relatedLanguages().sort()).toEqual(
+    expect(ccTagModel.relatedLanguages.sort()).toEqual(
       ['en', 'en-CA', 'en-IN', 'en-IE', 'en-GB', 'en-US'].sort(),
     )
   })
@@ -44,44 +44,44 @@ describe('CcTagModel', () => {
   it('setBackgroundColor should change backgroundColor', () => {
     const newBackroundColor = '#00000000'
     ccTagModel.setBackgroundColor(newBackroundColor)
-    expect(ccTagModel.backgroundColor()).toBe(newBackroundColor)
+    expect(ccTagModel.backgroundColor).toBe(newBackroundColor)
   })
 
   it('setTextColor should change textColor', () => {
     const newTextColor = '#000000'
     ccTagModel.setTextColor(newTextColor)
-    expect(ccTagModel.textColor()).toBe(newTextColor)
+    expect(ccTagModel.textColor).toBe(newTextColor)
   })
 
   it('setFontSize should change fontSize', () => {
     const newFontSize = '#000000'
     ccTagModel.setFontSize(newFontSize)
-    expect(ccTagModel.fontSize()).toBe(newFontSize)
+    expect(ccTagModel.fontSize).toBe(newFontSize)
   })
 
   describe('should return correct shown language', () => {
     it('en-US and not combinedRegion', () => {
       ccTagModel.setIsCombinedRegion(false)
       ccTagModel.setLanguage('en-US')
-      expect(ccTagModel.shownLanguage()).toBe('en-US')
+      expect(ccTagModel.shownLanguage).toBe('en-US')
     })
 
     it('en-US and combinedRegion', () => {
       ccTagModel.setIsCombinedRegion(true)
       ccTagModel.setLanguage('en-US')
-      expect(ccTagModel.shownLanguage()).toBe('en')
+      expect(ccTagModel.shownLanguage).toBe('en')
     })
 
     it('en and not combinedRegion', () => {
       ccTagModel.setIsCombinedRegion(false)
       ccTagModel.setLanguage('en')
-      expect(ccTagModel.shownLanguage()).toBe('en')
+      expect(ccTagModel.shownLanguage).toBe('en')
     })
 
     it('en and combinedRegion', () => {
       ccTagModel.setIsCombinedRegion(true)
       ccTagModel.setLanguage('en')
-      expect(ccTagModel.shownLanguage()).toBe('en')
+      expect(ccTagModel.shownLanguage).toBe('en')
     })
   })
 
