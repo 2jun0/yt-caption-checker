@@ -126,7 +126,7 @@ export const ContentContext = document => {
 
   const ytThumbnailViewManager = () => {
     if (!_ytThumbnailViewManager) {
-      _ytThumbnailViewManager = YtThumbnailViewManager(document)
+      _ytThumbnailViewManager = new YtThumbnailViewManager(document)
     }
 
     return _ytThumbnailViewManager

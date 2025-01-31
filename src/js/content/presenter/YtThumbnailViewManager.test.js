@@ -18,7 +18,7 @@ describe('YtThumbnailViewManager', () => {
         .fn()
         .mockReturnValue([thumbnailEl, thumbnailEl, thumbnailEl]),
     }
-    ytThumbnailViewManager = YtThumbnailViewManager(document)
+    ytThumbnailViewManager = new YtThumbnailViewManager(document)
   })
 
   it('should return an array of YtThumbnailView objects', () => {

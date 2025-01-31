@@ -1,36 +1,30 @@
 import { YtThumbnailView, isThumbnailElement } from '../view/YtThumbnailView.js'
 
-/**
- * @typedef {Object} YtThumbnailViewManager
- * @property {() => YtThumbnailView[]} findAllThumbnailView
- */
-
-/**
- * YouTube Thumbnail View Manager
- * @param {Document} document
- * @returns {YtThumbnailViewManager}
- */
-export const YtThumbnailViewManager = document => {
+export class YtThumbnailViewManager {
   /**
-   * find all thumbnail view
-   * it need to be initialized
-   * @returns {YtThumbnailView[]}
+   * @param {Document} document
    */
-  const findAllThumbnailView = () => {
-    return findAllThumbnail().map(thumbnailEl => YtThumbnailView(thumbnailEl))
+  constructor(document) {
+    this.document = document
   }
 
   /**
-   * find all thumbnail elements
-   * @returns {HTMLElement[]}
+   * Find all thumbnail view
+   * @returns {YtThumbnailView[]}
    */
-  const findAllThumbnail = () => {
-    return Array.from(document.querySelectorAll('a#thumbnail')).filter(
-      isThumbnailElement,
+  findAllThumbnailView() {
+    return this.findAllThumbnail().map(thumbnailEl =>
+      YtThumbnailView(thumbnailEl),
     )
   }
 
-  return {
-    findAllThumbnailView,
+  /**
+   * Find all thumbnail elements
+   * @returns {HTMLElement[]}
+   */
+  findAllThumbnail() {
+    return Array.from(this.document.querySelectorAll('a#thumbnail')).filter(
+      isThumbnailElement,
+    )
   }
 }
