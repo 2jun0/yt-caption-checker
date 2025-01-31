@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import pack from '../package.json' assert { type: 'json' }
+import pack from '../package.json' with { type: 'json' }
 
 const browser = process.argv[2]
 
