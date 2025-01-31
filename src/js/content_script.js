@@ -8,7 +8,7 @@ import {
   Storage,
 } from './utils/Storage.js'
 
-const contentContext = ContentContext(document)
+const contentContext = new ContentContext(document)
 const ccTagPresenter = contentContext.ccTagPresenter()
 contentContext.init()
 

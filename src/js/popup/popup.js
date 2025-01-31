@@ -6,11 +6,11 @@ import {
   IS_COMBINED_REGION_FIELD,
   LANGUAGE_FIELD,
 } from '../utils/Storage.js'
-import { PopupContext } from './popupContext.js'
+import { PopupContext } from './PopupContext.js'
 
 localize()
 
-const popupContext = PopupContext(document, window.iro)
+const popupContext = new PopupContext(document, window.iro)
 popupContext.init()
 const storage = popupContext.storage()
 const ccTagLanguagePresenter = popupContext.ccTagLanguagePresenter()
