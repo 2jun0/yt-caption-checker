@@ -118,7 +118,7 @@ export const ContentContext = document => {
 
   const contentMessageListener = () => {
     if (!_contentMessageListener) {
-      _contentMessageListener = ContentMessageListener(ccTagPresenter())
+      _contentMessageListener = new ContentMessageListener(ccTagPresenter())
     }
 
     return _contentMessageListener

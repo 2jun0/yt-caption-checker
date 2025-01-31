@@ -25,7 +25,7 @@ export const MessageManager = () => {
    */
   const addOnMessageListener = listener => {
     chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
-      listener(req)
+      listener.handleMessage(req)
     })
   }
 
