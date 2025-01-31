@@ -4,37 +4,27 @@ import { CcTagModel } from '../model/CcTagModel.js'
 import { YtThumbnailViewManager } from './YtThumbnailViewManager.js'
 import { YtThumbnailView } from '../view/YtThumbnailView.js'
 
-/**
- * @typedef {Object} CcTagPresenter
- * @property {(ytThumbnailView: YtThumbnailView) => void} onThumbnailAdded
- * @property {function} onBackgroundColorUpdated
- * @property {function} onTextColorUpdated
- * @property {function} onFontSizeUpdated
- * @property {function} onLanguageUpdated
- * @property {function} onIsCombinedRegionUpdated
- */
+export class CcTagPresenter {
+  /**
+   * @param {CcTagFactory} ccTagFactory
+   * @param {CcTagFinder} ccTagFinder
+   * @param {YtThumbnailViewManager} ytThumbnailViewManager
+   * @param {CcTagModel} ccTagModel
+   */
+  constructor(ccTagFactory, ccTagFinder, ytThumbnailViewManager, ccTagModel) {
+    this.ccTagFactory = ccTagFactory
+    this.ccTagFinder = ccTagFinder
+    this.ytThumbnailViewManager = ytThumbnailViewManager
+    this.ccTagModel = ccTagModel
+  }
 
-/**
- * CC Tag Presenter
- * @param {CcTagFactory} ccTagFactory
- * @param {CcTagFinder} ccTagFinder
- * @param {YtThumbnailViewManager} ytThumbnailViewManager
- * @param {CcTagModel} ccTagModel
- * @returns {CcTagPresenter}
- */
-export const CcTagPresenter = (
-  ccTagFactory,
-  ccTagFinder,
-  ytThumbnailViewManager,
-  ccTagModel,
-) => {
   /**
    * on thumbnail added
    * @param {YtThumbnailView} ytThumbnailView
    */
-  const onThumbnailAdded = async ytThumbnailView => {
+  async onThumbnailAdded(ytThumbnailView) {
     if (!(await ytThumbnailView.hasCcTag())) {
-      checkCaptionsAndCreateCcTag(ytThumbnailView)
+      this.checkCaptionsAndCreateCcTag(ytThumbnailView)
     }
   }
 
@@ -42,9 +32,9 @@ export const CcTagPresenter = (
    * on background color updated
    * @param {string} backgroundColor
    */
-  const onBackgroundColorUpdated = backgroundColor => {
-    ccTagModel.setBackgroundColor(backgroundColor)
-    ccTagFinder.findAllCcTagViews().forEach(ccTagView => {
+  onBackgroundColorUpdated(backgroundColor) {
+    this.ccTagModel.setBackgroundColor(backgroundColor)
+    this.ccTagFinder.findAllCcTagViews().forEach(ccTagView => {
       ccTagView.setBackgroundColor(backgroundColor)
     })
   }
@@ -53,9 +43,9 @@ export const CcTagPresenter = (
    * on text color updated
    * @param {string} textColor
    */
-  const onTextColorUpdated = textColor => {
-    ccTagModel.setTextColor(textColor)
-    ccTagFinder.findAllCcTagViews().forEach(ccTagView => {
+  onTextColorUpdated(textColor) {
+    this.ccTagModel.setTextColor(textColor)
+    this.ccTagFinder.findAllCcTagViews().forEach(ccTagView => {
       ccTagView.setTextColor(textColor)
     })
   }
@@ -64,9 +54,9 @@ export const CcTagPresenter = (
    * on font size updated
    * @param {string} fontSize
    */
-  const onFontSizeUpdated = fontSize => {
-    ccTagModel.setFontSize(fontSize)
-    ccTagFinder.findAllCcTagViews().forEach(ccTagView => {
+  onFontSizeUpdated(fontSize) {
+    this.ccTagModel.setFontSize(fontSize)
+    this.ccTagFinder.findAllCcTagViews().forEach(ccTagView => {
       ccTagView.setFontSize(fontSize)
     })
   }
@@ -75,28 +65,28 @@ export const CcTagPresenter = (
    * on language updated
    * @param {string} language
    */
-  const onLanguageUpdated = language => {
-    ccTagModel.setLanguage(language)
+  onLanguageUpdated(language) {
+    this.ccTagModel.setLanguage(language)
     // remove previous all CC Tags
-    removeAllCcTag()
+    this.removeAllCcTag()
     // check if it has captions and create cc tags
-    ytThumbnailViewManager
+    this.ytThumbnailViewManager
       .findAllThumbnailView()
-      .forEach(checkCaptionsAndCreateCcTag)
+      .forEach(this.checkCaptionsAndCreateCcTag.bind(this))
   }
 
   /**
    * on is combined region updated
    * @param {boolean} isCombinedRegion
    */
-  const onIsCombinedRegionUpdated = isCombinedRegion => {
-    ccTagModel.setIsCombinedRegion(isCombinedRegion)
+  onIsCombinedRegionUpdated(isCombinedRegion) {
+    this.ccTagModel.setIsCombinedRegion(isCombinedRegion)
     // remove previous all CC Tags
-    removeAllCcTag()
+    this.removeAllCcTag()
     // check if it has captions and create cc tags
-    ytThumbnailViewManager
+    this.ytThumbnailViewManager
       .findAllThumbnailView()
-      .forEach(checkCaptionsAndCreateCcTag)
+      .forEach(this.checkCaptionsAndCreateCcTag.bind(this))
   }
 
   /**
@@ -104,7 +94,7 @@ export const CcTagPresenter = (
    * and create cc tag
    * @param {YtThumbnailView} ytThumbnailView
    */
-  const checkCaptionsAndCreateCcTag = async ytThumbnailView => {
+  async checkCaptionsAndCreateCcTag(ytThumbnailView) {
     const videoUrl = ytThumbnailView.getVideoUrl()
     // if thumbnail doesn't have url
     // pass, but IS IT REAL THUMBNAIL?
@@ -112,34 +102,25 @@ export const CcTagPresenter = (
       return
     }
 
-    const languages = ccTagModel.relatedLanguages()
+    const languages = this.ccTagModel.relatedLanguages()
 
-    if (await ccTagModel.hasCaptions(videoUrl, languages)) {
-      ytThumbnailView.insertCcTag(createCcTag())
+    if (await this.ccTagModel.hasCaptions(videoUrl, languages)) {
+      ytThumbnailView.insertCcTag(this.createCcTag())
     }
   }
 
-  const removeAllCcTag = () => {
-    ccTagFinder.findAllCcTagViews().forEach(ccTagView => {
+  removeAllCcTag() {
+    this.ccTagFinder.findAllCcTagViews().forEach(ccTagView => {
       ccTagView.remove()
     })
   }
 
-  const createCcTag = () => {
-    return ccTagFactory.createCcTagView(
-      ccTagModel.backgroundColor,
-      ccTagModel.textColor,
-      ccTagModel.fontSize,
-      ccTagModel.shownLanguage,
+  createCcTag() {
+    return this.ccTagFactory.createCcTagView(
+      this.ccTagModel.backgroundColor,
+      this.ccTagModel.textColor,
+      this.ccTagModel.fontSize,
+      this.ccTagModel.shownLanguage,
     )
-  }
-
-  return {
-    onThumbnailAdded,
-    onBackgroundColorUpdated,
-    onTextColorUpdated,
-    onFontSizeUpdated,
-    onLanguageUpdated,
-    onIsCombinedRegionUpdated,
   }
 }

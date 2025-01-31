@@ -105,7 +105,7 @@ export const ContentContext = document => {
 
   const ccTagPresenter = () => {
     if (!_ccTagPresenter) {
-      _ccTagPresenter = CcTagPresenter(
+      _ccTagPresenter = new CcTagPresenter(
         ccTagFactory(),
         ccTagFinder(),
         ytThumbnailViewManager(),
