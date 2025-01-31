@@ -15,18 +15,13 @@ export class CcTagLanguagePresenter {
   _ccTagLanguageModel = null
 
   /**
-   * Constructor
+   * Init
    * @param {CcTagLanguagePicker} ccTagLanguagePicker
    * @param {CcTagCombineRegionCheckBox} ccTagCombineRegionCheckBox
    * @param {CcTagPreview} ccTagPreview
    * @param {CcTagLanguageModel} model
    */
-  constructor(
-    ccTagLanguagePicker,
-    ccTagCombineRegionCheckBox,
-    ccTagPreview,
-    model,
-  ) {
+  init(ccTagLanguagePicker, ccTagCombineRegionCheckBox, ccTagPreview, model) {
     this._ccTagLanguagePicker = ccTagLanguagePicker
     this._ccTagCombineRegionCheckBox = ccTagCombineRegionCheckBox
     this._ccTagPreview = ccTagPreview

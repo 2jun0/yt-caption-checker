@@ -12,7 +12,7 @@ export class CcTagTextColorModel {
    * @param {Storage} stoarge
    * @param {MessageManager} messageManager
    */
-  constructor(stoarge, messageManager) {
+  init(stoarge, messageManager) {
     this._storage = stoarge
     this._messageManager = messageManager
   }

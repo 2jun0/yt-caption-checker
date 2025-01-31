@@ -14,11 +14,11 @@ export class CcTagLanguageModel {
   _isCombinedRegion = null
 
   /**
-   * Constructor
+   * Init
    * @param {Storage} storage
    * @param {MessageManager} messageManager
    */
-  constructor(storage, messageManager) {
+  init(storage, messageManager) {
     this._storage = storage
     this._messageManager = messageManager
   }
