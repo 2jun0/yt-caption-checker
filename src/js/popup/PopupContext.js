@@ -21,7 +21,7 @@ import { CcTagTextColorPicker } from './ccTagTextColor/CcTagTextColorPicker.js'
 import { CcTagTextColorModel } from './ccTagTextColor/CcTagTextColorModel.js'
 
 import { MessageManager } from '../utils/MessageManager.js'
-import { Storage } from '../utils/Storage.js'
+import { Storage } from '../store/Storage.js'
 import { langs } from '../utils/lang.js'
 
 export class PopupContext {

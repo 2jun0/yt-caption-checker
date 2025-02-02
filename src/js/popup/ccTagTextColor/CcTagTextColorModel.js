@@ -1,5 +1,6 @@
 import { MessageManager } from '../../utils/MessageManager.js'
-import { COLOR_TXT_FIELD, Storage } from '../../utils/Storage.js'
+import { Storage } from '../../store/Storage.js'
+import { COLOR_TXT_FIELD } from '../../store/contants.js'
 
 export class CcTagTextColorModel {
   /** @type {Storage} */

@@ -1,12 +1,10 @@
-import { EXTENSION_NAME } from './common.js'
-
-export const COLOR_BG_FIELD = `${EXTENSION_NAME}_color-bg`
-export const COLOR_TXT_FIELD = `${EXTENSION_NAME}_color-txt`
-export const CC_PREVIEW_FONT_SIZE_FIELD = `${EXTENSION_NAME}_tag-font-size`
-export const IS_COMBINED_REGION_FIELD = `${EXTENSION_NAME}_combine-region`
-export const LANGUAGE_FIELD = `${EXTENSION_NAME}_lang`
-
-export const FIELD_VIDEO_LANG_LIST_URL = `${EXTENSION_NAME}_video-lang-list-url`
+import {
+  COLOR_BG_FIELD,
+  COLOR_TXT_FIELD,
+  CC_PREVIEW_FONT_SIZE_FIELD,
+  IS_COMBINED_REGION_FIELD,
+  LANGUAGE_FIELD,
+} from './contants.js'
 
 export const DEFAULT_VALUE = {
   [COLOR_BG_FIELD]: '#00000099',

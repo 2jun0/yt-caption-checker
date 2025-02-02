@@ -4,7 +4,7 @@ import {
   COLOR_TXT_FIELD,
   IS_COMBINED_REGION_FIELD,
   LANGUAGE_FIELD,
-} from '../../utils/Storage.js'
+} from '../../store/contants.js'
 import { CcTagPresenter } from './CcTagPresenter.js'
 
 export class ContentMessageListener {

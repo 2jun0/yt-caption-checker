@@ -5,8 +5,8 @@ import {
   CC_PREVIEW_FONT_SIZE_FIELD,
   IS_COMBINED_REGION_FIELD,
   LANGUAGE_FIELD,
-  Storage,
-} from './utils/Storage.js'
+} from './store/contants.js'
+import { Storage } from './store/Storage.js'
 
 const contentContext = new ContentContext(document)
 const ccTagPresenter = contentContext.ccTagPresenter()

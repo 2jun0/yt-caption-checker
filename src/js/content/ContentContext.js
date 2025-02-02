@@ -3,10 +3,10 @@ import {
   CC_PREVIEW_FONT_SIZE_FIELD,
   COLOR_BG_FIELD,
   COLOR_TXT_FIELD,
-  DEFAULT_VALUE,
   IS_COMBINED_REGION_FIELD,
   LANGUAGE_FIELD,
-} from '../utils/Storage.js'
+} from '../store/contants.js'
+import { DEFAULT_VALUE } from '../store/Storage.js'
 import { CcTagModel } from './model/CcTagModel.js'
 import { CcTagFactory } from './presenter/CcTagFactory.js'
 import { CcTagFinder } from './presenter/CcTagFinder.js'

@@ -1,5 +1,6 @@
 import { MessageManager } from '../../utils/MessageManager.js'
-import { CC_PREVIEW_FONT_SIZE_FIELD, Storage } from '../../utils/Storage.js'
+import { Storage } from '../../store/Storage.js'
+import { CC_PREVIEW_FONT_SIZE_FIELD } from '../../store/contants.js'
 
 export class CcTagFontSizeModel {
   /** @type {Storage} */
