@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
-import pkg from '../package.json' assert { type: 'json' }
+import pkg from '../package.json' with { type: 'json' }
 import archiver from 'archiver'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
