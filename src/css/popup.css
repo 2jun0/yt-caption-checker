@@ -19,7 +19,6 @@ popup-multi-page-menu {
   padding: 8px 0;
   font-size: 0.9rem;
   font-weight: 400;
-  line-height: 2rem;
   letter-spacing: 0.2px;
 }
 
@@ -27,7 +26,8 @@ popup-multi-page-menu {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-#items {
+.items {
+  line-height: 2rem;
 }
 
 popup-item-page {
