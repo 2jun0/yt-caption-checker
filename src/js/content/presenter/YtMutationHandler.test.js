@@ -17,16 +17,16 @@ describe('YtMutationHandler', () => {
 
   it('should call the `onThumbnailAdded` method of `CcTagPresenter` with a `YtThumbnailView` object if the mutation target is a thumbnail', async () => {
     const thumbnailEl = {
-      tagName: 'A',
-      id: 'thumbnail',
-      href: 'https://www.youtube.com/watch?v=123456',
-      parentElement: {
-        tagName: 'NON-YTD-PLAYLIST-THUMBNAIL',
-      },
+      tagName: 'YTD-THUMBNAIL',
+      querySelector: () => ({
+        tagName: 'A',
+        id: 'thumbnail',
+        href: 'https://www.youtube.com/watch?v=123456',
+      }),
     }
     const mutations = [
       {
-        target: thumbnailEl,
+        target: { querySelectorAll: () => [thumbnailEl] },
       },
     ]
 
@@ -39,68 +39,20 @@ describe('YtMutationHandler', () => {
     const nonThumbnailEls = [
       {
         tagName: 'DIV',
-        id: 'thumbnail',
-        href: 'https://www.youtube.com/watch?v=123456',
-        parentElement: {
-          tagName: 'NON-YTD-PLAYLIST-THUMBNAIL',
-        },
+        querySelector: () => null,
       },
       {
         tagName: 'A',
         id: 'video',
         href: 'https://www.youtube.com/watch?v=123456',
-        parentElement: {
-          tagName: 'NON-YTD-PLAYLIST-THUMBNAIL',
-        },
+        querySelector: () => null,
       },
     ]
-    const mutations = nonThumbnailEls.map(el => {
-      return {
-        target: el,
-      }
-    })
+    const mutations = nonThumbnailEls.map(el => ({
+      target: { querySelectorAll: () => [el] },
+    }))
 
     ytMutationHandler.handleMutations(mutations)
-
-    expect(ccTagPresenter.onThumbnailAdded).not.toHaveBeenCalled()
-  })
-
-  it('should not call the `onThumbnailAdded` method of `CcTagPresenter` if the mutation target is in a playlist', async () => {
-    const thumbnailElInPlaylist = {
-      tagName: 'A',
-      id: 'thumbnail',
-      href: 'https://www.youtube.com/watch?v=123456',
-      parentElement: {
-        tagName: 'YTD-PLAYLIST-THUMBNAIL',
-      },
-    }
-    const mutations = [
-      {
-        target: thumbnailElInPlaylist,
-      },
-    ]
-
-    new YtMutationHandler(ccTagPresenter).handleMutations(mutations)
-
-    expect(ccTagPresenter.onThumbnailAdded).not.toHaveBeenCalled()
-  })
-
-  it("should not call the `onThumbnailAdded` method of `CcTagPresenter` if the mutation target doesn't have varified url", async () => {
-    const thumbnailElInPlaylist = {
-      tagName: 'A',
-      id: 'thumbnail',
-      href: 'https://www.youtube.com/shorts/123456',
-      parentElement: {
-        tagName: 'non-YTD-PLAYLIST-THUMBNAIL',
-      },
-    }
-    const mutations = [
-      {
-        target: thumbnailElInPlaylist,
-      },
-    ]
-
-    new YtMutationHandler(ccTagPresenter).handleMutations(mutations)
 
     expect(ccTagPresenter.onThumbnailAdded).not.toHaveBeenCalled()
   })

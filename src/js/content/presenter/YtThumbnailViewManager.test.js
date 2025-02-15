@@ -9,9 +9,12 @@ describe('YtThumbnailViewManager', () => {
 
   beforeEach(() => {
     const thumbnailEl = {
-      tagName: 'A',
-      id: 'thumbnail',
-      href: 'https://www.youtube.com/watch?v=123456',
+      tagName: 'YTD-THUMBNAIL',
+      querySelector: () => ({
+        tagName: 'A',
+        id: 'thumbnail',
+        href: 'https://www.youtube.com/watch?v=123456',
+      }),
     }
     document = {
       querySelectorAll: jest

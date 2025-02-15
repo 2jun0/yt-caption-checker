@@ -1,4 +1,8 @@
-import { YtThumbnailView, isThumbnailElement } from '../view/YtThumbnailView.js'
+import {
+  YT_THUMBNAIL_SELECTOR,
+  YtThumbnailView,
+  isThumbnailElement,
+} from '../view/YtThumbnailView.js'
 
 export class YtThumbnailViewManager {
   /**
@@ -13,7 +17,7 @@ export class YtThumbnailViewManager {
    * @returns {YtThumbnailView[]}
    */
   findAllThumbnailView() {
-    return this.findAllThumbnail().map(
+    return this.findAllThumbnailEls().map(
       thumbnailEl => new YtThumbnailView(thumbnailEl),
     )
   }
@@ -22,9 +26,9 @@ export class YtThumbnailViewManager {
    * Find all thumbnail elements
    * @returns {HTMLElement[]}
    */
-  findAllThumbnail() {
-    return Array.from(this.document.querySelectorAll('a#thumbnail')).filter(
-      isThumbnailElement,
-    )
+  findAllThumbnailEls() {
+    return Array.from(
+      this.document.querySelectorAll(YT_THUMBNAIL_SELECTOR),
+    ).filter(isThumbnailElement)
   }
 }

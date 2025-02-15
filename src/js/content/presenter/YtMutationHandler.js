@@ -1,5 +1,9 @@
 import { CcTagPresenter } from './CcTagPresenter.js'
-import { YtThumbnailView, isThumbnailElement } from '../view/YtThumbnailView.js'
+import {
+  YT_THUMBNAIL_SELECTOR,
+  YtThumbnailView,
+  isThumbnailElement,
+} from '../view/YtThumbnailView.js'
 
 /**
  * YouTube Mutation Handler
@@ -23,22 +27,17 @@ export class YtMutationHandler {
    * @param {MutationRecord[]} mutations
    */
   handleMutations(mutations) {
-    mutations.forEach(async mutation => {
+    mutations.forEach(mutation => {
       const targetEl = mutation.target
 
-      if (isThumbnailElement(targetEl) && !this._isInPlayList(targetEl)) {
-        const ytThumbnailView = new YtThumbnailView(targetEl)
-        this.ccTagPresenter.onThumbnailAdded(ytThumbnailView)
-      }
+      targetEl
+        .querySelectorAll(YT_THUMBNAIL_SELECTOR)
+        .forEach(ytThumbnailEl => {
+          if (isThumbnailElement(ytThumbnailEl)) {
+            const ytThumbnailView = new YtThumbnailView(ytThumbnailEl)
+            this.ccTagPresenter.onThumbnailAdded(ytThumbnailView)
+          }
+        })
     })
-  }
-
-  /**
-   * Check if element is in playlist
-   * @param {HTMLElement} el
-   * @returns {boolean}
-   */
-  _isInPlayList(el) {
-    return el.parentElement.tagName == 'YTD-PLAYLIST-THUMBNAIL'
   }
 }

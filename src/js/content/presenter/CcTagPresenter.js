@@ -95,12 +95,7 @@ export class CcTagPresenter {
    * @param {YtThumbnailView} ytThumbnailView
    */
   async checkCaptionsAndCreateCcTag(ytThumbnailView) {
-    const videoUrl = ytThumbnailView.getVideoUrl()
-    // if thumbnail doesn't have url
-    // pass, but IS IT REAL THUMBNAIL?
-    if (!videoUrl) {
-      return
-    }
+    const videoUrl = ytThumbnailView.videoUrl
 
     const languages = this.ccTagModel.relatedLanguages
 

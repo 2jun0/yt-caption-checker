@@ -1,17 +1,15 @@
 import { InvalidYouTubeThumnailElementError } from '../../utils/errors.js'
 import { CC_TAG_ID, CcTagView } from './CcTagView.js'
 
+export const YT_THUMBNAIL_SELECTOR = 'YTD-THUMBNAIL'
+
 /**
  * Check If Element is ThumbnailElement
  * @param {HTMLElement} el
  */
 export const isThumbnailElement = el => {
-  return (
-    el.tagName == 'A' &&
-    el.id == 'thumbnail' &&
-    el.href &&
-    el.href.match(/\?v=([\w-]+)/)
-  )
+  const aTag = el.querySelector('A#thumbnail')
+  return aTag && aTag.href && aTag.href.match(/\?v=([\w-]+)/)
 }
 
 export class YtThumbnailView {
@@ -20,11 +18,10 @@ export class YtThumbnailView {
    */
   constructor(thumbnailEl) {
     this.thumbnailEl = thumbnailEl
-    this._overlays = null
 
-    this._validateThumbnailElementTagName()
-    this._validateThumbnailElementId()
-    this._validateThumbnailElementHref()
+    this._validateYtThumbnailElementTagName()
+    this._videoUrl = this._validateVideoUrl()
+    this._overlays = null
   }
 
   /**
@@ -51,11 +48,10 @@ export class YtThumbnailView {
   }
 
   /**
-   * Get video URL
    * @returns {string}
    */
-  getVideoUrl() {
-    return this.thumbnailEl.href
+  get videoUrl() {
+    return this._videoUrl
   }
 
   /**
@@ -102,26 +98,24 @@ export class YtThumbnailView {
     })
   }
 
-  _validateThumbnailElementTagName() {
-    if (this.thumbnailEl.tagName !== 'A') {
+  /**
+   * @returns {string}
+   */
+  _validateVideoUrl() {
+    const aTag = this.thumbnailEl.querySelector('A#thumbnail')
+    if (!aTag || !aTag.href || !aTag.href.match(/\?v=([\w-]+)/)) {
       throw new InvalidYouTubeThumnailElementError(
-        `tag name of thumbnail element is not 'A' (it is ${this.thumbnailEl.tagName})`,
+        `the thumbnail hasn't video url`,
       )
     }
+
+    return aTag.href
   }
 
-  _validateThumbnailElementId() {
-    if (this.thumbnailEl.id !== 'thumbnail') {
+  _validateYtThumbnailElementTagName() {
+    if (this.thumbnailEl.tagName != YT_THUMBNAIL_SELECTOR) {
       throw new InvalidYouTubeThumnailElementError(
-        `id of thumbnail element is not 'thumbnail' (it is ${this.thumbnailEl.id})`,
-      )
-    }
-  }
-
-  _validateThumbnailElementHref() {
-    if (!this.thumbnailEl.href) {
-      throw new InvalidYouTubeThumnailElementError(
-        `thumbnail element hasn't href property`,
+        `the thumbnail's tag name isn't ${YT_THUMBNAIL_SELECTOR}`,
       )
     }
   }

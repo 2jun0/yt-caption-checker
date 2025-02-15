@@ -138,6 +138,7 @@ export class ContentContext {
       )
       this._mutationObserver.observe(this.document.body, {
         subtree: true,
+        childList: true,
         attributeFilter: ['href'],
       })
     }

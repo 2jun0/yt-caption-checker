@@ -2,36 +2,66 @@ import { InvalidYouTubeThumnailElementError } from '../../utils/errors.js'
 import { YtThumbnailView } from './YtThumbnailView.js'
 import { jest } from '@jest/globals'
 
+const validAEl = {
+  tagName: 'A',
+  id: 'thumbnail',
+  href: 'https://www.youtube.com/watch?v=123456',
+}
+
+const invalidAEls = [
+  {
+    tagName: 'nonA',
+    id: 'nonthumbnail',
+    href: 'https://www.youtube.com/watch?v=123456',
+  },
+  {
+    tagName: 'A',
+    id: 'thumbnail',
+    href: 'https://www.youtube.com/watch?v=123456',
+  },
+  {
+    tagName: 'A',
+    id: 'thumbnail',
+  },
+  {
+    tagName: 'A',
+    id: 'thumbnail',
+    href: 'https://www.mytube.com/see?v=123456',
+  },
+]
+
 describe('YtThumbnailView', () => {
   describe('preconditions', () => {
-    it('should throw error if thumbnail element is not a tag', () => {
-      const nonThumbnailEl = {
-        tagName: 'nonA',
-        id: 'thumbnail',
-        href: 'https://www.youtube.com/watch?v=123456',
+    it("should throw error if thumbnail element hasn't an A tag", () => {
+      const thumbnailEl = {
+        tagName: 'YTD-THUMBNAIL',
+        querySelector: () => null,
       }
-      expect(() => new YtThumbnailView(nonThumbnailEl)).toThrowError(
+      expect(() => new YtThumbnailView(thumbnailEl)).toThrowError(
         InvalidYouTubeThumnailElementError,
       )
     })
 
-    it("should throw error if thumbnail element doesn' have thumbnail id", () => {
-      const nonThumbnailEl = {
-        tagName: 'A',
-        id: 'non-thumbnail',
-        href: 'https://www.youtube.com/watch?v=123456',
-      }
-      expect(() => new YtThumbnailView(nonThumbnailEl)).toThrowError(
-        InvalidYouTubeThumnailElementError,
-      )
-    })
+    test.each(
+      invalidAEls.map(el => [el]),
+      ('should throw error if thumbnail element has an invalid A tag',
+      aTag => {
+        const thumbnailEl = {
+          tagName: 'YTD-THUMBNAIL',
+          querySelector: () => aTag,
+        }
+        expect(() => new YtThumbnailView(thumbnailEl)).toThrowError(
+          InvalidYouTubeThumnailElementError,
+        )
+      }),
+    )
 
-    it("should throw error if thumbnail element doesn' have href", () => {
-      const nonThumbnailEl = {
-        tagName: 'A',
-        id: 'thumbnail',
+    it("should throw error if thumbnail element's tag name is invalid", () => {
+      const thumbnailEl = {
+        tagName: 'NON-YTD-THUMBNAIL',
+        querySelector: () => validAEl,
       }
-      expect(() => new YtThumbnailView(nonThumbnailEl)).toThrowError(
+      expect(() => new YtThumbnailView(thumbnailEl)).toThrowError(
         InvalidYouTubeThumnailElementError,
       )
     })
@@ -39,15 +69,12 @@ describe('YtThumbnailView', () => {
 
   it('should return the video url', () => {
     const thumbnailEl = {
-      tagName: 'A',
-      id: 'thumbnail',
-      href: 'https://www.youtube.com/watch?v=123456',
+      tagName: 'YTD-THUMBNAIL',
+      querySelector: () => validAEl,
     }
     const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
-    expect(ytThumbnailView.getVideoUrl()).toBe(
-      'https://www.youtube.com/watch?v=123456',
-    )
+    expect(ytThumbnailView.videoUrl).toBe(validAEl.href)
   })
 
   it('should insert cc tag to overlays', async () => {
@@ -57,15 +84,14 @@ describe('YtThumbnailView', () => {
       insertBefore: jest.fn(),
     }
     const thumbnailEl = {
-      tagName: 'A',
-      id: 'thumbnail',
-      href: 'https://www.youtube.com/watch?v=123456',
-      querySelector: () => overlays,
+      tagName: 'YTD-THUMBNAIL',
+      querySelector: () => validAEl,
     }
+    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
+    thumbnailEl.querySelector = () => overlays
     const ccTagView = {
       ccTagElement: () => {},
     }
-    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
     await ytThumbnailView.insertCcTag(ccTagView)
     expect(overlays.insertBefore).toBeCalled()
@@ -78,12 +104,14 @@ describe('YtThumbnailView', () => {
       insertBefore: jest.fn(),
     }
     const thumbnailEl = {
-      tagName: 'A',
-      id: 'thumbnail',
-      href: 'https://www.youtube.com/watch?v=123456',
-      querySelector: () => overlays,
+      tagName: 'YTD-THUMBNAIL',
+      querySelector: () => validAEl,
     }
     const ytThumbnailView = new YtThumbnailView(thumbnailEl)
+    thumbnailEl.querySelector = () => overlays
+    const ccTagView = {
+      ccTagElement: () => {},
+    }
 
     expect(await ytThumbnailView.hasCcTag()).toBe(true)
   })
@@ -95,12 +123,14 @@ describe('YtThumbnailView', () => {
       insertBefore: jest.fn(),
     }
     const thumbnailEl = {
-      tagName: 'A',
-      id: 'thumbnail',
-      href: 'https://www.youtube.com/watch?v=123456',
-      querySelector: () => overlays,
+      tagName: 'YTD-THUMBNAIL',
+      querySelector: () => validAEl,
     }
     const ytThumbnailView = new YtThumbnailView(thumbnailEl)
+    thumbnailEl.querySelector = () => overlays
+    const ccTagView = {
+      ccTagElement: () => {},
+    }
 
     expect(await ytThumbnailView.hasCcTag()).toBe(false)
   })
