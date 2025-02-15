@@ -26,5 +26,9 @@
   "combineRegion": {
     "message": "Combine region",
     "description": "Label name for Combine region"
-  }
+  },
+  "filteringVideos": {
+    "message": "Filtering Videos",
+    "description": "Shows only videos that has captions"
+}
 }

@@ -5,6 +5,7 @@ import {
   COLOR_TXT_FIELD,
   IS_COMBINED_REGION_FIELD,
   LANGUAGE_FIELD,
+  IS_FILTERING_VIDEOS_FIELD,
 } from '../store/contants.js'
 import { PopupContext } from './PopupContext.js'
 
@@ -18,6 +19,7 @@ const ccTagBackgroundColorPresenter =
   popupContext.ccTagBackgroundColorPresenter()
 const ccTagTextColorPresenter = popupContext.ccTagTextColorPresenter()
 const ccTagFontSizePresenter = popupContext.ccTagFontSizePresenter()
+const ytFilterVideosPresenter = popupContext.ytFilterVideosPresenter()
 
 storage.loadData(
   [
@@ -26,6 +28,7 @@ storage.loadData(
     COLOR_TXT_FIELD,
     CC_PREVIEW_FONT_SIZE_FIELD,
     IS_COMBINED_REGION_FIELD,
+    IS_FILTERING_VIDEOS_FIELD,
   ],
   items => {
     ccTagLanguagePresenter.setLanguage(items[LANGUAGE_FIELD])
@@ -33,5 +36,6 @@ storage.loadData(
     ccTagBackgroundColorPresenter.setBackgroundColor(items[COLOR_BG_FIELD])
     ccTagTextColorPresenter.setTextColor(items[COLOR_TXT_FIELD])
     ccTagFontSizePresenter.setFontSize(items[CC_PREVIEW_FONT_SIZE_FIELD])
+    ytFilterVideosPresenter.setFilterVideos(items[IS_FILTERING_VIDEOS_FIELD])
   },
 )

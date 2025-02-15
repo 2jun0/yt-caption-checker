@@ -23,6 +23,9 @@ import { CcTagTextColorModel } from './ccTagTextColor/CcTagTextColorModel.js'
 import { MessageManager } from '../utils/MessageManager.js'
 import { Storage } from '../store/Storage.js'
 import { langs } from '../utils/lang.js'
+import { YtFilterVideosCheckBox } from './ytFilterVidoes/YtFilterVideosCheckBox.js'
+import { YtFilterVideoModel } from './ytFilterVidoes/YtFilterVidoesModel.js'
+import { YtFilterVideosPresenter } from './ytFilterVidoes/YtFilterVideosPresenter.js'
 
 export class PopupContext {
   /** common */
@@ -51,6 +54,11 @@ export class PopupContext {
   _ccTagTextColorPicker = null
   _ccTagTextColorPresenter = null
   _ccTagTextColorModel = null
+
+  /** yt filter videos */
+  _ytFilterVideosCheckbox = null
+  _ytFilterVideosPresenter = null
+  _ytFilterVideosModel = null
 
   _storage = null
   _messageManager = null
@@ -273,6 +281,37 @@ export class PopupContext {
     }
 
     return this._ccTagTextColorModel
+  }
+
+  /** yt filter videos */
+  ytFilterVideosPresenter() {
+    if (!this._ytFilterVideosPresenter) {
+      this._ytFilterVideosPresenter = new YtFilterVideosPresenter()
+      this._ytFilterVideosPresenter.init(
+        this.ytFilterVideosCheckbox(),
+        this.ytFilterVideosModel(),
+      )
+    }
+
+    return this._ytFilterVideosPresenter
+  }
+
+  ytFilterVideosModel() {
+    if (!this._ytFilterVideosModel) {
+      this._ytFilterVideosModel = new YtFilterVideoModel()
+      this._ytFilterVideosModel.init(this.storage(), this.messageManager())
+    }
+
+    return this._ytFilterVideosModel
+  }
+
+  ytFilterVideosCheckbox() {
+    if (!this._ytFilterVideosCheckbox) {
+      this._ytFilterVideosCheckbox = new YtFilterVideosCheckBox(this.document)
+      this._ytFilterVideosCheckbox.init(this.ytFilterVideosPresenter())
+    }
+
+    return this._ytFilterVideosCheckbox
   }
 
   storage() {

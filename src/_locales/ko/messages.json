@@ -26,5 +26,9 @@
   "combineRegion": {
     "message": "지역언어 통합",
     "description": "지역언어의 레이블 이름"
+  },
+  "filteringVideos": {
+    "message": "동영상 필터링",
+    "description": "자막이 있는 동영상만 보여줍니다."
   }
 }

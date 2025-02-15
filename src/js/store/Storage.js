@@ -4,6 +4,7 @@ import {
   CC_PREVIEW_FONT_SIZE_FIELD,
   IS_COMBINED_REGION_FIELD,
   LANGUAGE_FIELD,
+  IS_FILTERING_VIDEOS_FIELD,
 } from './contants.js'
 
 export const DEFAULT_VALUE = {
@@ -12,6 +13,7 @@ export const DEFAULT_VALUE = {
   [CC_PREVIEW_FONT_SIZE_FIELD]: '1.3rem',
   [IS_COMBINED_REGION_FIELD]: true,
   [LANGUAGE_FIELD]: 'en',
+  [IS_FILTERING_VIDEOS_FIELD]: false,
 }
 
 export class Storage {

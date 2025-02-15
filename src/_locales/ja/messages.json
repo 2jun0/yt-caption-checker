@@ -26,5 +26,9 @@
   "combineRegion": {
     "message": "地域言語統合",
     "description": "地域言語統合のラベルネーム"
+  },
+  "filteringVideos": {
+    "message": "動画フィルタリング",
+    "description": "字幕付きの動画のみを表示します。"
   }
 }
