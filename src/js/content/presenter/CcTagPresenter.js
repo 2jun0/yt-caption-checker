@@ -3,6 +3,8 @@ import { CcTagFinder } from './CcTagFinder.js'
 import { CcTagModel } from '../model/CcTagModel.js'
 import { YtThumbnailViewManager } from './YtThumbnailViewManager.js'
 import { YtThumbnailView } from '../view/YtThumbnailView.js'
+import { YtVideoModel } from '../model/YtVideoModel.js'
+import { YtPlaylistView } from '../view/YtPlaylistView.js'
 
 export class CcTagPresenter {
   /**
@@ -10,12 +12,20 @@ export class CcTagPresenter {
    * @param {CcTagFinder} ccTagFinder
    * @param {YtThumbnailViewManager} ytThumbnailViewManager
    * @param {CcTagModel} ccTagModel
+   * @param {YtVideoModel} ytVideoModel
    */
-  constructor(ccTagFactory, ccTagFinder, ytThumbnailViewManager, ccTagModel) {
+  constructor(
+    ccTagFactory,
+    ccTagFinder,
+    ytThumbnailViewManager,
+    ccTagModel,
+    ytVideoModel,
+  ) {
     this.ccTagFactory = ccTagFactory
     this.ccTagFinder = ccTagFinder
     this.ytThumbnailViewManager = ytThumbnailViewManager
     this.ccTagModel = ccTagModel
+    this.ytVideoModel = ytVideoModel
   }
 
   /**
@@ -23,9 +33,21 @@ export class CcTagPresenter {
    * @param {YtThumbnailView} ytThumbnailView
    */
   async onThumbnailAdded(ytThumbnailView) {
-    if (!(await ytThumbnailView.hasCcTag())) {
-      this.checkCaptionsAndCreateCcTag(ytThumbnailView)
+    await this.updateVisible(ytThumbnailView)
+
+    if (await ytThumbnailView.hasCcTag()) {
+      return
     }
+
+    await this.checkCaptionsAndCreateCcTag(ytThumbnailView)
+  }
+
+  /**
+   * on playlist added
+   * @param {YtPlaylistView} ytPlaylistView
+   */
+  async onPlaylistAdded(ytPlaylistView) {
+    await ytPlaylistView.setVisible(!this.ytVideoModel.isFilteringVideos)
   }
 
   /**
@@ -65,28 +87,61 @@ export class CcTagPresenter {
    * on language updated
    * @param {string} language
    */
-  onLanguageUpdated(language) {
+  async onLanguageUpdated(language) {
+    if (this.ccTagModel.language == language) return
+
     this.ccTagModel.setLanguage(language)
     // remove previous all CC Tags
     this.removeAllCcTag()
     // check if it has captions and create cc tags
-    this.ytThumbnailViewManager
-      .findAllThumbnailView()
-      .forEach(this.checkCaptionsAndCreateCcTag.bind(this))
+    const ytThumbnailViews = this.ytThumbnailViewManager.findAllThumbnailView()
+    await Promise.all(
+      ytThumbnailViews.map(this.checkCaptionsAndCreateCcTag.bind(this)),
+    )
+    // update thumbnails visible
+    await Promise.all(ytThumbnailViews.map(this.updateVisible.bind(this)))
   }
 
   /**
-   * on is combined region updated
+   * on combine region updated
    * @param {boolean} isCombinedRegion
    */
-  onIsCombinedRegionUpdated(isCombinedRegion) {
+  async onIsCombinedRegionUpdated(isCombinedRegion) {
+    if (this.ccTagModel.isCombinedRegion == isCombinedRegion) return
+
     this.ccTagModel.setIsCombinedRegion(isCombinedRegion)
     // remove previous all CC Tags
     this.removeAllCcTag()
     // check if it has captions and create cc tags
-    this.ytThumbnailViewManager
-      .findAllThumbnailView()
-      .forEach(this.checkCaptionsAndCreateCcTag.bind(this))
+    const ytThumbnailViews = this.ytThumbnailViewManager.findAllThumbnailView()
+    await Promise.all(
+      ytThumbnailViews.map(this.checkCaptionsAndCreateCcTag.bind(this)),
+    )
+    // update thumbnails visible
+    await Promise.all(ytThumbnailViews.map(this.updateVisible.bind(this)))
+  }
+
+  /**
+   * on filter videos updated
+   * @param {boolean} isFilteringVideos
+   */
+  async onIsFilteringVideosUpdated(isFilteringVideos) {
+    if (this.ytVideoModel.isFilteringVideos == isFilteringVideos) return
+
+    this.ytVideoModel.setFilteringVideos(isFilteringVideos)
+
+    await Promise.all(
+      this.ytThumbnailViewManager
+        .findAllPlaylistViews()
+        .map(ytPlaylistView =>
+          ytPlaylistView.setVisible(!this.ytVideoModel.isFilteringVideos),
+        ),
+    )
+    await Promise.all(
+      this.ytThumbnailViewManager
+        .findAllThumbnailView()
+        .map(this.updateVisible.bind(this)),
+    )
   }
 
   /**
@@ -100,7 +155,18 @@ export class CcTagPresenter {
     const languages = this.ccTagModel.relatedLanguages
 
     if (await this.ccTagModel.hasCaptions(videoUrl, languages)) {
-      ytThumbnailView.insertCcTag(this.createCcTag())
+      await ytThumbnailView.insertCcTag(this.createCcTag())
+    }
+  }
+
+  /**
+   * @param {YtThumbnailView} ytThumbnailView
+   */
+  async updateVisible(ytYhumbnailView) {
+    if (this.ytVideoModel.isFilteringVideos) {
+      ytYhumbnailView.setVisibleWithVideo(await ytYhumbnailView.hasCcTag())
+    } else {
+      ytYhumbnailView.setVisibleWithVideo(true)
     }
   }
 

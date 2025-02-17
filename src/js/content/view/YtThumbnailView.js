@@ -22,6 +22,7 @@ export class YtThumbnailView {
     this._validateYtThumbnailElementTagName()
     this._videoUrl = this._validateVideoUrl()
     this._overlays = null
+    this._container = null
   }
 
   /**
@@ -34,6 +35,17 @@ export class YtThumbnailView {
     if (!overlays || (await this.hasCcTag())) return
 
     overlays.insertBefore(ccTagView.ccTagElement(), overlays.lastChild)
+  }
+
+  async setVisibleWithVideo(visible) {
+    const container = await this._getVideoContainer()
+    if (!container) return
+
+    if (visible) {
+      container.style.display = null
+    } else {
+      container.style.display = 'none'
+    }
   }
 
   /**
@@ -52,6 +64,27 @@ export class YtThumbnailView {
    */
   get videoUrl() {
     return this._videoUrl
+  }
+
+  /**
+   * Get a video container that the thumbnail element belongs to
+   * @returns {Promise<HTMLElement>}
+   */
+  async _getVideoContainer() {
+    if (!this._container) {
+      this._container = this.thumbnailEl.parentElement
+      while (
+        this._container &&
+        this._container.tagName != 'YTD-GRID-VIDEO-RENDERER' &&
+        this._container.tagName != 'YTD-VIDEO-RENDERER' &&
+        this._container.tagName != 'YTD-RICH-ITEM-RENDERER' &&
+        this._container.tagName != 'YTD-COMPACT-VIDEO-RENDERER'
+      ) {
+        this._container = this._container.parentElement
+      }
+    }
+
+    return this._container
   }
 
   /**

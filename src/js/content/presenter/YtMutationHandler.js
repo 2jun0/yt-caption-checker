@@ -4,6 +4,7 @@ import {
   YtThumbnailView,
   isThumbnailElement,
 } from '../view/YtThumbnailView.js'
+import { YT_PLAYLIST_SELECTOR, YtPlaylistView } from '../view/YtPlaylistView.js'
 
 /**
  * YouTube Mutation Handler
@@ -38,6 +39,11 @@ export class YtMutationHandler {
             this.ccTagPresenter.onThumbnailAdded(ytThumbnailView)
           }
         })
+
+      targetEl.querySelectorAll(YT_PLAYLIST_SELECTOR).forEach(playlistEl => {
+        const ytPlaylistView = new YtPlaylistView(playlistEl)
+        this.ccTagPresenter.onPlaylistAdded(ytPlaylistView)
+      })
     })
   }
 }

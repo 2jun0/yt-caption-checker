@@ -67,6 +67,14 @@ export class CcTagModel {
       : [this._language]
   }
 
+  get isCombinedRegion() {
+    return this._isCombinedRegion
+  }
+
+  get language() {
+    return this._language
+  }
+
   /**
    * Checks if the video has captions
    * @param {string} videoUrl

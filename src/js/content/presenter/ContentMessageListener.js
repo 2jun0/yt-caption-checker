@@ -3,6 +3,7 @@ import {
   COLOR_BG_FIELD,
   COLOR_TXT_FIELD,
   IS_COMBINED_REGION_FIELD,
+  IS_FILTERING_VIDEOS_FIELD,
   LANGUAGE_FIELD,
 } from '../../store/contants.js'
 import { CcTagPresenter } from './CcTagPresenter.js'
@@ -35,6 +36,11 @@ export class ContentMessageListener {
     if (IS_COMBINED_REGION_FIELD in req) {
       this.ccTagPresenter.onIsCombinedRegionUpdated(
         req[IS_COMBINED_REGION_FIELD],
+      )
+    }
+    if (IS_FILTERING_VIDEOS_FIELD in req) {
+      this.ccTagPresenter.onIsFilteringVideosUpdated(
+        req[IS_FILTERING_VIDEOS_FIELD],
       )
     }
   }

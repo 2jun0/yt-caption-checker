@@ -4,6 +4,7 @@ import {
   COLOR_BG_FIELD,
   COLOR_TXT_FIELD,
   IS_COMBINED_REGION_FIELD,
+  IS_FILTERING_VIDEOS_FIELD,
   LANGUAGE_FIELD,
 } from '../store/contants.js'
 import { DEFAULT_VALUE } from '../store/Storage.js'
@@ -14,11 +15,14 @@ import { CcTagPresenter } from './presenter/CcTagPresenter.js'
 import { ContentMessageListener } from './presenter/ContentMessageListener.js'
 import { YtThumbnailViewManager } from './presenter/YtThumbnailViewManager.js'
 import { YtMutationHandler } from './presenter/YtMutationHandler.js'
+import { YtVideoModel } from './model/YtVideoModel.js'
 
 export class ContentContext {
   /** model */
   /** @type {CcTagModel} */
   _ccTagModel = null
+  /** @type {YtVideoModel} */
+  _ytVideoModel = null
 
   /** view */
   /** @type {YtMutationHandler} */
@@ -48,6 +52,7 @@ export class ContentContext {
 
   init() {
     this.ccTagModel()
+    this.ytVideoModel()
     this.ccTagFactory()
     this.ccTagFinder()
     this.ccTagPresenter()
@@ -68,6 +73,15 @@ export class ContentContext {
       )
     }
     return this._ccTagModel
+  }
+
+  ytVideoModel() {
+    if (!this._ytVideoModel) {
+      this._ytVideoModel = new YtVideoModel(
+        DEFAULT_VALUE[IS_FILTERING_VIDEOS_FIELD],
+      )
+    }
+    return this._ytVideoModel
   }
 
   /** view */
@@ -100,6 +114,7 @@ export class ContentContext {
         this.ccTagFinder(),
         this.ytThumbnailViewManager(),
         this.ccTagModel(),
+        this.ytVideoModel(),
       )
     }
     return this._ccTagPresenter

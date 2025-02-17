@@ -5,6 +5,7 @@ import {
   CC_PREVIEW_FONT_SIZE_FIELD,
   IS_COMBINED_REGION_FIELD,
   LANGUAGE_FIELD,
+  IS_FILTERING_VIDEOS_FIELD,
 } from './store/contants.js'
 import { Storage } from './store/Storage.js'
 
@@ -23,12 +24,18 @@ storage.loadData(
     COLOR_TXT_FIELD,
     CC_PREVIEW_FONT_SIZE_FIELD,
     IS_COMBINED_REGION_FIELD,
+    IS_FILTERING_VIDEOS_FIELD,
   ],
-  items => {
+  async items => {
     ccTagPresenter.onBackgroundColorUpdated(items[COLOR_BG_FIELD])
     ccTagPresenter.onTextColorUpdated(items[COLOR_TXT_FIELD])
     ccTagPresenter.onFontSizeUpdated(items[CC_PREVIEW_FONT_SIZE_FIELD])
-    ccTagPresenter.onLanguageUpdated(items[LANGUAGE_FIELD])
-    ccTagPresenter.onIsCombinedRegionUpdated(items[IS_COMBINED_REGION_FIELD])
+    await ccTagPresenter.onLanguageUpdated(items[LANGUAGE_FIELD])
+    await ccTagPresenter.onIsCombinedRegionUpdated(
+      items[IS_COMBINED_REGION_FIELD],
+    )
+    await ccTagPresenter.onIsFilteringVideosUpdated(
+      items[IS_FILTERING_VIDEOS_FIELD],
+    )
   },
 )

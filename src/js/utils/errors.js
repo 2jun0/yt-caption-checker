@@ -11,3 +11,10 @@ export class InvalidYouTubeThumnailElementError extends Error {
     this.name = 'InvalidYouTubeThumnailElementError'
   }
 }
+
+export class InvalidYouTubePlaylistElementError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = 'InvalidYouTubePlaylistElementError'
+  }
+}
