@@ -1,4 +1,5 @@
 import { YtThumbnailView, isThumbnailElement } from '../view/YtThumbnailView.js'
+import { debug } from '../../utils/common.js'
 
 export class YtThumbnailViewManager {
   /**
@@ -23,8 +24,14 @@ export class YtThumbnailViewManager {
    * @returns {HTMLElement[]}
    */
   findAllThumbnail() {
-    return Array.from(this.document.querySelectorAll('a#thumbnail')).filter(
-      isThumbnailElement,
-    )
+    const selector = 'a#thumbnail, a.yt-lockup-view-model__content-image'
+    const thumbnails = Array.from(this.document.querySelectorAll(selector))
+      .filter(isThumbnailElement)
+
+    debug('YtThumbnailViewManager: findAllThumbnail', {
+      thumbnails,
+    })
+
+    return thumbnails
   }
 }

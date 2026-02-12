@@ -3,6 +3,7 @@ import { CcTagFinder } from './CcTagFinder.js'
 import { CcTagModel } from '../model/CcTagModel.js'
 import { YtThumbnailViewManager } from './YtThumbnailViewManager.js'
 import { YtThumbnailView } from '../view/YtThumbnailView.js'
+import { debug } from '../../utils/common.js'
 
 export class CcTagPresenter {
   /**
@@ -99,12 +100,21 @@ export class CcTagPresenter {
     // if thumbnail doesn't have url
     // pass, but IS IT REAL THUMBNAIL?
     if (!videoUrl) {
+      debug('CcTagPresenter: caption check, No videoUrl', { ytThumbnailView })
       return
     }
 
     const languages = this.ccTagModel.relatedLanguages
 
-    if (await this.ccTagModel.hasCaptions(videoUrl, languages)) {
+    const hasCaptions = await this.ccTagModel.hasCaptions(videoUrl, languages)
+    debug('CcTagPresenter: caption check', {
+      ytThumbnailView,
+      videoUrl,
+      languages,
+      hasCaptions,
+    })
+
+    if (hasCaptions) {
       ytThumbnailView.insertCcTag(this.createCcTag())
     }
   }

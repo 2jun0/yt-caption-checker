@@ -46,9 +46,16 @@ Show if there are captions for the language you want in YouTube videos.
 - Node.js
 - npm
 
-### Step by step
+### Step by step for release
 
 1. run `npm install` in terminal.
 2. run `npm run build:[chrome or firefox]` in terminal. (built source will be created in `dist` folder)
+3. run `npm run build:zip:[chrome or firefox]` in terminal.
+4. then, `[chrome or firefox] yt-caption-checker-[version].zip` will be created.
+
+### Step by step for development
+
+1. run `npm install` in terminal.
+2. run `npm run build:[chrome or firefox] -- --dev` in terminal. (built source will be created in `dist` folder)
 3. run `npm run build:zip:[chrome or firefox]` in terminal.
 4. then, `[chrome or firefox] yt-caption-checker-[version].zip` will be created.

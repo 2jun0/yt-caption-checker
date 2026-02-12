@@ -8,15 +8,33 @@ describe('YtThumbnailViewManager', () => {
   let ytThumbnailViewManager
 
   beforeEach(() => {
-    const thumbnailEl = {
+    const oldThumbnailEl = {
       tagName: 'A',
       id: 'thumbnail',
       href: 'https://www.youtube.com/watch?v=123456',
     }
+
+    const newThumbnailEl = {
+      tagName: 'A',
+      id: 'non-thumbnail',
+      href: 'https://www.youtube.com/watch?v=abcdef',
+      classList: {
+        contains: jest
+          .fn()
+          .mockImplementation(cls => cls === 'yt-lockup-view-model__content-image'),
+      },
+    }
+
+    const nonThumbnailEl = {
+      tagName: 'A',
+      id: 'thumbnail',
+      href: 'https://www.youtube.com/',
+    }
+
     document = {
       querySelectorAll: jest
         .fn()
-        .mockReturnValue([thumbnailEl, thumbnailEl, thumbnailEl]),
+        .mockReturnValue([oldThumbnailEl, newThumbnailEl, nonThumbnailEl]),
     }
     ytThumbnailViewManager = new YtThumbnailViewManager(document)
   })
@@ -25,6 +43,9 @@ describe('YtThumbnailViewManager', () => {
     const thumbnailViews = ytThumbnailViewManager.findAllThumbnailView()
 
     expect(Array.isArray(thumbnailViews)).toBe(true)
-    expect(thumbnailViews.length).toBe(3)
+    expect(document.querySelectorAll).toBeCalledWith(
+      'a#thumbnail, a.yt-lockup-view-model__content-image',
+    )
+    expect(thumbnailViews.length).toBe(2)
   })
 })

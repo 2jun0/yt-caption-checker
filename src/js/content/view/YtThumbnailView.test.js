@@ -26,6 +26,20 @@ describe('YtThumbnailView', () => {
       )
     })
 
+    it('should not throw error if thumbnail element is new thumbnail type', () => {
+      const newThumbnailEl = {
+        tagName: 'A',
+        id: 'non-thumbnail',
+        href: 'https://www.youtube.com/watch?v=123456',
+        classList: {
+          contains: jest
+            .fn()
+            .mockImplementation(cls => cls === 'yt-lockup-view-model__content-image'),
+        },
+      }
+      expect(() => new YtThumbnailView(newThumbnailEl)).not.toThrow()
+    })
+
     it("should throw error if thumbnail element doesn' have href", () => {
       const nonThumbnailEl = {
         tagName: 'A',

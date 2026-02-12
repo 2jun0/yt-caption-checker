@@ -45,9 +45,16 @@ README 페이지를 영문로 보시려면 아래를 참고하세요.
 - Node.js
 - npm
 
-### Step by step
+### Step by step for release
 
 1. 터미널에서 `npm install` 을 실행하세요.
 2. 터미널에서 `npm run build:[chrome 혹은 firefox]` 를 실행하세요. (dist 폴더에 빌드된 소스가 저장됩니다)
+3. 터미널에서 `npm run build:zip:[chrome 혹은 firefox]` 을 실행하세요.
+4. `[chrome 혹은 firefox] yt-caption-checker-[version].zip` 가 최상위 폴더에 생성됩니다.
+
+### Step by step for development
+
+1. 터미널에서 `npm install` 을 실행하세요.
+2. 터미널에서 `npm run build:[chrome 혹은 firefox] -- --dev` 를 실행하세요. (dist 폴더에 빌드된 소스가 저장됩니다)
 3. 터미널에서 `npm run build:zip:[chrome 혹은 firefox]` 을 실행하세요.
 4. `[chrome 혹은 firefox] yt-caption-checker-[version].zip` 가 최상위 폴더에 생성됩니다.
