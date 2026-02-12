@@ -16,17 +16,16 @@ describe('YtMutationHandler', () => {
   })
 
   it('should call the `onThumbnailAdded` method of `CcTagPresenter` with a `YtThumbnailView` object if the mutation target is a thumbnail', async () => {
-    const thumbnailEl = {
-      tagName: 'A',
-      id: 'thumbnail',
-      href: 'https://www.youtube.com/watch?v=123456',
-      parentElement: {
-        tagName: 'NON-YTD-PLAYLIST-THUMBNAIL',
-      },
-    }
+    const thumbnailEl = document.createElement('a')
+    thumbnailEl.id = 'thumbnail'
+    thumbnailEl.href = 'https://www.youtube.com/watch?v=123456'
+
+    const containerEl = document.createElement('div')
+    containerEl.appendChild(thumbnailEl)
+
     const mutations = [
       {
-        target: thumbnailEl,
+        addedNodes: [containerEl],
       },
     ]
 
@@ -36,29 +35,19 @@ describe('YtMutationHandler', () => {
   })
 
   it('should not call the `onThumbnailAdded` method of `CcTagPresenter` if the mutation target is not a thumbnail', async () => {
-    const nonThumbnailEls = [
-      {
-        tagName: 'DIV',
-        id: 'thumbnail',
-        href: 'https://www.youtube.com/watch?v=123456',
-        parentElement: {
-          tagName: 'NON-YTD-PLAYLIST-THUMBNAIL',
-        },
-      },
-      {
-        tagName: 'A',
-        id: 'video',
-        href: 'https://www.youtube.com/watch?v=123456',
-        parentElement: {
-          tagName: 'NON-YTD-PLAYLIST-THUMBNAIL',
-        },
-      },
+    const containerWithoutAnchor = document.createElement('div')
+
+    const nonThumbnailAnchor = document.createElement('a')
+    nonThumbnailAnchor.id = 'video'
+    nonThumbnailAnchor.href = 'https://www.youtube.com/watch?v=123456'
+
+    const containerWithNonThumbnailAnchor = document.createElement('div')
+    containerWithNonThumbnailAnchor.appendChild(nonThumbnailAnchor)
+
+    const mutations = [
+      { addedNodes: [containerWithoutAnchor] },
+      { addedNodes: [containerWithNonThumbnailAnchor] },
     ]
-    const mutations = nonThumbnailEls.map(el => {
-      return {
-        target: el,
-      }
-    })
 
     ytMutationHandler.handleMutations(mutations)
 
@@ -66,17 +55,15 @@ describe('YtMutationHandler', () => {
   })
 
   it('should not call the `onThumbnailAdded` method of `CcTagPresenter` if the mutation target is in a playlist', async () => {
-    const thumbnailElInPlaylist = {
-      tagName: 'A',
-      id: 'thumbnail',
-      href: 'https://www.youtube.com/watch?v=123456',
-      parentElement: {
-        tagName: 'YTD-PLAYLIST-THUMBNAIL',
-      },
-    }
+    const playlistEl = document.createElement('ytd-playlist-thumbnail')
+    const thumbnailElInPlaylist = document.createElement('a')
+    thumbnailElInPlaylist.id = 'thumbnail'
+    thumbnailElInPlaylist.href = 'https://www.youtube.com/watch?v=123456'
+    playlistEl.appendChild(thumbnailElInPlaylist)
+
     const mutations = [
       {
-        target: thumbnailElInPlaylist,
+        addedNodes: [playlistEl],
       },
     ]
 
@@ -86,17 +73,16 @@ describe('YtMutationHandler', () => {
   })
 
   it("should not call the `onThumbnailAdded` method of `CcTagPresenter` if the mutation target doesn't have varified url", async () => {
-    const thumbnailElInPlaylist = {
-      tagName: 'A',
-      id: 'thumbnail',
-      href: 'https://www.youtube.com/shorts/123456',
-      parentElement: {
-        tagName: 'non-YTD-PLAYLIST-THUMBNAIL',
-      },
-    }
+    const thumbnailEl = document.createElement('a')
+    thumbnailEl.id = 'thumbnail'
+    thumbnailEl.href = 'https://www.youtube.com/shorts/123456'
+
+    const containerEl = document.createElement('div')
+    containerEl.appendChild(thumbnailEl)
+
     const mutations = [
       {
-        target: thumbnailElInPlaylist,
+        addedNodes: [containerEl],
       },
     ]
 

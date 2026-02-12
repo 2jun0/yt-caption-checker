@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url'
 import pack from '../package.json' with { type: 'json' }
 
 const browser = process.argv[2]
+const isDev = process.argv.includes('--dev')
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -24,7 +25,16 @@ const copyDir = async (src, dest) => {
     }
 
     if (!entry.name.endsWith('.test.js')) {
-      await fs.copyFile(srcPath, destPath)
+      if (entry.name.endsWith('.js')) {
+        const content = await fs.readFile(srcPath, 'utf-8')
+        const replaced = content.replaceAll(
+          '__YCC_DEV__',
+          isDev ? 'true' : 'false',
+        )
+        await fs.writeFile(destPath, replaced, 'utf-8')
+      } else {
+        await fs.copyFile(srcPath, destPath)
+      }
     }
   }
 }
@@ -50,6 +60,8 @@ const updateManifest = async () => {
 
 const build = async () => {
   await updateManifest()
+
+  console.log('build mode:', isDev ? 'dev' : 'prod')
 
   await fs.rm(outputDir, { recursive: true, force: true })
   await copyDir(srcDir, outputDir)

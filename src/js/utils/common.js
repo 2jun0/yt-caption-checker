@@ -18,3 +18,9 @@ export const localize = () => {
     e.innerText = chrome.i18n.getMessage(e.dataset.locale)
   })
 }
+
+export const debug = (...args) => {
+  const IS_DEV = '__YCC_DEV__' === 'true'
+  if (!IS_DEV) return
+  console.debug('[yt-caption-checker]', ...args)
+}

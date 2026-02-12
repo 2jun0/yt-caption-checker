@@ -1,6 +1,6 @@
 {
   "name": "yt-caption-checker",
-  "version": "1.5.9",
+  "version": "1.5.10",
   "description": "Show if there are captions for the language you want in YouTube videos.",
   "scripts": {
     "build": "npm run build:chrome && npm run build:firefox",
@@ -34,7 +34,11 @@
   "devDependencies": {
     "@types/jest": "^29.4.0",
     "jest": "^29.4.2",
+    "jest-environment-jsdom": "^29.7.0",
     "prettier": "^2.7.1"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   },
   "type": "module"
 }

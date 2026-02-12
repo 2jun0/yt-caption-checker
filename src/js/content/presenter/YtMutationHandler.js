@@ -24,12 +24,17 @@ export class YtMutationHandler {
    */
   handleMutations(mutations) {
     mutations.forEach(async mutation => {
-      const targetEl = mutation.target
+      mutation.addedNodes.forEach(node => {
+        if (node.nodeType !== Node.ELEMENT_NODE) return
 
-      if (isThumbnailElement(targetEl) && !this._isInPlayList(targetEl)) {
-        const ytThumbnailView = new YtThumbnailView(targetEl)
-        this.ccTagPresenter.onThumbnailAdded(ytThumbnailView)
-      }
+        const targetEl = node.querySelector('a')
+        if (!targetEl) return
+
+        if (isThumbnailElement(targetEl) && !this._isInPlayList(targetEl)) {
+          const ytThumbnailView = new YtThumbnailView(targetEl)
+          this.ccTagPresenter.onThumbnailAdded(ytThumbnailView)
+        }
+      })
     })
   }
 

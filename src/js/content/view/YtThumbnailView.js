@@ -6,12 +6,20 @@ import { CC_TAG_ID, CcTagView } from './CcTagView.js'
  * @param {HTMLElement} el
  */
 export const isThumbnailElement = el => {
-  return (
+  const isOldThumbnail =
     el.tagName == 'A' &&
     el.id == 'thumbnail' &&
     el.href &&
-    el.href.match(/\?v=([\w-]+)/)
-  )
+    el.href.match(/\?v=([\w-]+)/);
+
+  const isNewThumbnail =
+    el.tagName == 'A' &&
+    el.classList &&
+    el.classList.contains('yt-lockup-view-model__content-image') &&
+    el.href &&
+    el.href.match(/\?v=([\w-]+)/);
+
+  return isOldThumbnail || isNewThumbnail
 }
 
 export class YtThumbnailView {
@@ -23,7 +31,7 @@ export class YtThumbnailView {
     this._overlays = null
 
     this._validateThumbnailElementTagName()
-    this._validateThumbnailElementId()
+    this._validateThumbnailElementIdOrClass()
     this._validateThumbnailElementHref()
   }
 
@@ -33,7 +41,7 @@ export class YtThumbnailView {
    * @returns {Promise<void>}
    */
   async insertCcTag(ccTagView) {
-    const overlays = await this._getOverlays()
+    const overlays = this._getOverlays()
     if (!overlays || (await this.hasCcTag())) return
 
     overlays.insertBefore(ccTagView.ccTagElement(), overlays.lastChild)
@@ -60,46 +68,13 @@ export class YtThumbnailView {
 
   /**
    * Get overlays
-   * @returns {Promise<HTMLElement>}
+   * @returns {HTMLElement}
    */
-  async _getOverlays() {
+  _getOverlays() {
     if (!this._overlays) {
-      this._overlays = await this._waitOverlayLoadedAsync()
+      this._overlays = this.thumbnailEl.querySelector('#overlays') ?? this.thumbnailEl
     }
     return this._overlays
-  }
-
-  /**
-   * Wait for overlay to load
-   * @returns {Promise<HTMLElement>}
-   */
-  async _waitOverlayLoadedAsync() {
-    const overlays = this.thumbnailEl.querySelector('#overlays')
-
-    if (overlays.childElementCount > 0) {
-      return overlays
-    }
-
-    let timer = null
-
-    return new Promise(resolve => {
-      const observer = new MutationObserver(() => {
-        if (overlays.childElementCount > 0) {
-          observer.disconnect()
-          clearTimeout(timer)
-          resolve(overlays)
-        }
-      })
-      observer.observe(this.thumbnailEl, {
-        childList: true,
-        subtree: true,
-      })
-
-      timer = setTimeout(() => {
-        observer.disconnect()
-        resolve(null)
-      }, 5000)
-    })
   }
 
   _validateThumbnailElementTagName() {
@@ -110,10 +85,15 @@ export class YtThumbnailView {
     }
   }
 
-  _validateThumbnailElementId() {
-    if (this.thumbnailEl.id !== 'thumbnail') {
+  _validateThumbnailElementIdOrClass() {
+    const isOldThumbnail = this.thumbnailEl.id === 'thumbnail'
+    const isNewThumbnail =
+      this.thumbnailEl.classList?.contains?.('yt-lockup-view-model__content-image') ===
+      true
+
+    if (!isOldThumbnail && !isNewThumbnail) {
       throw new InvalidYouTubeThumnailElementError(
-        `id of thumbnail element is not 'thumbnail' (it is ${this.thumbnailEl.id})`,
+        `thumbnail element is neither old nor new thumbnail type (id : ${this.thumbnailEl.id}, class : ${this.thumbnailEl.className})`,
       )
     }
   }
