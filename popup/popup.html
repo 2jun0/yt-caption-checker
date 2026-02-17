@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YT Caption Checker</title>
+    <link rel="stylesheet" href="popup.css" />
+</head>
+
+<body>
+    <main class="container">
+        <h1>자막 태그 설정</h1>
+        <p class="subtitle">변경 사항이 자동으로 저장되고 즉시 적용됩니다.</p>
+
+        <label class="field">
+            <span>자막 언어</span>
+            <select id="targetLanguage"></select>
+        </label>
+
+        <label class="field">
+            <span>태그 크기</span>
+            <div class="inline-row">
+                <input id="badgeSize" type="range" min="10" max="24" step="1" />
+                <output id="badgeSizeValue"></output>
+            </div>
+        </label>
+
+        <label class="field">
+            <span>태그 배경색</span>
+            <input id="badgeColor" type="color" />
+        </label>
+
+        <label class="field">
+            <span>배경 투명도</span>
+            <div class="inline-row">
+                <input id="badgeColorAlpha" type="range" min="0" max="100" step="1" />
+                <output id="badgeColorAlphaValue"></output>
+            </div>
+        </label>
+
+        <label class="field">
+            <span>태그 글자색</span>
+            <input id="badgeTextColor" type="color" />
+        </label>
+
+        <label class="field">
+            <span>글자 투명도</span>
+            <div class="inline-row">
+                <input id="badgeTextColorAlpha" type="range" min="0" max="100" step="1" />
+                <output id="badgeTextColorAlphaValue"></output>
+            </div>
+        </label>
+
+        <label class="field checkbox-row">
+            <input id="unifyRegionalVariants" type="checkbox" />
+            <span>언어 통합 검색 (예: en-GB, en-US → en)</span>
+        </label>
+
+        <p id="statusText" class="status"></p>
+    </main>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+:root {
+    color-scheme: light;
+}
+
+body {
+    margin: 0;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    width: 340px;
+    background: linear-gradient(165deg, #f8fafc 0%, #eef2ff 100%);
+    color: #111827;
+}
+
+.container {
+    margin: 10px;
+    padding: 14px;
+    border: 1px solid #dbe3ff;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
+}
+
+h1 {
+    font-size: 17px;
+    margin: 0;
+}
+
+.subtitle {
+    margin: 4px 0 14px;
+    color: #475569;
+    font-size: 12px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 13px;
+    font-size: 13px;
+}
+
+.field input[type="text"],
+.field select {
+    padding: 9px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field select:focus,
+.field input:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.14);
+    outline: none;
+}
+
+.inline-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.inline-row input[type="range"] {
+    flex: 1;
+}
+
+output {
+    min-width: 46px;
+    text-align: right;
+    color: #334155;
+    font-weight: 600;
+}
+
+.checkbox-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.status {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: #4f46e5;
+    min-height: 14px;
+}
