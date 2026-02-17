@@ -6,19 +6,8 @@ const DEFAULT_SETTINGS = {
     badgeTextColor: "#ffffff",
     badgeTextColorAlpha: 100,
     badgeRadius: 2,
-    uiLanguage: "auto",
     unifyRegionalVariants: true,
 };
-
-const UI_LANGUAGE_OPTIONS = [
-    { value: "auto", label: "Auto" },
-    { value: "ko", label: "한국어" },
-    { value: "en", label: "English" },
-    { value: "ja", label: "日本語" },
-    { value: "zh-CN", label: "简体中文" },
-    { value: "es", label: "Español" },
-    { value: "it", label: "Italiano" },
-];
 
 const POPUP_I18N = {
     ko: {
@@ -107,7 +96,6 @@ const POPUP_I18N = {
     },
 };
 
-const uiLanguageEl = document.getElementById("uiLanguage");
 const targetLanguageEl = document.getElementById("targetLanguage");
 const badgeSizeEl = document.getElementById("badgeSize");
 const badgeSizeValueEl = document.getElementById("badgeSizeValue");
@@ -125,13 +113,10 @@ let activeUiLanguage = "en";
 init();
 
 function init() {
-    renderUiLanguageOptions();
-
     chrome.storage.sync.get(DEFAULT_SETTINGS, (result) => {
         const settings = { ...DEFAULT_SETTINGS, ...result };
 
-        uiLanguageEl.value = settings.uiLanguage;
-        activeUiLanguage = resolveUiLanguage(settings.uiLanguage);
+        activeUiLanguage = resolveUiLanguage();
         applyPopupI18n(activeUiLanguage);
 
         unifyRegionalVariantsEl.checked = Boolean(settings.unifyRegionalVariants);
@@ -160,11 +145,6 @@ function init() {
         scheduleSave(120);
     });
 
-    uiLanguageEl.addEventListener("change", () => {
-        activeUiLanguage = resolveUiLanguage(uiLanguageEl.value);
-        applyPopupI18n(activeUiLanguage);
-        scheduleSave(0);
-    });
     targetLanguageEl.addEventListener("change", () => scheduleSave(0));
     badgeColorEl.addEventListener("input", () => scheduleSave(0));
     badgeColorAlphaEl.addEventListener("input", () => {
@@ -199,7 +179,6 @@ function save() {
         badgeTextColor: badgeTextColorEl.value,
         badgeTextColorAlpha: clamp(Number(badgeTextColorAlphaEl.value), 0, 100),
         badgeRadius: 2,
-        uiLanguage: uiLanguageEl.value,
         unifyRegionalVariants: unifyRegionalVariantsEl.checked,
     };
 
@@ -259,17 +238,7 @@ function isRegionalCode(code) {
     return /[-_]/.test(String(code || ""));
 }
 
-function renderUiLanguageOptions() {
-    uiLanguageEl.innerHTML = UI_LANGUAGE_OPTIONS.map(
-        (item) => `<option value="${item.value}">${item.label}</option>`,
-    ).join("");
-}
-
-function resolveUiLanguage(uiLanguageSetting) {
-    if (uiLanguageSetting && uiLanguageSetting !== "auto") {
-        return normalizeUiLanguage(uiLanguageSetting);
-    }
-
+function resolveUiLanguage() {
     const browserLang = chrome.i18n.getUILanguage() || "en";
     return normalizeUiLanguage(browserLang);
 }
@@ -298,7 +267,6 @@ function applyPopupI18n(lang) {
     document.documentElement.lang = lang;
     document.getElementById("titleText").textContent = t("title", lang);
     document.getElementById("subtitleText").textContent = t("subtitle", lang);
-    document.getElementById("uiLanguageLabel").textContent = t("uiLanguageLabel", lang);
     document.getElementById("captionLanguageLabel").textContent = t("captionLanguageLabel", lang);
     document.getElementById("badgeSizeLabel").textContent = t("badgeSizeLabel", lang);
     document.getElementById("badgeBgColorLabel").textContent = t("badgeBgColorLabel", lang);
