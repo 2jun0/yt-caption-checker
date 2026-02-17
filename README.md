@@ -4,6 +4,9 @@ Language versions: [English](README.md) · [한국어](README_KO.md) · [日本�
 
 A browser extension that checks whether a YouTube video has captions in your selected language and shows a badge on thumbnails.
 
+## Built with GitHub Copilot
+This project was fully created with GitHub Copilot (GPT-5.3-Codex).
+
 ## Features
 - Detects YouTube video thumbnails and adds a caption badge
 - Supports a wide range of YouTube caption language codes
@@ -22,6 +25,18 @@ A browser extension that checks whether a YouTube video has captions in your sel
 2. Open extension popup
 3. Choose caption language and style options
 4. Thumbnail badges appear as `CC XX` when captions are available
+
+## Screenshots
+> You can place real images in [assets/screenshots](assets/screenshots) and they will show below.
+
+### Popup
+![Popup Settings](assets/screenshots/popup-settings.png)
+
+### YouTube Thumbnail Badge
+![YouTube Thumbnail Badge](assets/screenshots/youtube-thumbnails-badge.png)
+
+## License
+MIT
 
 ## Notes
 - Caption detection uses multiple fallback paths for reliability.
