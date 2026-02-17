@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "YT Caption Checker Aid"
+  },
+  "extDescription": {
+    "message": "선택한 자막 언어가 존재하면 유튜브 썸네일 위에 자막 배지를 표시합니다."
+  }
+}
