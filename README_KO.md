@@ -4,6 +4,9 @@
 
 선택한 자막 언어가 있는지 확인하고, 유튜브 썸네일 위에 배지로 표시하는 브라우저 확장 프로그램입니다.
 
+## GitHub Copilot로 제작
+이 프로젝트는 GitHub Copilot (GPT-5.3-Codex)로 전체 구현되었습니다.
+
 ## 주요 기능
 - 유튜브 썸네일 감지 후 자막 배지 표시
 - 유튜브 자막 언어 코드를 폭넓게 지원
@@ -22,6 +25,18 @@
 2. 확장 프로그램 팝업 열기
 3. 자막 언어/태그 스타일 선택
 4. 자막이 있으면 썸네일에 `CC XX` 배지 표시
+
+## 스크린샷
+> 실제 스크린샷 파일은 [assets/screenshots](assets/screenshots)에 넣어주세요.
+
+### 팝업
+![Popup Settings](assets/screenshots/popup-settings.png)
+
+### 유튜브 썸네일 배지
+![YouTube Thumbnail Badge](assets/screenshots/youtube-thumbnails-badge.png)
+
+## 라이선스
+MIT
 
 ## 참고
 - 자막 조회는 안정성을 위해 다중 폴백 경로를 사용합니다.

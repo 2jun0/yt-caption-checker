@@ -4,6 +4,9 @@ Versioni lingua: [English](README.md) · [한국어](README_KO.md) · [日本語
 
 Estensione browser che verifica se un video YouTube ha sottotitoli nella lingua selezionata e mostra un badge sulla miniatura.
 
+## Creato con GitHub Copilot
+Questo progetto è stato creato interamente con GitHub Copilot (GPT-5.3-Codex).
+
 ## Funzionalità
 - Rileva miniature YouTube e mostra il badge sottotitoli
 - Supporta molti codici lingua dei sottotitoli YouTube
@@ -22,6 +25,18 @@ Estensione browser che verifica se un video YouTube ha sottotitoli nella lingua 
 2. Apri il popup dell’estensione
 3. Scegli lingua sottotitoli e stile tag
 4. Se disponibili, vedrai `CC XX` sulla miniatura
+
+## Screenshot
+> Inserisci le immagini reali nella cartella [assets/screenshots](assets/screenshots).
+
+### Popup
+![Popup Settings](assets/screenshots/popup-settings.png)
+
+### Badge miniatura YouTube
+![YouTube Thumbnail Badge](assets/screenshots/youtube-thumbnails-badge.png)
+
+## Licenza
+MIT
 
 ## Note
 - Il rilevamento sottotitoli usa più percorsi di fallback per affidabilità.

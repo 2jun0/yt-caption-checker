@@ -4,6 +4,9 @@
 
 这是一个浏览器扩展，用于检查 YouTube 视频是否提供所选字幕语言，并在缩略图上显示标签。
 
+## 由 GitHub Copilot 构建
+本项目完全由 GitHub Copilot (GPT-5.3-Codex) 创建。
+
 ## 功能
 - 检测 YouTube 缩略图并显示字幕标签
 - 支持大量 YouTube 字幕语言代码
@@ -22,6 +25,18 @@
 2. 打开扩展弹窗
 3. 选择字幕语言和标签样式
 4. 若有字幕，缩略图将显示 `CC XX`
+
+## 截图
+> 请将实际截图文件放到 [assets/screenshots](assets/screenshots) 目录。
+
+### 弹窗
+![Popup Settings](assets/screenshots/popup-settings.png)
+
+### YouTube 缩略图标签
+![YouTube Thumbnail Badge](assets/screenshots/youtube-thumbnails-badge.png)
+
+## 许可证
+MIT
 
 ## 说明
 - 为了提高稳定性，字幕检测使用多级回退路径。
