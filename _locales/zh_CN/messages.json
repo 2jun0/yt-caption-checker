@@ -1,8 +1,8 @@
 {
-  "extName": {
-    "message": "YT Caption Checker Aid"
-  },
-  "extDescription": {
-    "message": "当所选字幕语言可用时，在 YouTube 缩略图上显示字幕标签。"
-  }
+    "extName": {
+        "message": "YT Caption Checker Aid"
+    },
+    "extDescription": {
+        "message": "当所选字幕语言可用时，在 YouTube 缩略图上显示字幕标签。"
+    }
 }

@@ -1,8 +1,8 @@
 {
-  "extName": {
-    "message": "YT Caption Checker Aid"
-  },
-  "extDescription": {
-    "message": "Shows a caption badge on YouTube thumbnails when the selected subtitle language is available."
-  }
+    "extName": {
+        "message": "YT Caption Checker Aid"
+    },
+    "extDescription": {
+        "message": "Shows a caption badge on YouTube thumbnails when the selected subtitle language is available."
+    }
 }

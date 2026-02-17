@@ -1,8 +1,8 @@
 {
-  "extName": {
-    "message": "YT Caption Checker Aid"
-  },
-  "extDescription": {
-    "message": "選択した字幕言語がある場合、YouTubeサムネイルに字幕バッジを表示します。"
-  }
+    "extName": {
+        "message": "YT Caption Checker Aid"
+    },
+    "extDescription": {
+        "message": "選択した字幕言語がある場合、YouTubeサムネイルに字幕バッジを表示します。"
+    }
 }
