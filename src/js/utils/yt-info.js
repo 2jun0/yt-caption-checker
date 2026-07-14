@@ -52,3 +52,34 @@ const findPlayerResponse = (source, info) => {
       info.embedded_player_response)
   return parseJSON(source, 'player_response', player_response)
 }
+
+/**
+ * Extract the caption tracks array from a watch-page info object.
+ * @param {{player_response?: any}} info
+ * @returns {Array|null} tracks, or null when the video carries no caption metadata
+ */
+export const extractCaptionTracks = info => {
+  const captions = info?.player_response?.captions
+  if (!captions) return null
+  return captions.playerCaptionsTracklistRenderer?.captionTracks ?? null
+}
+
+/**
+ * Reduce caption tracks to non-auto-created language codes.
+ * @param {Array} tracks
+ * @returns {string[]}
+ */
+export const captionTracksToLanguageCodes = tracks =>
+  tracks.filter(({ kind }) => kind !== 'asr').map(({ languageCode }) => languageCode)
+
+/**
+ * Fetch a video's non-auto-created caption language codes.
+ * @param {string} id
+ * @returns {Promise<string[]|null>}
+ */
+export const getCaptionLanguages = async id => {
+  const info = await getYtInfo(id)
+  const tracks = extractCaptionTracks(info)
+  if (!tracks) return null
+  return captionTracksToLanguageCodes(tracks)
+}
