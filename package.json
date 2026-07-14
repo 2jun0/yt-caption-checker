@@ -11,7 +11,8 @@
     "build:zip": "npm run build:zip:chrome && npm run build:zip:firefox",
     "build:all": "npm run build && npm run build:zip",
     "lint": "prettier --write .",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "canary:caption": "node canary/captionCanary.js"
   },
   "repository": {
     "type": "git",
