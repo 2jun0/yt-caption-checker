@@ -1,8 +1,7 @@
 import { InvalidYouTubeThumnailElementError } from '../../utils/errors.js'
 import { CC_TAG_ID, CcTagView } from './CcTagView.js'
 
-// Lockup content-image anchor classes across YouTube markup revisions
-// (BEM kebab-case, then camelCase since ~2026-07)
+// Class names YouTube uses for the lockup content-image anchor
 export const LOCKUP_CONTENT_IMAGE_CLASSES = [
   'yt-lockup-view-model__content-image',
   'ytLockupViewModelContentImage',
