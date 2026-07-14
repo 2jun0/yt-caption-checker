@@ -18,6 +18,8 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
       - name: Run caption canary
         id: canary
         run: node canary/captionCanary.js

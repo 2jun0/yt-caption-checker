@@ -16,4 +16,6 @@ jobs:
         with:
           node-version: 16
       - run: npm i
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
       - run: npm test
