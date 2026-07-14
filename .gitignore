@@ -7,3 +7,6 @@ dist
 *.pem
 
 .DS_store
+
+# superpowers 작업 문서(스펙/계획) - 공개하지 않음
+docs/superpowers/
