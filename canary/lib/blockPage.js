@@ -7,4 +7,4 @@
  */
 export const looksBlocked = (finalUrl = '', body = '') =>
   /consent\.|\/sorry\//.test(finalUrl) ||
-  /before you continue|consent\.youtube|our systems have detected unusual traffic/i.test(body)
+  /before you continue|our systems have detected unusual traffic/i.test(body)
