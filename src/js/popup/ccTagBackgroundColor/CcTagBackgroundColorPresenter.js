@@ -28,7 +28,7 @@ export class CcTagBackgroundColorPresenter {
   }
 
   toggleBackgroundColorPicker() {
-    if (this._backgroundColorPicker.isDisplay()) {
+    if (this._backgroundColorPicker.isDisplayed()) {
       this._backgroundColorPicker.hide()
     } else {
       this._backgroundColorPicker.display()

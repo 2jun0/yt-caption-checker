@@ -28,7 +28,7 @@ export class CcTagTextColorPresenter {
   }
 
   toggleTextColorPicker() {
-    if (this._ccTagTextColorPicker.isDisplay()) {
+    if (this._ccTagTextColorPicker.isDisplayed()) {
       this._ccTagTextColorPicker.hide()
     } else {
       this._ccTagTextColorPicker.display()

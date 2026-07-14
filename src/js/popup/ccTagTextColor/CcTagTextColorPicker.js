@@ -51,7 +51,7 @@ export class CcTagTextColorPicker {
     this.textColorPicker.el.style.display = 'block'
   }
 
-  isDisplay() {
+  isDisplayed() {
     return this.textColorPicker.el.style.display === 'block'
   }
 }
