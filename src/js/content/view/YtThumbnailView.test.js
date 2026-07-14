@@ -40,6 +40,20 @@ describe('YtThumbnailView', () => {
       expect(() => new YtThumbnailView(newThumbnailEl)).not.toThrow()
     })
 
+    it('should not throw error if thumbnail element is camelCase lockup type', () => {
+      const newThumbnailEl = {
+        tagName: 'A',
+        id: '',
+        href: 'https://www.youtube.com/watch?v=123456',
+        classList: {
+          contains: jest
+            .fn()
+            .mockImplementation(cls => cls === 'ytLockupViewModelContentImage'),
+        },
+      }
+      expect(() => new YtThumbnailView(newThumbnailEl)).not.toThrow()
+    })
+
     it("should throw error if thumbnail element doesn' have href", () => {
       const nonThumbnailEl = {
         tagName: 'A',
