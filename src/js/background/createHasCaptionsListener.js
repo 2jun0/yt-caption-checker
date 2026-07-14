@@ -2,9 +2,8 @@ import { debug } from '../utils/common.js'
 
 /**
  * Create the runtime.onMessage listener answering 'has-captions' queries.
- * The channel is always answered: lookup failures (bot wall, network,
- * parse errors) resolve to false so the sender never waits on a channel
- * that closes without a response.
+ * Every 'has-captions' message receives a response; a failed lookup
+ * responds false.
  * @param {(videoId: string) => Promise<string[]|null>} getCaptions
  */
 export const createHasCaptionsListener =

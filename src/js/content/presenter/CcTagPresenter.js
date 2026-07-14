@@ -110,7 +110,6 @@ export class CcTagPresenter {
     try {
       hasCaptions = await this.ccTagModel.hasCaptions(videoUrl, languages)
     } catch (err) {
-      // e.g. the background service worker died before answering the channel
       debug('CcTagPresenter: caption check failed', {
         videoUrl,
         error: String((err && err.message) || err),
