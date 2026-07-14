@@ -36,6 +36,8 @@ export class IndexedDB {
   }
 
   async put(store, value) {
+    if (!this._db) await this.init()
+
     return new Promise(resolve => {
       this._db
         .transaction([store], 'readwrite')
@@ -45,6 +47,8 @@ export class IndexedDB {
   }
 
   async get(store, key) {
+    if (!this._db) await this.init()
+
     return new Promise(resolve => {
       const objectStore = this._db
         .transaction([store], 'readonly')

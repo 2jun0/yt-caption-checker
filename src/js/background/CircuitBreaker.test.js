@@ -1,18 +1,24 @@
 import { jest } from '@jest/globals'
-import { CircuitBreaker, CircuitOpenError } from './CircuitBreaker.js'
+import { CircuitBreaker } from './CircuitBreaker.js'
+import { CircuitOpenError } from '../utils/errors.js'
+import { Storage } from '../store/Storage.js'
+
+const STATE_FIELD = 'test-circuit'
 
 const createMemoryStorage = () => {
   const data = {}
-  return {
-    loadDataAsync: async field => ({ [field]: data[field] }),
-    saveDataAsync: async (field, value) => {
-      data[field] = value
+  return new Storage({
+    get: (fields, callback) =>
+      callback(Object.fromEntries(fields.map(field => [field, data[field]]))),
+    set: (items, callback) => {
+      Object.assign(data, items)
+      callback?.()
     },
-  }
+  })
 }
 
 const createBreaker = storage =>
-  new CircuitBreaker(3, 60_000, 240_000, storage ?? createMemoryStorage())
+  new CircuitBreaker(3, 60_000, 240_000, storage ?? createMemoryStorage(), STATE_FIELD)
 
 const failNTimes = async (breaker, n) => {
   for (let i = 0; i < n; i++) {

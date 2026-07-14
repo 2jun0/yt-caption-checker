@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals'
 import { CaptionLoader } from './CaptionLoader.js'
-import { CircuitOpenError } from './CircuitBreaker.js'
+import { CircuitOpenError } from '../utils/errors.js'
 
 const HOUR = 3600 * 1000
 const MINUTE = 60 * 1000
@@ -8,9 +8,12 @@ const MINUTE = 60 * 1000
 describe('CaptionLoader', () => {
   const passthrough = { run: task => task() }
 
-  const createLoader = ({ entries = {}, fetchCaptionLanguages } = {}) => {
+  const createLoader = ({
+    entries = {},
+    fetchCaptionLanguages,
+    circuitBreaker,
+  } = {}) => {
     const indexedDB = {
-      _db: {},
       get: jest.fn(async (store, videoId) => entries[videoId]),
       put: jest.fn(async () => {}),
     }
@@ -18,7 +21,7 @@ describe('CaptionLoader', () => {
       indexedDB,
       fetchCaptionLanguages ?? jest.fn(async () => ['en']),
       passthrough,
-      passthrough,
+      circuitBreaker ?? passthrough,
     )
     return { loader, indexedDB }
   }
@@ -78,10 +81,12 @@ describe('CaptionLoader', () => {
   })
 
   it('should not cache a failure marker when the circuit is open', async () => {
-    const fetchCaptionLanguages = jest.fn(async () => {
-      throw new CircuitOpenError()
-    })
-    const { loader, indexedDB } = createLoader({ fetchCaptionLanguages })
+    const circuitBreaker = {
+      run: async () => {
+        throw new CircuitOpenError()
+      },
+    }
+    const { loader, indexedDB } = createLoader({ circuitBreaker })
 
     await expect(loader.getCaptions('123456')).rejects.toThrow(CircuitOpenError)
     expect(indexedDB.put).not.toBeCalled()
@@ -119,5 +124,18 @@ describe('CaptionLoader', () => {
 
     await expect(loader.getCaptions('123456')).resolves.toEqual(['en'])
     expect(fetchCaptionLanguages).toBeCalled()
+  })
+
+  it('should share one request between concurrent lookups of the same video', async () => {
+    const fetchCaptionLanguages = jest.fn(async () => ['en'])
+    const { loader } = createLoader({ fetchCaptionLanguages })
+
+    const results = await Promise.all([
+      loader.getCaptions('123456'),
+      loader.getCaptions('123456'),
+    ])
+
+    expect(results).toEqual([['en'], ['en']])
+    expect(fetchCaptionLanguages).toBeCalledTimes(1)
   })
 })

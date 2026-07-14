@@ -1,8 +1,5 @@
 import { debug } from '../utils/common.js'
-import { IndexedDB } from '../store/IndexedDB.js'
 import { CAPTION_STORE } from '../store/contants.js'
-import { ThrottledQueue } from './ThrottledQueue.js'
-import { CircuitBreaker, CircuitOpenError } from './CircuitBreaker.js'
 
 const SUCCESS_TTL_MS = 1000 * 3600 * 24
 const FAILURE_TTL_MS = 1000 * 60 * 10
@@ -19,65 +16,68 @@ export class CaptionLoader {
     this.fetchCaptionLanguages = fetchCaptionLanguages
     this.throttledQueue = throttledQueue
     this.circuitBreaker = circuitBreaker
+    this._inFlight = new Map()
   }
 
   /**
    * Get caption language codes of a video.
    * Successful lookups are cached for a day, failed lookups for
-   * 10 minutes (resolving to null while fresh).
+   * 10 minutes (resolving to null while fresh). Concurrent lookups
+   * of the same video share one request.
    * @param {string} videoId
    * @returns {Promise<string[]|null>}
    */
   async getCaptions(videoId) {
-    if (!this.indexedDB._db) {
-      await this.indexedDB.init()
-      debug('indexedDB initialized')
-    }
+    if (this._inFlight.has(videoId)) return this._inFlight.get(videoId)
 
+    const lookup = this._lookup(videoId).finally(() =>
+      this._inFlight.delete(videoId),
+    )
+    this._inFlight.set(videoId, lookup)
+    return lookup
+  }
+
+  async _lookup(videoId) {
     const saved = await this.indexedDB.get(CAPTION_STORE, videoId)
-    if (saved && Date.now() - saved['updatedAt'] < this._ttlOf(saved)) {
+    const ttlMs = saved?.failed ? FAILURE_TTL_MS : SUCCESS_TTL_MS
+    if (saved && Date.now() - saved.updatedAt < ttlMs) {
       debug('captions cache hit', {
         videoId,
-        ageMs: Date.now() - saved['updatedAt'],
-        failed: !!saved['failed'],
-        count: Array.isArray(saved['captions']) ? saved['captions'].length : 0,
+        ageMs: Date.now() - saved.updatedAt,
+        failed: !!saved.failed,
+        count: Array.isArray(saved.captions) ? saved.captions.length : 0,
       })
-      return saved['failed'] ? null : saved['captions']
+      return saved.failed ? null : saved.captions
     }
 
     debug('captions cache miss', { videoId })
 
-    const captions = await this._fetchCaptions(videoId)
-    debug('captions fetched', {
-      videoId,
-      count: Array.isArray(captions) ? captions.length : 0,
-    })
-    this.indexedDB.put(CAPTION_STORE, {
-      videoId: videoId,
-      captions,
-      updatedAt: Date.now(),
-    })
-    return captions
+    // the breaker sits inside the queue so its state is checked when
+    // the task runs, not when it was enqueued
+    return this.throttledQueue.run(() =>
+      this.circuitBreaker.run(() => this._fetchAndCache(videoId)),
+    )
   }
 
-  _ttlOf(saved) {
-    return saved['failed'] ? FAILURE_TTL_MS : SUCCESS_TTL_MS
-  }
-
-  async _fetchCaptions(videoId) {
+  async _fetchAndCache(videoId) {
     try {
-      return await this.throttledQueue.run(() =>
-        this.circuitBreaker.run(() => this.fetchCaptionLanguages(videoId)),
-      )
+      const captions = await this.fetchCaptionLanguages(videoId)
+      debug('captions fetched', {
+        videoId,
+        count: Array.isArray(captions) ? captions.length : 0,
+      })
+      this.indexedDB.put(CAPTION_STORE, {
+        videoId,
+        captions,
+        updatedAt: Date.now(),
+      })
+      return captions
     } catch (err) {
-      // a fast-fail from the open circuit is not a lookup result for this video
-      if (!(err instanceof CircuitOpenError)) {
-        this.indexedDB.put(CAPTION_STORE, {
-          videoId: videoId,
-          failed: true,
-          updatedAt: Date.now(),
-        })
-      }
+      this.indexedDB.put(CAPTION_STORE, {
+        videoId,
+        failed: true,
+        updatedAt: Date.now(),
+      })
       throw err
     }
   }

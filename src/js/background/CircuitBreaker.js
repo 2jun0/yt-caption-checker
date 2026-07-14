@@ -1,15 +1,5 @@
 import { debug } from '../utils/common.js'
-import { Storage } from '../store/Storage.js'
-import { CIRCUIT_STATE_FIELD } from '../store/contants.js'
-
-export class CircuitOpenError extends Error {
-  constructor() {
-    super('circuit is open')
-    this.name = 'CircuitOpenError'
-  }
-}
-
-const INITIAL_STATE = { failures: 0, backoffMs: null, openUntil: 0 }
+import { CircuitOpenError } from '../utils/errors.js'
 
 export class CircuitBreaker {
   /**
@@ -17,12 +7,15 @@ export class CircuitBreaker {
    * @param {number} initialBackoffMs
    * @param {number} maxBackoffMs
    * @param {Storage} storage
+   * @param {string} stateField
    */
-  constructor(failureThreshold, initialBackoffMs, maxBackoffMs, storage) {
+  constructor(failureThreshold, initialBackoffMs, maxBackoffMs, storage, stateField) {
     this.failureThreshold = failureThreshold
     this.initialBackoffMs = initialBackoffMs
     this.maxBackoffMs = maxBackoffMs
     this.storage = storage
+    this.stateField = stateField
+    this._state = null
   }
 
   /**
@@ -35,7 +28,7 @@ export class CircuitBreaker {
    * @returns {Promise<any>}
    */
   async run(task) {
-    const state = (await this._loadState()) ?? INITIAL_STATE
+    const state = await this._loadState()
     const now = Date.now()
 
     if (now < state.openUntil) throw new CircuitOpenError()
@@ -48,10 +41,8 @@ export class CircuitBreaker {
 
     try {
       const result = await task()
-      if (isProbe || state.failures > 0) {
-        if (isProbe) debug('circuit closed')
-        await this._saveState(INITIAL_STATE)
-      }
+      if (isProbe) debug('circuit closed')
+      if (isProbe || state.failures > 0) await this._saveState(this._closedState())
       return result
     } catch (err) {
       await this._recordFailure(state, isProbe)
@@ -77,17 +68,26 @@ export class CircuitBreaker {
       return this._saveState({ ...state, failures })
     }
 
-    const backoffMs = state.backoffMs ?? this.initialBackoffMs
-    debug('circuit opened', { failures, backoffMs })
-    return this._saveState({ failures, backoffMs, openUntil: now + backoffMs })
+    debug('circuit opened', { failures, backoffMs: state.backoffMs })
+    return this._saveState({ ...state, failures, openUntil: now + state.backoffMs })
   }
 
+  _closedState() {
+    return { failures: 0, backoffMs: this.initialBackoffMs, openUntil: 0 }
+  }
+
+  // the state is read from storage once per service worker lifetime
+  // and written through on every change
   async _loadState() {
-    const items = await this.storage.loadDataAsync(CIRCUIT_STATE_FIELD)
-    return items[CIRCUIT_STATE_FIELD]
+    if (!this._state) {
+      const items = await this.storage.loadDataAsync(this.stateField)
+      this._state = items[this.stateField] ?? this._closedState()
+    }
+    return this._state
   }
 
   async _saveState(state) {
-    await this.storage.saveDataAsync(CIRCUIT_STATE_FIELD, state)
+    this._state = state
+    await this.storage.saveDataAsync(this.stateField, state)
   }
 }
