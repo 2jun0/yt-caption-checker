@@ -7,6 +7,7 @@ import {
 import { CAPTION_FIXTURES } from './fixtures.js'
 import { judgeCaptionResults } from './lib/captionVerdict.js'
 import { looksBlocked } from './lib/blockPage.js'
+import { describeDegradedPlayability } from './lib/playability.js'
 
 const msg = err => String((err && err.message) || err)
 const watchUrl = id => `https://www.youtube.com/watch?v=${id}&hl=en`
@@ -35,6 +36,10 @@ const checkVideo = async id => {
   }
   const tracks = extractCaptionTracks(info) // captions...captionTracks path
   if (!tracks || tracks.length === 0) {
+    const degraded = describeDegradedPlayability(info.player_response)
+    if (degraded) {
+      return { id, outcome: 'unreachable', error: `bot-degraded response: ${degraded}` }
+    }
     return { id, outcome: 'broken', error: 'no captionTracks (path broken or empty)' }
   }
   if (!tracks.every(t => typeof t?.languageCode === 'string')) {
