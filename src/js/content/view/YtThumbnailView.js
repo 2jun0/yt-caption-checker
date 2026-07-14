@@ -1,6 +1,17 @@
 import { InvalidYouTubeThumnailElementError } from '../../utils/errors.js'
 import { CC_TAG_ID, CcTagView } from './CcTagView.js'
 
+// Lockup content-image anchor classes across YouTube markup revisions
+// (BEM kebab-case, then camelCase since ~2026-07)
+export const LOCKUP_CONTENT_IMAGE_CLASSES = [
+  'yt-lockup-view-model__content-image',
+  'ytLockupViewModelContentImage',
+]
+
+const hasLockupContentImageClass = el =>
+  !!el.classList &&
+  LOCKUP_CONTENT_IMAGE_CLASSES.some(cls => el.classList.contains(cls))
+
 /**
  * Check If Element is ThumbnailElement
  * @param {HTMLElement} el
@@ -14,8 +25,7 @@ export const isThumbnailElement = el => {
 
   const isNewThumbnail =
     el.tagName == 'A' &&
-    el.classList &&
-    el.classList.contains('yt-lockup-view-model__content-image') &&
+    hasLockupContentImageClass(el) &&
     el.href &&
     el.href.match(/\?v=([\w-]+)/);
 
@@ -87,9 +97,7 @@ export class YtThumbnailView {
 
   _validateThumbnailElementIdOrClass() {
     const isOldThumbnail = this.thumbnailEl.id === 'thumbnail'
-    const isNewThumbnail =
-      this.thumbnailEl.classList?.contains?.('yt-lockup-view-model__content-image') ===
-      true
+    const isNewThumbnail = hasLockupContentImageClass(this.thumbnailEl)
 
     if (!isOldThumbnail && !isNewThumbnail) {
       throw new InvalidYouTubeThumnailElementError(
