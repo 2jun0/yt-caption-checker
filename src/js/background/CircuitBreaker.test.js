@@ -4,21 +4,15 @@ import { CircuitBreaker, CircuitOpenError } from './CircuitBreaker.js'
 const createMemoryStorage = () => {
   const data = {}
   return {
-    get: async key => data[key],
-    set: async (key, value) => {
-      data[key] = value
+    loadDataAsync: async field => ({ [field]: data[field] }),
+    saveDataAsync: async (field, value) => {
+      data[field] = value
     },
   }
 }
 
-const createBreaker = () =>
-  new CircuitBreaker({
-    failureThreshold: 3,
-    initialBackoffMs: 60_000,
-    maxBackoffMs: 240_000,
-    storageKey: 'test-circuit',
-    storage: createMemoryStorage(),
-  })
+const createBreaker = storage =>
+  new CircuitBreaker(3, 60_000, 240_000, storage ?? createMemoryStorage())
 
 const failNTimes = async (breaker, n) => {
   for (let i = 0; i < n; i++) {
@@ -90,7 +84,8 @@ describe('CircuitBreaker', () => {
     const probe = breaker.run(
       () => new Promise(resolve => (resolveProbe = resolve)),
     )
-    await Promise.resolve()
+    // flush microtasks so the probe's tentative re-open is saved
+    for (let i = 0; i < 10; i++) await Promise.resolve()
 
     await expect(breaker.run(async () => 'ok')).rejects.toThrow(CircuitOpenError)
 
@@ -125,19 +120,12 @@ describe('CircuitBreaker', () => {
     await expect(breaker.run(async () => 'ok')).resolves.toBe('ok')
   })
 
-  it('should persist state through the injected storage', async () => {
+  it('should persist state through the given storage', async () => {
     const storage = createMemoryStorage()
-    const options = {
-      failureThreshold: 3,
-      initialBackoffMs: 60_000,
-      maxBackoffMs: 240_000,
-      storageKey: 'test-circuit',
-      storage,
-    }
-    const breaker = new CircuitBreaker(options)
+    const breaker = createBreaker(storage)
     await failNTimes(breaker, 3)
 
-    const revived = new CircuitBreaker(options)
+    const revived = createBreaker(storage)
     await expect(revived.run(async () => 'ok')).rejects.toThrow(CircuitOpenError)
   })
 })

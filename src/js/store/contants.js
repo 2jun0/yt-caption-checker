@@ -6,5 +6,6 @@ export const CC_PREVIEW_FONT_SIZE_FIELD = `${EXTENSION_NAME}_tag-font-size`
 export const IS_COMBINED_REGION_FIELD = `${EXTENSION_NAME}_combine-region`
 export const LANGUAGE_FIELD = `${EXTENSION_NAME}_lang`
 export const CAPTION_CACHE_FIELD = `${EXTENSION_NAME}_cc-cache`
+export const CIRCUIT_STATE_FIELD = `${EXTENSION_NAME}_caption-circuit`
 
 export const CAPTION_STORE = 'captions'
