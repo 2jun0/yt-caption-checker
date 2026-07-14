@@ -56,7 +56,7 @@ export class CcTagBackgroundColorPicker {
    * check if the color picker is displayed
    * @returns {boolean}
    */
-  isDisplay() {
+  isDisplayed() {
     return this.backgroundColorPicker.el.style.display === 'block'
   }
 }

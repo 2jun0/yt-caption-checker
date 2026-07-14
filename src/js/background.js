@@ -1,31 +1,9 @@
 import { debug } from './utils/common.js'
-import { getYtInfo } from './utils/yt-info.js'
+import { getCaptionLanguages } from './utils/yt-info.js'
 import { IndexedDB } from './store/IndexedDB.js'
 import { CAPTION_STORE } from './store/contants.js'
 
 const indexedDB = new IndexedDB()
-
-async function getCaptionsFromYt(videoId) {
-  const info = await getYtInfo(videoId)
-  const { captions } = info.player_response
-
-  if (!captions) {
-    return null
-  }
-
-  /** @type{Array} */
-  const captionTracks = captions.playerCaptionsTracklistRenderer.captionTracks
-
-  return captionTracks
-    .filter(
-      // filter not auto-created
-      ({ kind }) => kind !== 'asr',
-    )
-    .map(
-      // get languageCode only
-      ({ languageCode }) => languageCode,
-    )
-}
 
 async function getCaptions(videoId) {
   if (!indexedDB._db) {
@@ -45,7 +23,7 @@ async function getCaptions(videoId) {
 
   debug('captions cache miss', { videoId })
 
-  const captions = await getCaptionsFromYt(videoId)
+  const captions = await getCaptionLanguages(videoId)
   debug('captions fetched', {
     videoId,
     count: Array.isArray(captions) ? captions.length : 0,
