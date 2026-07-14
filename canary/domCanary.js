@@ -45,20 +45,27 @@ const probeQuery = async (context, query) => {
 
 const main = async () => {
   const browser = await chromium.launch({ headless: true })
-  const context = await browser.newContext({ userAgent: UA, locale: 'en-US' })
-  const probes = []
-  for (const q of DOM_SEARCH_QUERIES) {
-    probes.push(await probeQuery(context, q))
-  }
-  await browser.close()
+  try {
+    const context = await browser.newContext({ userAgent: UA, locale: 'en-US' })
+    const probes = []
+    for (const q of DOM_SEARCH_QUERIES) {
+      probes.push(await probeQuery(context, q))
+    }
 
-  const status = aggregateDom(probes)
-  writeResult({ surface: 'dom', status, probes })
-  process.exit(status === 'fail' ? 1 : 0) // inconclusive는 실패로 치지 않음
+    const status = aggregateDom(probes)
+    writeResult({ surface: 'dom', status, probes })
+    process.exitCode = status === 'fail' ? 1 : 0 // inconclusive는 실패로 치지 않음
+  } finally {
+    await browser.close()
+  }
 }
 
 main().catch(err => {
   // 크래시는 YouTube 깨짐이 아니라 인프라 이슈 → inconclusive로 기록하고 초록 종료
-  writeResult({ surface: 'dom', status: 'inconclusive', error: String((err && err.message) || err) })
-  process.exit(0)
+  writeResult({
+    surface: 'dom',
+    status: 'inconclusive',
+    error: String((err && err.message) || err),
+  })
+  process.exitCode = 0
 })
