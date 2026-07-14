@@ -2,6 +2,7 @@ import { debug } from './utils/common.js'
 import { getCaptionLanguages } from './utils/yt-info.js'
 import { IndexedDB } from './store/IndexedDB.js'
 import { CAPTION_STORE } from './store/contants.js'
+import { createHasCaptionsListener } from './background/createHasCaptionsListener.js'
 
 const indexedDB = new IndexedDB()
 
@@ -40,37 +41,4 @@ chrome.runtime.onStartup.addListener(() => {
   // nothing.
 })
 
-chrome.runtime.onMessage.addListener(({ type, value }, sender, sendRes) => {
-  if (type === 'has-captions') {
-    const { videoId, languages } = value
-
-    debug('message: has-captions', {
-      videoId,
-      languages,
-      sender: sender?.id,
-    })
-
-    getCaptions(videoId).then(captions => {
-      if (!captions) {
-        debug('no captions', { videoId })
-        return sendRes(false)
-      }
-
-      const existsCaptions = captions.filter(languageCode =>
-        languages.includes(languageCode),
-      )
-
-      debug('caption match result', {
-        videoId,
-        matched: existsCaptions,
-        matchedCount: existsCaptions.length,
-        captionsCount: captions.length,
-      })
-
-      return sendRes(existsCaptions.length > 0)
-    })
-  }
-
-  // this will keep the message channel open to the other end until sendResponse is called
-  return true
-})
+chrome.runtime.onMessage.addListener(createHasCaptionsListener(getCaptions))
