@@ -106,7 +106,16 @@ export class CcTagPresenter {
 
     const languages = this.ccTagModel.relatedLanguages
 
-    const hasCaptions = await this.ccTagModel.hasCaptions(videoUrl, languages)
+    let hasCaptions
+    try {
+      hasCaptions = await this.ccTagModel.hasCaptions(videoUrl, languages)
+    } catch (err) {
+      debug('CcTagPresenter: caption check failed', {
+        videoUrl,
+        error: String((err && err.message) || err),
+      })
+      return
+    }
     debug('CcTagPresenter: caption check', {
       ytThumbnailView,
       videoUrl,
