@@ -1,0 +1,52 @@
+name: YouTube Canary
+
+on:
+  schedule:
+    - cron: '17 6 * * *' # 매일 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  caption-canary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: Run caption canary
+        id: canary
+        run: node canary/captionCanary.js
+        continue-on-error: true
+      - name: Report issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node canary/reportIssue.js --surface caption
+      - name: Fail job if canary broke
+        if: steps.canary.outcome == 'failure'
+        run: exit 1
+
+  dom-canary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Run DOM canary
+        id: canary
+        run: node canary/domCanary.js
+        continue-on-error: true
+      - name: Report issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node canary/reportIssue.js --surface dom
+      - name: Fail job if canary broke
+        if: steps.canary.outcome == 'failure'
+        run: exit 1
