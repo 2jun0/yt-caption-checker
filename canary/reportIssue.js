@@ -33,8 +33,10 @@ try {
 }
 
 // 열린 카나리아 이슈 목록 (bug 라벨 + 제목 마커로 판단)
-const openIssues = JSON.parse(gh(['issue', 'list', '--state', 'open', '--label', 'bug', '--json', 'number,title']))
-  .filter(i => i.title.includes(marker))
+// --limit 넉넉히: gh 기본(30)이면 bug 이슈가 많을 때 기존 카나리아 이슈를 놓쳐 dedup이 깨진다
+const openIssues = JSON.parse(
+  gh(['issue', 'list', '--state', 'open', '--label', 'bug', '--limit', '200', '--json', 'number,title']),
+).filter(i => i.title.includes(marker))
 
 const decision = decideIssueAction({ status, openIssues })
 console.log(JSON.stringify({ surface, status, openIssues, decision }))
