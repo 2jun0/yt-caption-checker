@@ -41,11 +41,7 @@ export class ThrottledQueue {
       this._timer = null
       const item = this._pending.pop()
       this._lastStartedAt = Date.now()
-      try {
-        item.task().then(item.resolve, item.reject)
-      } catch (err) {
-        item.reject(err)
-      }
+      item.task().then(item.resolve, item.reject)
       this._schedule()
     }, wait)
   }
