@@ -5,8 +5,7 @@ import { YtThumbnailViewManager } from './YtThumbnailViewManager.js'
 import { YtThumbnailView } from '../view/YtThumbnailView.js'
 import { debug } from '../../utils/common.js'
 
-// show the loading indicator only when a check outlives this delay,
-// so cached lookups don't flash a spinner
+// checks answered within this delay (e.g. cache hits) never show a spinner
 const LOADING_DELAY_MS = 300
 
 export class CcTagPresenter {
