@@ -4,7 +4,7 @@
     "description": "YouTubeで視聴する映像に好む言語の字幕があれば見せてくれます。"
   },
   "appDesc": {
-    "message": "YouTubeで視聴する映像に好む言語の字幕があれば見せてくれます。",
+    "message": "お好みの言語の字幕があるYouTube動画のサムネイルにCCタグを表示します。",
     "description": "この拡張機能は、YouTube映像のサムネイルにあなたが好む言語の字幕タグを付けてくれます。 (字幕がない場合はタグをつけません。)"
   },
   "selectLang": {

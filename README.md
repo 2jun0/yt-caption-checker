@@ -9,7 +9,7 @@ follow the below page to read it in multiple languages.
 
 [한국어](README_KO.md)
 
-Show if there are captions for the language you want in YouTube videos.
+CC tags on YouTube thumbnails for videos subtitled in your language.
 
 ## Download
 
