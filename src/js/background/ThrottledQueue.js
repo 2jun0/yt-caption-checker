@@ -26,6 +26,10 @@ export class ThrottledQueue {
     })
   }
 
+  // entered from both run() and the timer callback, but never
+  // concurrently: neither path awaits, so each runs as a single
+  // uninterruptible block, and the _timer guard keeps at most
+  // one timer pending
   _schedule() {
     if (this._timer !== null || this._pending.length === 0) return
 
