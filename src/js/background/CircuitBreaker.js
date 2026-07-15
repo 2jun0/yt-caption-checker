@@ -31,9 +31,9 @@ export class CircuitBreaker {
     const state = await this._loadState()
     const now = Date.now()
 
-    if (now < state.openUntil) throw new CircuitOpenError()
+    if (CircuitBreaker._isOpen(state, now)) throw new CircuitOpenError()
 
-    const isProbe = state.openUntil > 0
+    const isProbe = CircuitBreaker._isHalfOpen(state, now)
     if (isProbe) {
       // re-open tentatively so concurrent calls fail fast during the probe
       await this._saveState({ ...state, openUntil: now + state.backoffMs })
@@ -70,6 +70,18 @@ export class CircuitBreaker {
 
     debug('circuit opened', { failures, backoffMs: state.backoffMs })
     return this._saveState({ ...state, failures, openUntil: now + state.backoffMs })
+  }
+
+  static _isClosed(state) {
+    return state.openUntil === 0
+  }
+
+  static _isOpen(state, now) {
+    return now < state.openUntil
+  }
+
+  static _isHalfOpen(state, now) {
+    return !this._isClosed(state) && !this._isOpen(state, now)
   }
 
   _closedState() {
