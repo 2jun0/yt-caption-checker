@@ -1,4 +1,5 @@
 import { CcTagView, CC_TAG_ID } from '../view/CcTagView.js'
+import { CcLoadingView, CC_LOADING_ID } from '../view/CcLoadingView.js'
 
 export class CcTagFactory {
   /**
@@ -22,6 +23,20 @@ export class CcTagFactory {
     ccTagDiv.appendChild(ccTagSpan)
 
     return new CcTagView(ccTagDiv, ccTagSpan)
+  }
+
+  /**
+   * Create CC Loading View
+   * @returns {CcLoadingView}
+   */
+  createLoadingView() {
+    const loadingDiv = this.document.createElement('div')
+    Object.assign(loadingDiv, {
+      id: CC_LOADING_ID,
+      className: 'style-scope ytd-thumbnail',
+    })
+
+    return new CcLoadingView(loadingDiv)
   }
 
   /**

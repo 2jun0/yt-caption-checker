@@ -24,7 +24,6 @@
     linear-gradient(to right, transparent 50%, white 50%);
   -webkit-mask-image: linear-gradient(transparent 50%, white 50%),
     linear-gradient(to right, transparent 50%, white 50%);
-  position: relative;
   color: #000;
   animation: rotate 6s infinite;
 }

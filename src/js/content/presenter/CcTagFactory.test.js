@@ -26,4 +26,11 @@ describe('CcTagFactory', () => {
     )
     expect(ccTagView).toBeDefined()
   })
+
+  it('should create a CcLoadingView', () => {
+    const ccLoadingView = ccTagFactory.createLoadingView()
+
+    expect(ccLoadingView).toBeDefined()
+    expect(ccLoadingView.loadingElement().id).toBe('cc-loading')
+  })
 })

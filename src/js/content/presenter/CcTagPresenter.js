@@ -5,6 +5,10 @@ import { YtThumbnailViewManager } from './YtThumbnailViewManager.js'
 import { YtThumbnailView } from '../view/YtThumbnailView.js'
 import { debug } from '../../utils/common.js'
 
+// show the loading indicator only when a check outlives this delay,
+// so cached lookups don't flash a spinner
+const LOADING_DELAY_MS = 300
+
 export class CcTagPresenter {
   /**
    * @param {CcTagFactory} ccTagFactory
@@ -106,6 +110,12 @@ export class CcTagPresenter {
 
     const languages = this.ccTagModel.relatedLanguages
 
+    const loadingView = this.ccTagFactory.createLoadingView()
+    const showLoadingTimer = setTimeout(
+      () => ytThumbnailView.insertLoading(loadingView),
+      LOADING_DELAY_MS,
+    )
+
     let hasCaptions
     try {
       hasCaptions = await this.ccTagModel.hasCaptions(videoUrl, languages)
@@ -115,6 +125,9 @@ export class CcTagPresenter {
         error: String((err && err.message) || err),
       })
       return
+    } finally {
+      clearTimeout(showLoadingTimer)
+      loadingView.remove()
     }
     debug('CcTagPresenter: caption check', {
       ytThumbnailView,
