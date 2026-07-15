@@ -6,9 +6,11 @@ const DB_NAME = `${EXTENSION_NAME}_DB`
 export class IndexedDB {
   /** @type{IDBDatabase} */
   _db = null
+  /** @type{Promise<void>} */
+  _initPromise = null
 
   async init() {
-    return new Promise((resolve, reject) => {
+    this._initPromise ??= new Promise((resolve, reject) => {
       const req = indexedDB.open(DB_NAME, 1)
 
       req.onupgradeneeded = event => {
@@ -30,12 +32,17 @@ export class IndexedDB {
         reject()
       }
     }).catch(error => {
+      this._initPromise = null
       indexedDB.deleteDatabase(DB_NAME)
       throw error
     })
+
+    return this._initPromise
   }
 
   async put(store, value) {
+    if (!this._db) await this.init()
+
     return new Promise(resolve => {
       this._db
         .transaction([store], 'readwrite')
@@ -45,6 +52,8 @@ export class IndexedDB {
   }
 
   async get(store, key) {
+    if (!this._db) await this.init()
+
     return new Promise(resolve => {
       const objectStore = this._db
         .transaction([store], 'readonly')

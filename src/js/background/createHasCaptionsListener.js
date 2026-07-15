@@ -6,9 +6,8 @@ import { debug } from '../utils/common.js'
  * responds false.
  * @param {(videoId: string) => Promise<string[]|null>} getCaptions
  */
-export const createHasCaptionsListener =
-  getCaptions =>
-  ({ type, value }, sender, sendRes) => {
+export function createHasCaptionsListener(getCaptions) {
+  return ({ type, value }, sender, sendRes) => {
     if (type !== 'has-captions') return false
 
     const { videoId, languages } = value
@@ -50,3 +49,4 @@ export const createHasCaptionsListener =
     // this will keep the message channel open to the other end until sendResponse is called
     return true
   }
+}
