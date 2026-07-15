@@ -6,7 +6,7 @@ export class CircuitBreaker {
    * @param {number} failureThreshold
    * @param {number} initialBackoffMs
    * @param {number} maxBackoffMs
-   * @param {Storage} storage
+   * @param {import('../store/Storage.js').Storage} storage
    * @param {string} stateField
    */
   constructor(failureThreshold, initialBackoffMs, maxBackoffMs, storage, stateField) {
