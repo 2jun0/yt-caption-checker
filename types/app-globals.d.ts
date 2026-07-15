@@ -5,6 +5,7 @@ declare global {
   type CcTagBackgroundColorPicker = import('../src/js/popup/ccTagBackgroundColor/CcTagBackgroundColorPicker.js').CcTagBackgroundColorPicker
   type CcTagBackgroundColorPresenter = import('../src/js/popup/ccTagBackgroundColor/CcTagBackgroundColorPresenter.js').CcTagBackgroundColorPresenter
   type CcTagCombineRegionCheckBox = import('../src/js/popup/ccTagLanguage/CcTagCombineRegionCheckBox.js').CcTagCombineRegionCheckBox
+  type CcLoadingView = import('../src/js/content/view/CcLoadingView.js').CcLoadingView
   type CcTagFactory = import('../src/js/content/presenter/CcTagFactory.js').CcTagFactory
   type CcTagFinder = import('../src/js/content/presenter/CcTagFinder.js').CcTagFinder
   type CcTagFontSizeModel = import('../src/js/popup/common/CcTagFontSizeModel.js').CcTagFontSizeModel

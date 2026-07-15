@@ -99,6 +99,48 @@ describe('YtThumbnailView', () => {
     expect(overlays.insertBefore).toBeCalled()
   })
 
+  it('should insert loading indicator to overlays', () => {
+    const overlays = {
+      childElementCount: 1,
+      querySelector: () => null,
+      insertBefore: jest.fn(),
+    }
+    const thumbnailEl = {
+      tagName: 'A',
+      id: 'thumbnail',
+      href: 'https://www.youtube.com/watch?v=123456',
+      querySelector: () => overlays,
+    }
+    const ccLoadingView = {
+      loadingElement: () => {},
+    }
+    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
+
+    ytThumbnailView.insertLoading(ccLoadingView)
+    expect(overlays.insertBefore).toBeCalled()
+  })
+
+  it('should not insert loading indicator twice', () => {
+    const overlays = {
+      childElementCount: 1,
+      querySelector: () => 'existing-loading-el',
+      insertBefore: jest.fn(),
+    }
+    const thumbnailEl = {
+      tagName: 'A',
+      id: 'thumbnail',
+      href: 'https://www.youtube.com/watch?v=123456',
+      querySelector: () => overlays,
+    }
+    const ccLoadingView = {
+      loadingElement: () => {},
+    }
+    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
+
+    ytThumbnailView.insertLoading(ccLoadingView)
+    expect(overlays.insertBefore).not.toBeCalled()
+  })
+
   it('should return true if cc tag exists', async () => {
     const overlays = {
       childElementCount: 1,

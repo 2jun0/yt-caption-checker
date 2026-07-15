@@ -1,5 +1,6 @@
 import { InvalidYouTubeThumnailElementError } from '../../utils/errors.js'
 import { CC_TAG_ID, CcTagView } from './CcTagView.js'
+import { CC_LOADING_ID, CcLoadingView } from './CcLoadingView.js'
 
 // Class names YouTube uses for the lockup content-image anchor
 export const LOCKUP_CONTENT_IMAGE_CLASSES = [
@@ -54,6 +55,28 @@ export class YtThumbnailView {
     if (!overlays || (await this.hasCcTag())) return
 
     overlays.insertBefore(ccTagView.ccTagElement(), overlays.lastChild)
+  }
+
+  /**
+   * Insert loading indicator in YouTube thumbnail
+   * @param {CcLoadingView} ccLoadingView
+   */
+  insertLoading(ccLoadingView) {
+    const overlays = this._getOverlays()
+    if (!overlays || this.hasLoading()) return
+
+    overlays.insertBefore(ccLoadingView.loadingElement(), overlays.lastChild)
+  }
+
+  /**
+   * Check if loading indicator exists
+   * @returns {boolean}
+   */
+  hasLoading() {
+    const overlays = this._getOverlays()
+    if (!overlays) return false
+
+    return !!overlays.querySelector(`#${CC_LOADING_ID}`)
   }
 
   /**
