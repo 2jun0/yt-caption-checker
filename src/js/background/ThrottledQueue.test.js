@@ -64,6 +64,21 @@ describe('ThrottledQueue', () => {
     expect(order).toEqual(['third', 'second', 'first'])
   })
 
+  it('should keep draining when a task throws synchronously', async () => {
+    const queue = new ThrottledQueue(200)
+    const ran = []
+
+    const bad = queue.run(() => {
+      throw new Error('sync boom')
+    })
+    const good = queue.run(async () => ran.push('good'))
+    jest.advanceTimersByTime(1000)
+
+    await expect(bad).rejects.toThrow('sync boom')
+    await good
+    expect(ran).toEqual(['good'])
+  })
+
   it('should keep throttling tasks added while draining', async () => {
     const queue = new ThrottledQueue(200)
     const startedAt = []

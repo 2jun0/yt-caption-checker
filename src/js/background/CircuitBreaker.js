@@ -31,7 +31,9 @@ export class CircuitBreaker {
     const state = await this._loadState()
     const now = Date.now()
 
-    if (CircuitBreaker._isOpen(state, now)) throw new CircuitOpenError()
+    if (CircuitBreaker._isOpen(state, now)) {
+      throw new CircuitOpenError('circuit is open')
+    }
 
     const isProbe = CircuitBreaker._isHalfOpen(state, now)
     if (isProbe) {
