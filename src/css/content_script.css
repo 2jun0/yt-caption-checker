@@ -6,13 +6,13 @@
   right: auto;
   margin: 4px;
   position: absolute;
+  z-index: 1;
 }
 
 #cc-status {
   padding: 3px 4px;
   border-radius: 4px;
   font-weight: 500;
-  z-index: 1;
 }
 
 #cc-loading {
