@@ -6,7 +6,7 @@ describe('CcTagPresenter', () => {
     getVideoUrl: () => 'https://www.youtube.com/watch?v=123456',
     insertCcTag: jest.fn(),
     insertLoading: jest.fn(),
-    hasCcTag: jest.fn().mockResolvedValue(false),
+    hasCcTag: jest.fn().mockReturnValue(false),
   })
 
   const createLoadingView = () => ({

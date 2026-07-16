@@ -78,7 +78,7 @@ describe('YtThumbnailView', () => {
     )
   })
 
-  it('should insert cc tag to overlays', async () => {
+  it('should insert cc tag to overlays', () => {
     const overlays = {
       childElementCount: 1,
       querySelector: () => {},
@@ -95,7 +95,7 @@ describe('YtThumbnailView', () => {
     }
     const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
-    await ytThumbnailView.insertCcTag(ccTagView)
+    ytThumbnailView.insertCcTag(ccTagView)
     expect(overlays.insertBefore).toBeCalled()
   })
 
@@ -141,7 +141,7 @@ describe('YtThumbnailView', () => {
     expect(overlays.insertBefore).not.toBeCalled()
   })
 
-  it('should return true if cc tag exists', async () => {
+  it('should return true if cc tag exists', () => {
     const overlays = {
       childElementCount: 1,
       querySelector: () => 'el',
@@ -155,10 +155,10 @@ describe('YtThumbnailView', () => {
     }
     const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
-    expect(await ytThumbnailView.hasCcTag()).toBe(true)
+    expect(ytThumbnailView.hasCcTag()).toBe(true)
   })
 
-  it('should return false if cc tag does not exist', async () => {
+  it('should return false if cc tag does not exist', () => {
     const overlays = {
       childElementCount: 1,
       querySelector: () => null,
@@ -172,6 +172,6 @@ describe('YtThumbnailView', () => {
     }
     const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
-    expect(await ytThumbnailView.hasCcTag()).toBe(false)
+    expect(ytThumbnailView.hasCcTag()).toBe(false)
   })
 })

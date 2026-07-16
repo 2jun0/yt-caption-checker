@@ -48,11 +48,10 @@ export class YtThumbnailView {
   /**
    * Insert CC tag in YouTube thumbnail
    * @param {CcTagView} ccTagView
-   * @returns {Promise<void>}
    */
-  async insertCcTag(ccTagView) {
+  insertCcTag(ccTagView) {
     const overlays = this._getOverlays()
-    if (!overlays || (await this.hasCcTag())) return
+    if (!overlays || this.hasCcTag() || this.hasLoading()) return
 
     overlays.insertBefore(ccTagView.ccTagElement(), overlays.lastChild)
   }
@@ -63,7 +62,7 @@ export class YtThumbnailView {
    */
   insertLoading(ccLoadingView) {
     const overlays = this._getOverlays()
-    if (!overlays || this.hasLoading()) return
+    if (!overlays || this.hasLoading() || this.hasCcTag()) return
 
     overlays.insertBefore(ccLoadingView.loadingElement(), overlays.lastChild)
   }
@@ -81,10 +80,10 @@ export class YtThumbnailView {
 
   /**
    * Check if CC tag exists
-   * @returns {Promise<boolean>}
+   * @returns {boolean}
    */
-  async hasCcTag() {
-    const overlays = await this._getOverlays()
+  hasCcTag() {
+    const overlays = this._getOverlays()
     if (!overlays) return false
 
     return !!overlays.querySelector(`#${CC_TAG_ID}`)

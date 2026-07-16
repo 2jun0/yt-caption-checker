@@ -26,8 +26,8 @@ export class CcTagPresenter {
    * on thumbnail added
    * @param {YtThumbnailView} ytThumbnailView
    */
-  async onThumbnailAdded(ytThumbnailView) {
-    if (!(await ytThumbnailView.hasCcTag())) {
+  onThumbnailAdded(ytThumbnailView) {
+    if (!ytThumbnailView.hasCcTag()) {
       this.checkCaptionsAndCreateCcTag(ytThumbnailView)
     }
   }
@@ -109,25 +109,19 @@ export class CcTagPresenter {
 
     const languages = this.ccTagModel.relatedLanguages
 
-    const loadingView = this.ccTagFactory.createLoadingView()
-    const showLoadingTimer = setTimeout(
-      () => ytThumbnailView.insertLoading(loadingView),
-      LOADING_DELAY_MS,
-    )
-
     let hasCaptions
     try {
-      hasCaptions = await this.ccTagModel.hasCaptions(videoUrl, languages)
+      hasCaptions = await this.withLoadingView(ytThumbnailView, () =>
+        this.ccTagModel.hasCaptions(videoUrl, languages),
+      )
     } catch (err) {
       debug('CcTagPresenter: caption check failed', {
         videoUrl,
         error: String((err && err.message) || err),
       })
       return
-    } finally {
-      clearTimeout(showLoadingTimer)
-      loadingView.remove()
     }
+
     debug('CcTagPresenter: caption check', {
       ytThumbnailView,
       videoUrl,
@@ -137,6 +131,27 @@ export class CcTagPresenter {
 
     if (hasCaptions) {
       ytThumbnailView.insertCcTag(this.createCcTag())
+    }
+  }
+
+  /**
+   * Show loading view while executing the function
+   * @param {YtThumbnailView} ytThumbnailView 
+   * @param {() => Promise<any>} fn 
+   * @returns {Promise<any>}
+   */
+  async withLoadingView(ytThumbnailView, fn) {
+    const loadingView = this.ccTagFactory.createLoadingView()
+    const showLoadingTimer = setTimeout(
+      () => ytThumbnailView.insertLoading(loadingView),
+      LOADING_DELAY_MS,
+    )
+
+    try {
+      return await fn()
+    } finally {
+      clearTimeout(showLoadingTimer)
+      loadingView.remove()
     }
   }
 
