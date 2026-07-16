@@ -1,5 +1,7 @@
 import { InvalidYouTubeThumnailElementError } from '../../utils/errors.js'
 import { YtThumbnailView } from './YtThumbnailView.js'
+import { CC_TAG_ID } from './CcTagView.js'
+import { CC_LOADING_ID } from './CcLoadingView.js'
 import { jest } from '@jest/globals'
 
 describe('YtThumbnailView', () => {
@@ -126,6 +128,70 @@ describe('YtThumbnailView', () => {
     const overlays = {
       childElementCount: 1,
       querySelector: () => 'existing-loading-el',
+      insertBefore: jest.fn(),
+    }
+    const thumbnailEl = {
+      tagName: 'A',
+      id: 'thumbnail',
+      href: 'https://www.youtube.com/watch?v=123456',
+      querySelector: () => overlays,
+    }
+    const ccLoadingView = {
+      ccLoadingElement: () => {},
+    }
+    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
+
+    ytThumbnailView.insertCcLoading(ccLoadingView)
+    expect(overlays.insertBefore).not.toBeCalled()
+  })
+
+  it('should not insert a second cc tag', () => {
+    const overlays = {
+      childElementCount: 1,
+      querySelector: selector => (selector === `#${CC_TAG_ID}` ? 'el' : null),
+      insertBefore: jest.fn(),
+    }
+    const thumbnailEl = {
+      tagName: 'A',
+      id: 'thumbnail',
+      href: 'https://www.youtube.com/watch?v=123456',
+      querySelector: () => overlays,
+    }
+    const ccTagView = {
+      ccTagElement: () => {},
+    }
+    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
+
+    ytThumbnailView.insertCcTag(ccTagView)
+    expect(overlays.insertBefore).not.toBeCalled()
+  })
+
+  it('should not insert cc tag when loading indicator exists', () => {
+    const overlays = {
+      childElementCount: 1,
+      querySelector: selector =>
+        selector === `#${CC_LOADING_ID}` ? 'el' : null,
+      insertBefore: jest.fn(),
+    }
+    const thumbnailEl = {
+      tagName: 'A',
+      id: 'thumbnail',
+      href: 'https://www.youtube.com/watch?v=123456',
+      querySelector: () => overlays,
+    }
+    const ccTagView = {
+      ccTagElement: () => {},
+    }
+    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
+
+    ytThumbnailView.insertCcTag(ccTagView)
+    expect(overlays.insertBefore).not.toBeCalled()
+  })
+
+  it('should not insert loading indicator when cc tag exists', () => {
+    const overlays = {
+      childElementCount: 1,
+      querySelector: selector => (selector === `#${CC_TAG_ID}` ? 'el' : null),
       insertBefore: jest.fn(),
     }
     const thumbnailEl = {
