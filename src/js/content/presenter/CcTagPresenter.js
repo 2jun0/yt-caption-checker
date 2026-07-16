@@ -26,8 +26,8 @@ export class CcTagPresenter {
    * on thumbnail added
    * @param {YtThumbnailView} ytThumbnailView
    */
-  async onThumbnailAdded(ytThumbnailView) {
-    if (!(await ytThumbnailView.hasCcTag())) {
+  onThumbnailAdded(ytThumbnailView) {
+    if (!ytThumbnailView.hasCcTag()) {
       this.checkCaptionsAndCreateCcTag(ytThumbnailView)
     }
   }
