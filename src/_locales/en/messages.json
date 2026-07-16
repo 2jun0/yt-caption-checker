@@ -4,8 +4,8 @@
     "description": "Show if there are captions for the language you want in YouTube videos."
   },
   "appDesc": {
-    "message": "CC tags on YouTube thumbnails for videos subtitled in your language.",
-    "description": "This extension adds a caption tag for the language you want on the video thumbnail in the YouTube. (But if there are no caption, it doesn't add tags)"
+    "message": "CC tags on YouTube thumbnails for videos subtitled in your chosen language.",
+    "description": "This extension adds a CC tag to the video thumbnail when the video has captions in the language you choose. (No tag if there are no captions.)"
   },
   "selectLang": {
     "message": "Select Language",
