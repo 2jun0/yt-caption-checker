@@ -54,8 +54,8 @@ const aggregateSurface = probes => {
 }
 
 /**
- * Aggregate probes into a single verdict, judging each surface separately —
- * search still matching must not mask a broken channel/watch surface.
+ * Aggregate probes into a single verdict. Probes are grouped by surface:
+ * fail if any surface fails, else pass if any surface passes.
  * @param {{surface?: string, blocked?: boolean, watchLinks?: number, matches?: number}[]} probes
  * @returns {'pass'|'fail'|'inconclusive'}
  */

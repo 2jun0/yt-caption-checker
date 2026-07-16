@@ -10,11 +10,8 @@ export const CAPTION_FIXTURES = [
 // Search queries visited by the DOM canary (thumbnails must appear).
 export const DOM_SEARCH_QUERIES = ['news', 'music']
 
-// Surfaces visited by the DOM canary. YouTube serves different markup per
-// surface (search: old a#thumbnail, channel/watch: new lockup view-model),
-// so each surface is judged separately — see aggregateDom.
-// Anonymous "home" is an empty feed (no videos), so that surface normally
-// stays inconclusive; it only starts counting if YouTube brings the feed back.
+// Surfaces visited by the DOM canary, judged separately by aggregateDom.
+// Anonymous home renders no video links; its probes are never usable.
 export const DOM_PROBE_TARGETS = [
   ...DOM_SEARCH_QUERIES.map(query => ({
     surface: 'search',
