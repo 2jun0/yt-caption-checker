@@ -54,4 +54,37 @@ describe('aggregateDom', () => {
   test('inconclusive when every probe is blocked or has no watch links', () => {
     expect(aggregateDom([{ blocked: true }, { watchLinks: 0, matches: 0 }])).toBe('inconclusive')
   })
+
+  test('fail when one surface breaks even if another surface still passes', () => {
+    expect(
+      aggregateDom([
+        { surface: 'search', watchLinks: 110, matches: 27 },
+        { surface: 'channel', watchLinks: 30, matches: 0 },
+      ]),
+    ).toBe('fail')
+  })
+  test('pass when every usable surface has matches', () => {
+    expect(
+      aggregateDom([
+        { surface: 'search', watchLinks: 110, matches: 27 },
+        { surface: 'watch', watchLinks: 20, matches: 20 },
+      ]),
+    ).toBe('pass')
+  })
+  test('surface without usable probes (e.g. anonymous home) stays neutral', () => {
+    expect(
+      aggregateDom([
+        { surface: 'home', watchLinks: 0, matches: 0 },
+        { surface: 'search', watchLinks: 110, matches: 27 },
+      ]),
+    ).toBe('pass')
+  })
+  test('multiple probes within a surface buffer each other', () => {
+    expect(
+      aggregateDom([
+        { surface: 'search', watchLinks: 100, matches: 0 },
+        { surface: 'search', watchLinks: 110, matches: 27 },
+      ]),
+    ).toBe('pass')
+  })
 })

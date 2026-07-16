@@ -1,6 +1,6 @@
 import { writeFileSync } from 'fs'
 import { chromium } from 'playwright'
-import { DOM_SEARCH_QUERIES } from './fixtures.js'
+import { DOM_PROBE_TARGETS } from './fixtures.js'
 import {
   countThumbnailMatches,
   isConsentOrBlockPage,
@@ -16,15 +16,12 @@ const writeResult = out => {
   writeFileSync('dom-canary-result.json', JSON.stringify(out))
 }
 
-const probeQuery = async (context, query) => {
+const probeTarget = async (context, { surface, label, url }) => {
   const page = await context.newPage()
   try {
-    const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(
-      query,
-    )}&hl=en&gl=US`
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 })
     if (isConsentOrBlockPage({ url: page.url(), title: await page.title() })) {
-      return { query, blocked: true }
+      return { surface, label, blocked: true }
     }
     await page.waitForTimeout(4000) // let the SPA render thumbnails
     const descriptors = await page.$$eval('a', as =>
@@ -35,9 +32,14 @@ const probeQuery = async (context, query) => {
         className: a.className,
       })),
     )
-    return { query, ...countThumbnailMatches(descriptors) }
+    return { surface, label, ...countThumbnailMatches(descriptors) }
   } catch (err) {
-    return { query, blocked: true, error: String((err && err.message) || err) }
+    return {
+      surface,
+      label,
+      blocked: true,
+      error: String((err && err.message) || err),
+    }
   } finally {
     await page.close()
   }
@@ -48,8 +50,8 @@ const main = async () => {
   try {
     const context = await browser.newContext({ userAgent: UA, locale: 'en-US' })
     const probes = []
-    for (const q of DOM_SEARCH_QUERIES) {
-      probes.push(await probeQuery(context, q))
+    for (const target of DOM_PROBE_TARGETS) {
+      probes.push(await probeTarget(context, target))
     }
 
     const status = aggregateDom(probes)

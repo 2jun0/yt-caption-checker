@@ -42,13 +42,31 @@ export const isConsentOrBlockPage = ({ url = '', title = '' }) =>
   /consent\.|\/sorry\//.test(url) || /before you continue/i.test(title)
 
 /**
- * Aggregate per-query probes into a single verdict.
+ * Verdict for the probes of a single surface.
  * A probe is "usable" only if it wasn't blocked and actually had watch links.
  * @param {{blocked?: boolean, watchLinks?: number, matches?: number}[]} probes
  * @returns {'pass'|'fail'|'inconclusive'}
  */
-export const aggregateDom = probes => {
+const aggregateSurface = probes => {
   const usable = probes.filter(p => !p.blocked && (p.watchLinks || 0) > 0)
   if (usable.length === 0) return 'inconclusive'
   return usable.some(p => (p.matches || 0) > 0) ? 'pass' : 'fail'
+}
+
+/**
+ * Aggregate probes into a single verdict, judging each surface separately —
+ * search still matching must not mask a broken channel/watch surface.
+ * @param {{surface?: string, blocked?: boolean, watchLinks?: number, matches?: number}[]} probes
+ * @returns {'pass'|'fail'|'inconclusive'}
+ */
+export const aggregateDom = probes => {
+  const bySurface = new Map()
+  for (const p of probes) {
+    const key = p.surface || 'default'
+    if (!bySurface.has(key)) bySurface.set(key, [])
+    bySurface.get(key).push(p)
+  }
+  const verdicts = [...bySurface.values()].map(aggregateSurface)
+  if (verdicts.includes('fail')) return 'fail'
+  return verdicts.includes('pass') ? 'pass' : 'inconclusive'
 }
