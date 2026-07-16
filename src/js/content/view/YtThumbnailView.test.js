@@ -1,5 +1,7 @@
 import { InvalidYouTubeThumnailElementError } from '../../utils/errors.js'
 import { YtThumbnailView } from './YtThumbnailView.js'
+import { CC_TAG_ID } from './CcTagView.js'
+import { CC_LOADING_ID } from './CcLoadingView.js'
 import { jest } from '@jest/globals'
 
 describe('YtThumbnailView', () => {
@@ -34,7 +36,9 @@ describe('YtThumbnailView', () => {
         classList: {
           contains: jest
             .fn()
-            .mockImplementation(cls => cls === 'yt-lockup-view-model__content-image'),
+            .mockImplementation(
+              cls => cls === 'yt-lockup-view-model__content-image',
+            ),
         },
       }
       expect(() => new YtThumbnailView(newThumbnailEl)).not.toThrow()
@@ -78,7 +82,7 @@ describe('YtThumbnailView', () => {
     )
   })
 
-  it('should insert cc tag to overlays', async () => {
+  it('should insert cc tag to overlays', () => {
     const overlays = {
       childElementCount: 1,
       querySelector: () => {},
@@ -95,7 +99,7 @@ describe('YtThumbnailView', () => {
     }
     const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
-    await ytThumbnailView.insertCcTag(ccTagView)
+    ytThumbnailView.insertCcTag(ccTagView)
     expect(overlays.insertBefore).toBeCalled()
   })
 
@@ -112,11 +116,11 @@ describe('YtThumbnailView', () => {
       querySelector: () => overlays,
     }
     const ccLoadingView = {
-      loadingElement: () => {},
+      ccLoadingElement: () => {},
     }
     const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
-    ytThumbnailView.insertLoading(ccLoadingView)
+    ytThumbnailView.insertCcLoading(ccLoadingView)
     expect(overlays.insertBefore).toBeCalled()
   })
 
@@ -133,15 +137,79 @@ describe('YtThumbnailView', () => {
       querySelector: () => overlays,
     }
     const ccLoadingView = {
-      loadingElement: () => {},
+      ccLoadingElement: () => {},
     }
     const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
-    ytThumbnailView.insertLoading(ccLoadingView)
+    ytThumbnailView.insertCcLoading(ccLoadingView)
     expect(overlays.insertBefore).not.toBeCalled()
   })
 
-  it('should return true if cc tag exists', async () => {
+  it('should not insert a second cc tag', () => {
+    const overlays = {
+      childElementCount: 1,
+      querySelector: selector => (selector === `#${CC_TAG_ID}` ? 'el' : null),
+      insertBefore: jest.fn(),
+    }
+    const thumbnailEl = {
+      tagName: 'A',
+      id: 'thumbnail',
+      href: 'https://www.youtube.com/watch?v=123456',
+      querySelector: () => overlays,
+    }
+    const ccTagView = {
+      ccTagElement: () => {},
+    }
+    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
+
+    ytThumbnailView.insertCcTag(ccTagView)
+    expect(overlays.insertBefore).not.toBeCalled()
+  })
+
+  it('should not insert cc tag when loading indicator exists', () => {
+    const overlays = {
+      childElementCount: 1,
+      querySelector: selector =>
+        selector === `#${CC_LOADING_ID}` ? 'el' : null,
+      insertBefore: jest.fn(),
+    }
+    const thumbnailEl = {
+      tagName: 'A',
+      id: 'thumbnail',
+      href: 'https://www.youtube.com/watch?v=123456',
+      querySelector: () => overlays,
+    }
+    const ccTagView = {
+      ccTagElement: () => {},
+    }
+    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
+
+    ytThumbnailView.insertCcTag(ccTagView)
+    expect(overlays.insertBefore).not.toBeCalled()
+  })
+
+  it('should not insert loading indicator when cc tag exists', () => {
+    const overlays = {
+      childElementCount: 1,
+      querySelector: selector => (selector === `#${CC_TAG_ID}` ? 'el' : null),
+      insertBefore: jest.fn(),
+    }
+    const thumbnailEl = {
+      tagName: 'A',
+      id: 'thumbnail',
+      href: 'https://www.youtube.com/watch?v=123456',
+      querySelector: () => overlays,
+    }
+    const ccLoadingView = {
+      ccLoadingElement: () => {},
+    }
+    const ytThumbnailView = new YtThumbnailView(thumbnailEl)
+
+    ytThumbnailView.insertCcLoading(ccLoadingView)
+    expect(overlays.insertBefore).not.toBeCalled()
+  })
+
+  it('should return true if cc tag exists', () => {
     const overlays = {
       childElementCount: 1,
       querySelector: () => 'el',
@@ -155,10 +223,10 @@ describe('YtThumbnailView', () => {
     }
     const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
-    expect(await ytThumbnailView.hasCcTag()).toBe(true)
+    expect(ytThumbnailView.hasCcTag()).toBe(true)
   })
 
-  it('should return false if cc tag does not exist', async () => {
+  it('should return false if cc tag does not exist', () => {
     const overlays = {
       childElementCount: 1,
       querySelector: () => null,
@@ -172,6 +240,6 @@ describe('YtThumbnailView', () => {
     }
     const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
-    expect(await ytThumbnailView.hasCcTag()).toBe(false)
+    expect(ytThumbnailView.hasCcTag()).toBe(false)
   })
 })

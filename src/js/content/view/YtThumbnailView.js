@@ -21,13 +21,13 @@ export const isThumbnailElement = el => {
     el.tagName == 'A' &&
     el.id == 'thumbnail' &&
     el.href &&
-    el.href.match(/\?v=([\w-]+)/);
+    el.href.match(/\?v=([\w-]+)/)
 
   const isNewThumbnail =
     el.tagName == 'A' &&
     hasLockupContentImageClass(el) &&
     el.href &&
-    el.href.match(/\?v=([\w-]+)/);
+    el.href.match(/\?v=([\w-]+)/)
 
   return isOldThumbnail || isNewThumbnail
 }
@@ -46,33 +46,32 @@ export class YtThumbnailView {
   }
 
   /**
-   * Insert CC tag in YouTube thumbnail
+   * Insert CC tag in YouTube thumbnail.
    * @param {CcTagView} ccTagView
-   * @returns {Promise<void>}
    */
-  async insertCcTag(ccTagView) {
+  insertCcTag(ccTagView) {
     const overlays = this._getOverlays()
-    if (!overlays || (await this.hasCcTag())) return
+    if (!overlays || this.hasCcTag() || this.hasCcLoading()) return
 
     overlays.insertBefore(ccTagView.ccTagElement(), overlays.lastChild)
   }
 
   /**
-   * Insert loading indicator in YouTube thumbnail
+   * Insert loading indicator in YouTube thumbnail.
    * @param {CcLoadingView} ccLoadingView
    */
-  insertLoading(ccLoadingView) {
+  insertCcLoading(ccLoadingView) {
     const overlays = this._getOverlays()
-    if (!overlays || this.hasLoading()) return
+    if (!overlays || this.hasCcLoading() || this.hasCcTag()) return
 
-    overlays.insertBefore(ccLoadingView.loadingElement(), overlays.lastChild)
+    overlays.insertBefore(ccLoadingView.ccLoadingElement(), overlays.lastChild)
   }
 
   /**
    * Check if loading indicator exists
    * @returns {boolean}
    */
-  hasLoading() {
+  hasCcLoading() {
     const overlays = this._getOverlays()
     if (!overlays) return false
 
@@ -81,10 +80,10 @@ export class YtThumbnailView {
 
   /**
    * Check if CC tag exists
-   * @returns {Promise<boolean>}
+   * @returns {boolean}
    */
-  async hasCcTag() {
-    const overlays = await this._getOverlays()
+  hasCcTag() {
+    const overlays = this._getOverlays()
     if (!overlays) return false
 
     return !!overlays.querySelector(`#${CC_TAG_ID}`)
@@ -104,7 +103,8 @@ export class YtThumbnailView {
    */
   _getOverlays() {
     if (!this._overlays) {
-      this._overlays = this.thumbnailEl.querySelector('#overlays') ?? this.thumbnailEl
+      this._overlays =
+        this.thumbnailEl.querySelector('#overlays') ?? this.thumbnailEl
     }
     return this._overlays
   }

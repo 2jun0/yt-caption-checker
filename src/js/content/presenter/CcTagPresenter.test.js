@@ -5,19 +5,22 @@ describe('CcTagPresenter', () => {
   const createThumbnailView = () => ({
     getVideoUrl: () => 'https://www.youtube.com/watch?v=123456',
     insertCcTag: jest.fn(),
-    insertLoading: jest.fn(),
-    hasCcTag: jest.fn().mockResolvedValue(false),
+    insertCcLoading: jest.fn(),
+    hasCcTag: jest.fn().mockReturnValue(false),
   })
 
-  const createLoadingView = () => ({
+  const createCcLoadingView = () => ({
     remove: jest.fn(),
-    loadingElement: () => {},
+    ccLoadingElement: () => {},
   })
 
-  const createPresenter = (ccTagModel, loadingView = createLoadingView()) => {
+  const createPresenter = (
+    ccTagModel,
+    ccLoadingView = createCcLoadingView(),
+  ) => {
     const ccTagFactory = {
       createCcTagView: jest.fn().mockReturnValue('ccTagView'),
-      createLoadingView: jest.fn().mockReturnValue(loadingView),
+      createCcLoadingView: jest.fn().mockReturnValue(ccLoadingView),
     }
     return new CcTagPresenter(ccTagFactory, {}, {}, ccTagModel)
   }
@@ -68,7 +71,7 @@ describe('CcTagPresenter', () => {
       await presenter.checkCaptionsAndCreateCcTag(thumbnailView)
       jest.advanceTimersByTime(1000)
 
-      expect(thumbnailView.insertLoading).not.toBeCalled()
+      expect(thumbnailView.insertCcLoading).not.toBeCalled()
     })
 
     it('should show the loading indicator when the check takes longer than the delay', async () => {
@@ -79,18 +82,18 @@ describe('CcTagPresenter', () => {
           () => new Promise(resolve => (resolveCheck = resolve)),
         ),
       }
-      const loadingView = createLoadingView()
+      const ccLoadingView = createCcLoadingView()
       const thumbnailView = createThumbnailView()
-      const presenter = createPresenter(ccTagModel, loadingView)
+      const presenter = createPresenter(ccTagModel, ccLoadingView)
 
       const check = presenter.checkCaptionsAndCreateCcTag(thumbnailView)
       jest.advanceTimersByTime(300)
-      expect(thumbnailView.insertLoading).toBeCalledWith(loadingView)
+      expect(thumbnailView.insertCcLoading).toBeCalledWith(ccLoadingView)
 
       resolveCheck(true)
       await check
 
-      expect(loadingView.remove).toBeCalled()
+      expect(ccLoadingView.remove).toBeCalled()
       expect(thumbnailView.insertCcTag).toBeCalled()
     })
 
@@ -102,16 +105,16 @@ describe('CcTagPresenter', () => {
           () => new Promise((resolve, reject) => (rejectCheck = reject)),
         ),
       }
-      const loadingView = createLoadingView()
+      const ccLoadingView = createCcLoadingView()
       const thumbnailView = createThumbnailView()
-      const presenter = createPresenter(ccTagModel, loadingView)
+      const presenter = createPresenter(ccTagModel, ccLoadingView)
 
       const check = presenter.checkCaptionsAndCreateCcTag(thumbnailView)
       jest.advanceTimersByTime(300)
       rejectCheck(new Error('check failed'))
       await check
 
-      expect(loadingView.remove).toBeCalled()
+      expect(ccLoadingView.remove).toBeCalled()
       expect(thumbnailView.insertCcTag).not.toBeCalled()
     })
   })

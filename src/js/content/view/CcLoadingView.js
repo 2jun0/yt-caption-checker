@@ -2,21 +2,21 @@ export const CC_LOADING_ID = 'cc-loading'
 
 export class CcLoadingView {
   /**
-   * @param {HTMLDivElement} loadingDiv
+   * @param {HTMLDivElement} ccLoadingDiv
    */
-  constructor(loadingDiv) {
-    this.loadingDiv = loadingDiv
+  constructor(ccLoadingDiv) {
+    this.ccLoadingDiv = ccLoadingDiv
   }
 
   remove() {
-    this.loadingDiv.remove()
+    this.ccLoadingDiv.remove()
   }
 
   /**
    * Get the loading element
    * @returns {HTMLDivElement}
    */
-  loadingElement() {
-    return this.loadingDiv
+  ccLoadingElement() {
+    return this.ccLoadingDiv
   }
 }
