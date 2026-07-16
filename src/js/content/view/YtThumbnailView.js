@@ -61,18 +61,18 @@ export class YtThumbnailView {
    * Insert loading indicator in YouTube thumbnail
    * @param {CcLoadingView} ccLoadingView
    */
-  insertLoading(ccLoadingView) {
+  insertCcLoading(ccLoadingView) {
     const overlays = this._getOverlays()
-    if (!overlays || this.hasLoading()) return
+    if (!overlays || this.hasCcLoading()) return
 
-    overlays.insertBefore(ccLoadingView.loadingElement(), overlays.lastChild)
+    overlays.insertBefore(ccLoadingView.ccLoadingElement(), overlays.lastChild)
   }
 
   /**
    * Check if loading indicator exists
    * @returns {boolean}
    */
-  hasLoading() {
+  hasCcLoading() {
     const overlays = this._getOverlays()
     if (!overlays) return false
 

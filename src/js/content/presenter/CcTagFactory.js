@@ -29,14 +29,14 @@ export class CcTagFactory {
    * Create CC Loading View
    * @returns {CcLoadingView}
    */
-  createLoadingView() {
-    const loadingDiv = this.document.createElement('div')
-    Object.assign(loadingDiv, {
+  createCcLoadingView() {
+    const ccLoadingDiv = this.document.createElement('div')
+    Object.assign(ccLoadingDiv, {
       id: CC_LOADING_ID,
       className: 'style-scope ytd-thumbnail',
     })
 
-    return new CcLoadingView(loadingDiv)
+    return new CcLoadingView(ccLoadingDiv)
   }
 
   /**

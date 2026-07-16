@@ -3,18 +3,18 @@ import { CcLoadingView } from './CcLoadingView.js'
 
 describe('CcLoadingView', () => {
   it('should return the loading element', () => {
-    const loadingDiv = { remove: jest.fn() }
-    const ccLoadingView = new CcLoadingView(loadingDiv)
+    const ccLoadingDiv = { remove: jest.fn() }
+    const ccLoadingView = new CcLoadingView(ccLoadingDiv)
 
-    expect(ccLoadingView.loadingElement()).toBe(loadingDiv)
+    expect(ccLoadingView.ccLoadingElement()).toBe(ccLoadingDiv)
   })
 
   it('should remove the loading element', () => {
-    const loadingDiv = { remove: jest.fn() }
-    const ccLoadingView = new CcLoadingView(loadingDiv)
+    const ccLoadingDiv = { remove: jest.fn() }
+    const ccLoadingView = new CcLoadingView(ccLoadingDiv)
 
     ccLoadingView.remove()
 
-    expect(loadingDiv.remove).toBeCalled()
+    expect(ccLoadingDiv.remove).toBeCalled()
   })
 })

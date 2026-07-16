@@ -34,7 +34,9 @@ describe('YtThumbnailView', () => {
         classList: {
           contains: jest
             .fn()
-            .mockImplementation(cls => cls === 'yt-lockup-view-model__content-image'),
+            .mockImplementation(
+              cls => cls === 'yt-lockup-view-model__content-image',
+            ),
         },
       }
       expect(() => new YtThumbnailView(newThumbnailEl)).not.toThrow()
@@ -112,11 +114,11 @@ describe('YtThumbnailView', () => {
       querySelector: () => overlays,
     }
     const ccLoadingView = {
-      loadingElement: () => {},
+      ccLoadingElement: () => {},
     }
     const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
-    ytThumbnailView.insertLoading(ccLoadingView)
+    ytThumbnailView.insertCcLoading(ccLoadingView)
     expect(overlays.insertBefore).toBeCalled()
   })
 
@@ -133,11 +135,11 @@ describe('YtThumbnailView', () => {
       querySelector: () => overlays,
     }
     const ccLoadingView = {
-      loadingElement: () => {},
+      ccLoadingElement: () => {},
     }
     const ytThumbnailView = new YtThumbnailView(thumbnailEl)
 
-    ytThumbnailView.insertLoading(ccLoadingView)
+    ytThumbnailView.insertCcLoading(ccLoadingView)
     expect(overlays.insertBefore).not.toBeCalled()
   })
 

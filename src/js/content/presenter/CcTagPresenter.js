@@ -109,9 +109,9 @@ export class CcTagPresenter {
 
     const languages = this.ccTagModel.relatedLanguages
 
-    const loadingView = this.ccTagFactory.createLoadingView()
+    const ccLoadingView = this.ccTagFactory.createCcLoadingView()
     const showLoadingTimer = setTimeout(
-      () => ytThumbnailView.insertLoading(loadingView),
+      () => ytThumbnailView.insertCcLoading(ccLoadingView),
       LOADING_DELAY_MS,
     )
 
@@ -126,7 +126,7 @@ export class CcTagPresenter {
       return
     } finally {
       clearTimeout(showLoadingTimer)
-      loadingView.remove()
+      ccLoadingView.remove()
     }
     debug('CcTagPresenter: caption check', {
       ytThumbnailView,
