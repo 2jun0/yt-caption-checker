@@ -1,4 +1,5 @@
 import { debug } from '../utils/common.js'
+import { ANY_LANGUAGE } from '../utils/lang.js'
 
 /**
  * Create the runtime.onMessage listener answering 'has-captions' queries.
@@ -25,9 +26,9 @@ export function createHasCaptionsListener(getCaptions) {
           return sendRes(false)
         }
 
-        const existsCaptions = captions.filter(languageCode =>
-          languages.includes(languageCode),
-        )
+        const existsCaptions = languages.includes(ANY_LANGUAGE)
+          ? captions
+          : captions.filter(languageCode => languages.includes(languageCode))
 
         debug('caption match result', {
           videoId,

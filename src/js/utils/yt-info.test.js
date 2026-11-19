@@ -23,12 +23,17 @@ describe('extractCaptionTracks', () => {
 })
 
 describe('captionTracksToLanguageCodes', () => {
-  test('drops auto-created (asr) tracks and maps to languageCode', () => {
+  test('includes auto-created (asr) tracks and de-duplicates codes', () => {
     const tracks = [
       { languageCode: 'en', kind: 'asr' },
       { languageCode: 'ko' },
+      { languageCode: 'ko', kind: 'asr' },
       { languageCode: 'ja' },
     ]
-    expect(captionTracksToLanguageCodes(tracks)).toEqual(['ko', 'ja'])
+    expect(captionTracksToLanguageCodes(tracks)).toEqual(['en', 'ko', 'ja'])
+  })
+
+  test('skips tracks without a languageCode', () => {
+    expect(captionTracksToLanguageCodes([{ kind: 'asr' }])).toEqual([])
   })
 })

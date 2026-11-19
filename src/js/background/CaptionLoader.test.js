@@ -41,7 +41,12 @@ describe('CaptionLoader', () => {
     const fetchCaptionLanguages = jest.fn()
     const { loader } = createLoader({
       entries: {
-        123456: { videoId: '123456', captions: ['en'], updatedAt: Date.now() - HOUR },
+        123456: {
+          videoId: '123456',
+          captions: ['en'],
+          schema: 2,
+          updatedAt: Date.now() - HOUR,
+        },
       },
       fetchCaptionLanguages,
     })
@@ -64,6 +69,23 @@ describe('CaptionLoader', () => {
     })
 
     await expect(loader.getCaptions('123456')).resolves.toEqual(['ko'])
+    expect(fetchCaptionLanguages).toBeCalled()
+  })
+
+  it('should refetch a cached entry written by an older schema', async () => {
+    const fetchCaptionLanguages = jest.fn(async () => ['fr'])
+    const { loader } = createLoader({
+      entries: {
+        123456: {
+          videoId: '123456',
+          captions: [],
+          updatedAt: Date.now() - HOUR,
+        },
+      },
+      fetchCaptionLanguages,
+    })
+
+    await expect(loader.getCaptions('123456')).resolves.toEqual(['fr'])
     expect(fetchCaptionLanguages).toBeCalled()
   })
 
@@ -99,6 +121,7 @@ describe('CaptionLoader', () => {
         123456: {
           videoId: '123456',
           failed: true,
+          schema: 2,
           updatedAt: Date.now() - 5 * MINUTE,
         },
       },
