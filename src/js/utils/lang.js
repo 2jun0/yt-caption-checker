@@ -1,4 +1,10 @@
+export const ANY_LANGUAGE = 'any'
+
 export const langs = [
+  {
+    code: ANY_LANGUAGE,
+    displayName: 'Any language (all captions)',
+  },
   {
     code: 'ha',
     displayName: '(Hausa) هَوُسَ',
@@ -847,3 +853,12 @@ export const getRelatedLangCodes = originLangCode => {
   })
   return relatedLangCodes
 }
+
+/**
+ * Label shown inside the CC tag.
+ * The 'any' mode marks captions without naming a language.
+ * @param {string} language
+ * @returns {string}
+ */
+export const formatCcTagLabel = language =>
+  !language || language === ANY_LANGUAGE ? 'CC' : `${language.toUpperCase()} CC`

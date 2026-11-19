@@ -32,6 +32,42 @@ describe('createHasCaptionsListener', () => {
     expect(sendRes).toBeCalledWith(false)
   })
 
+  it('should respond true for any captions in any-language mode', async () => {
+    const getCaptions = jest.fn().mockResolvedValue(['fr', 'de'])
+    const sendRes = jest.fn()
+    const listener = createHasCaptionsListener(getCaptions)
+
+    listener(
+      {
+        type: 'has-captions',
+        value: { videoId: '123456', languages: ['any'] },
+      },
+      {},
+      sendRes,
+    )
+    await flushPromises()
+
+    expect(sendRes).toBeCalledWith(true)
+  })
+
+  it('should respond false for any-language mode when there are no captions', async () => {
+    const getCaptions = jest.fn().mockResolvedValue([])
+    const sendRes = jest.fn()
+    const listener = createHasCaptionsListener(getCaptions)
+
+    listener(
+      {
+        type: 'has-captions',
+        value: { videoId: '123456', languages: ['any'] },
+      },
+      {},
+      sendRes,
+    )
+    await flushPromises()
+
+    expect(sendRes).toBeCalledWith(false)
+  })
+
   it('should respond false if captions are unavailable', async () => {
     const getCaptions = jest.fn().mockResolvedValue(null)
     const sendRes = jest.fn()

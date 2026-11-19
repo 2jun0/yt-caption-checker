@@ -11,7 +11,7 @@ export const DEFAULT_VALUE = {
   [COLOR_TXT_FIELD]: '#FFFFFF',
   [CC_PREVIEW_FONT_SIZE_FIELD]: '1.3rem',
   [IS_COMBINED_REGION_FIELD]: true,
-  [LANGUAGE_FIELD]: 'en',
+  [LANGUAGE_FIELD]: 'any',
 }
 
 export class Storage {

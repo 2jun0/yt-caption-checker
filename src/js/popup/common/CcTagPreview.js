@@ -1,3 +1,5 @@
+import { formatCcTagLabel } from '../../utils/lang.js'
+
 const CC_TAG_PREVIEW_ID = 'cc-status-example'
 
 export class CcTagPreview {
@@ -13,7 +15,7 @@ export class CcTagPreview {
   }
 
   setLanguage(lang) {
-    this._ccTagPreview.textContent = lang.toUpperCase() + ' CC'
+    this._ccTagPreview.textContent = formatCcTagLabel(lang)
   }
 
   setTxtColor(txtColor) {

@@ -3,6 +3,8 @@ import { CAPTION_STORE } from '../store/contants.js'
 
 const SUCCESS_TTL_MS = 1000 * 3600 * 24
 const FAILURE_TTL_MS = 1000 * 60 * 10
+// bump when the meaning of the cached caption list changes (v2: asr included)
+const CAPTION_SCHEMA_VERSION = 2
 
 export class CaptionLoader {
   /**
@@ -40,7 +42,11 @@ export class CaptionLoader {
   async _lookup(videoId) {
     const saved = await this.indexedDB.get(CAPTION_STORE, videoId)
     const ttlMs = saved?.failed ? FAILURE_TTL_MS : SUCCESS_TTL_MS
-    if (saved && Date.now() - saved.updatedAt < ttlMs) {
+    if (
+      saved &&
+      saved.schema === CAPTION_SCHEMA_VERSION &&
+      Date.now() - saved.updatedAt < ttlMs
+    ) {
       debug('captions cache hit', {
         videoId,
         ageMs: Date.now() - saved.updatedAt,
@@ -69,6 +75,7 @@ export class CaptionLoader {
       this.indexedDB.put(CAPTION_STORE, {
         videoId,
         captions,
+        schema: CAPTION_SCHEMA_VERSION,
         updatedAt: Date.now(),
       })
       return captions
@@ -76,6 +83,7 @@ export class CaptionLoader {
       this.indexedDB.put(CAPTION_STORE, {
         videoId,
         failed: true,
+        schema: CAPTION_SCHEMA_VERSION,
         updatedAt: Date.now(),
       })
       throw err

@@ -1,5 +1,6 @@
 import { CcTagView, CC_TAG_ID } from '../view/CcTagView.js'
 import { CcLoadingView, CC_LOADING_ID } from '../view/CcLoadingView.js'
+import { ANY_LANGUAGE, formatCcTagLabel } from '../../utils/lang.js'
 
 export class CcTagFactory {
   /**
@@ -70,10 +71,12 @@ export class CcTagFactory {
    */
   createCcTagSpan(language) {
     const ccTagSpan = this.document.createElement('span')
+    const label = formatCcTagLabel(language)
     Object.assign(ccTagSpan, {
       className: 'style-scope ytd-thumbnail-overlay-time-status-renderer',
-      ariaLabel: `${language.toUpperCase()} CC`,
-      textContent: `${language.toUpperCase()} CC`,
+      ariaLabel:
+        language === ANY_LANGUAGE ? 'Captions available' : `${label}`,
+      textContent: label,
     })
 
     return ccTagSpan

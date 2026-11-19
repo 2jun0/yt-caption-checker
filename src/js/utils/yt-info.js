@@ -65,15 +65,21 @@ export const extractCaptionTracks = info => {
 }
 
 /**
- * Reduce caption tracks to non-auto-created language codes.
+ * Reduce caption tracks to unique language codes.
+ * Auto-created (asr) tracks count as captions too.
  * @param {Array} tracks
  * @returns {string[]}
  */
-export const captionTracksToLanguageCodes = tracks =>
-  tracks.filter(({ kind }) => kind !== 'asr').map(({ languageCode }) => languageCode)
+export const captionTracksToLanguageCodes = tracks => [
+  ...new Set(
+    tracks
+      .map(({ languageCode }) => languageCode)
+      .filter(languageCode => !!languageCode),
+  ),
+]
 
 /**
- * Fetch a video's non-auto-created caption language codes.
+ * Fetch a video's caption language codes, auto-created tracks included.
  * @param {string} id
  * @returns {Promise<string[]|null>}
  */
